@@ -27,7 +27,16 @@ const FEED_URL = import.meta.env.VITE_FEED_URL || "/api/feed";
 
 async function fromFeed(known) {
   const res = await fetch(FEED_URL, { headers: { accept: "application/json" } });
-  if (!res.ok) throw new Error(`feed returned HTTP ${res.status}`);
+  if (!res.ok) {
+    // Naming the URL matters here: a 404 means the feed isn't where this build
+    // was told to look, and the path is the whole diagnosis.
+    const where = new URL(FEED_URL, window.location.href).pathname;
+    throw new Error(
+      res.status === 404
+        ? `no feed at ${where} — this build is in feed mode (VITE_WIRE_MODE=${MODE}, VITE_FEED_URL=${FEED_URL})`
+        : `feed at ${where} returned HTTP ${res.status}`
+    );
+  }
   const feed = await res.json();
   const seen = new Set(known.map((i) => i.url + i.title));
   const fresh = (feed.items || []).filter((x) => x.url && !seen.has(x.url + x.title));
@@ -49,7 +58,15 @@ async function fromProvider(known, choice) {
     }),
   });
 
-  const json = await res.json();
+  // A 404 here is the dev proxy not being there at all — a built bundle opened
+  // without `vite dev`, say — so it won't be JSON, and parsing it would mask
+  // the real cause.
+  if (res.status === 404) {
+    throw new Error(
+      `no endpoint at /api/wire/${provider.id} — direct mode needs the dev server (npm run dev). A built site should run in feed mode.`
+    );
+  }
+  const json = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(json.error || `HTTP ${res.status}`);
   return { fresh: json.fresh || [], checkedAt: Date.now(), mode: json.mode, searched: json.searched };
 }

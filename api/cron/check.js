@@ -5,9 +5,9 @@
  *
  * Both callers must present CRON_SECRET — this route spends money.
  */
-import { byId } from "../../../../src/lib/providers/index.js";
-import { buildPrompt, normalize, parseArray } from "../../../../src/lib/check.js";
-import { SEED } from "../../../../src/data/seed.js";
+import { byId } from "../../src/lib/providers/index.js";
+import { runCheck } from "../../src/lib/run-check.js";
+import { SEED } from "../../src/data/seed.js";
 
 const FEED_KEY = "wire:feed:v1";
 const MAX_ENTRIES = 150;
@@ -36,28 +36,27 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: "Not authorised." });
   }
 
-  const provider = byId(process.env.WIRE_PROVIDER || "anthropic");
+  if (!process.env.KV_REST_API_URL) {
+    return res.status(501).json({
+      error:
+        "No KV store configured, so a check here would have nowhere to persist. " +
+        "Either add a KV integration, or let GitHub Actions run the check and commit public/feed.json.",
+    });
+  }
+
+  // No hardcoded fallback: byId() returns the first registered provider.
+  const provider = byId(process.env.WIRE_PROVIDER);
   const model = process.env.WIRE_MODEL || provider.models[0];
-  const key = provider.envKey ? process.env[provider.envKey] : "";
 
   try {
     const feed = (await kvGet(FEED_KEY)) || { items: SEED, checkedAt: null };
-    const url = provider.endpoint(process.env).replace("{model}", encodeURIComponent(model));
-    const upstream = await fetch(url, {
-      method: "POST",
-      headers: provider.headers(key, process.env),
-      body: JSON.stringify(
-        provider.buildBody({
-          prompt: buildPrompt(feed.items, provider),
-          model,
-          search: provider.supportsSearch,
-        })
-      ),
+    const { fresh } = await runCheck({
+      provider,
+      model,
+      known: feed.items,
+      env: process.env,
     });
-    const body = await upstream.json();
-    if (!upstream.ok) throw new Error(provider.extractError?.(body) || `HTTP ${upstream.status}`);
 
-    const fresh = normalize(parseArray(provider.extractText(body)), feed.items, provider.id);
     const next = {
       items: [...fresh, ...feed.items].slice(0, MAX_ENTRIES),
       checkedAt: Date.now(),

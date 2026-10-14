@@ -72,10 +72,22 @@ Then point a domain at it in the Workers dashboard, or use the
 | **Fly.io / a small VM** | You want a real cron, a real database, and no platform limits. | You now operate a machine for a JSON file. |
 | **GitHub Pages + Actions** | Cheapest possible: commit the feed as a file in the repo. | No server at all, so no manual-check route and no private mode. |
 
-`deploy/vercel/` holds working `api/feed.js` and `api/cron/check.js` for the
-Vercel path, plus a `vercel.json` with a daily cron. Copy `deploy/vercel/api` to
-`/api` at the project root and set `KV_REST_API_URL`, `KV_REST_API_TOKEN`,
-`CRON_SECRET`, and your provider key.
+### Vercel
+
+`api/feed.js` and `api/cron/check.js` are at the project root, so `/api/feed`
+serves on Vercel exactly as it does on Cloudflare — no client configuration, and
+the same URL in both deploys.
+
+`/api/feed` reads a KV store if one is configured, and otherwise falls back to
+`public/feed.json` committed in the repo. That fallback is what makes a Vercel
+deploy work with no database at all: GitHub Actions runs the check, commits the
+feed, Vercel rebuilds on the push.
+
+Add KV only if you want refreshes without a redeploy. Then set
+`KV_REST_API_URL`, `KV_REST_API_TOKEN`, `CRON_SECRET`, `OLLAMA_API_KEY` and
+`OLLAMA_BASE_URL` as environment variables; `/api/cron/check` returns 501 until
+KV exists, rather than running a check it couldn't persist. Note Hobby cron
+fires once a day, so GitHub Actions remains the better scheduler.
 
 ## Getting a tighter cadence for free
 

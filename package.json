@@ -31,5 +31,11 @@
     "vite": "^8.2.2",
     "wrangler": "^4.127.1",
     "@eslint/js": "^10.0.1"
+  },
+  "license": "MIT",
+  "author": "John William Baker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juubaker/ai-wire.git"
   }
 }

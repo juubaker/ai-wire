@@ -136,3 +136,11 @@ it appears on the wire on reload. Saved entries take precedence over seeds with 
 
 Entries live in `localStorage` under the `wire:` prefix. To start fresh, run
 `localStorage.removeItem("wire:items:v1")` in the console and reload.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+The code is MIT. The entries the wire collects are not: each one links to, and
+summarises, someone else's announcement or paper, and those remain the property
+of whoever published them.

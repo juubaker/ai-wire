@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.rulers": [100],
+  "editor.tabSize": 2,
+  "files.eol": "\n",
+  "files.exclude": { "**/node_modules": true, "**/dist": true },
+  "search.exclude": { "**/node_modules": true, "**/dist": true },
+  "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "tailwindCSS.includeLanguages": { "javascript": "javascript" },
+  "tailwindCSS.experimental.classRegex": [["className\\s*=\\s*[\"'`]([^\"'`]*)"]],
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "css.lint.unknownAtRules": "ignore"
+}

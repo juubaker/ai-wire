@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Open AI Wire in Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "wire: dev server",
+      "sourceMapPathOverrides": { "/src/*": "${workspaceFolder}/src/*" }
+    }
+  ]
+}

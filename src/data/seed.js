@@ -1,0 +1,187 @@
+/**
+ * The entries the wire starts with: the Aug 13-27, 2026 briefing.
+ * Anything the update check finds is merged in front of these and saved locally.
+ */
+export const SEED = [
+  {
+    id: "anthropic-browser-use",
+    date: "2026-08-19",
+    source: "Anthropic",
+    tier: "Primary",
+    type: "API & tooling",
+    section: "product",
+    title: "Computer use leaves beta; browser use ships",
+    summary:
+      "computer_toolset_20260801 adds batch actions and default zoom. The new browser_toolset_20260801 drives a browser your app hosts, reading the accessibility tree instead of screenshots alone.",
+    url: "https://docs.claude.com/en/release-notes/overview.md",
+  },
+  {
+    id: "anthropic-files-skills-ga",
+    date: "2026-08-19",
+    source: "Anthropic",
+    tier: "Primary",
+    type: "API & tooling",
+    section: "product",
+    title: "Files API and Skills API out of beta",
+    summary:
+      "Drop the files-api-2025-04-14 and skills-2025-10-02 headers. The Console session viewer picks up a timeline minimap, per-model-request transcript, and per-tool cost stats.",
+    url: "https://docs.claude.com/en/release-notes/overview.md",
+  },
+  {
+    id: "anthropic-python-sdk-1",
+    date: "2026-08-20",
+    source: "Anthropic",
+    tier: "Primary",
+    type: "API & tooling",
+    section: "product",
+    title: "Python SDK v1.0 — breaking",
+    summary:
+      "httpx moves to httpx2, Python 3.10+ required, legacy Text Completions gone, temperature/top_p/top_k removed from Messages, AnthropicBedrock no longer defaults to us-east-1.",
+    url: "https://docs.claude.com/en/release-notes/overview.md",
+  },
+  {
+    id: "anthropic-sonnet5-price",
+    date: "2026-08-10",
+    source: "Anthropic",
+    tier: "Primary",
+    type: "Pricing",
+    section: "product",
+    title: "Sonnet 5 stays at $2 / $10 per MTok",
+    summary:
+      "The increase to $3 / $15 scheduled for September 1 will not happen. Introductory pricing is now the standard price.",
+    url: "https://docs.claude.com/en/release-notes/overview.md",
+  },
+  {
+    id: "anthropic-opus41-retired",
+    date: "2026-08-05",
+    source: "Anthropic",
+    tier: "Primary",
+    type: "Deprecation",
+    section: "product",
+    title: "claude-opus-4-1-20250805 retired",
+    summary:
+      "Requests to the dated Opus 4.1 ID now hard-error rather than degrade. Opus 5 is the migration target.",
+    url: "https://docs.claude.com/en/release-notes/overview.md",
+  },
+  {
+    id: "openai-sol-price-cut",
+    date: "2026-08-21",
+    source: "OpenAI",
+    tier: "Primary",
+    type: "Pricing",
+    section: "product",
+    title: "GPT-5.6 Sol cut over 20% for three months",
+    summary:
+      "API and credit pricing only, and explicitly temporary. Worth testing against, not worth rebuilding routing economics around.",
+    url: "https://openai.com/index/gpt-5-6/",
+  },
+  {
+    id: "openai-assistants-removed",
+    date: "2026-08-26",
+    source: "OpenAI",
+    tier: "Primary",
+    type: "Deprecation",
+    section: "product",
+    title: "Assistants API removed",
+    summary:
+      "One year after notice, the endpoint is gone; Responses plus Conversations is the path. Older GPT-5 and o3 snapshots follow on December 11.",
+    url: "https://developers.openai.com/api/docs/deprecations",
+  },
+  {
+    id: "google-transcribe-ga",
+    date: "2026-08-26",
+    source: "Google",
+    tier: "Primary",
+    type: "Model release",
+    section: "product",
+    title: "Gemini 3.5 Transcribe and Transcribe Live GA",
+    summary:
+      "Diarization, word-level timestamps, and vocabulary biasing up to 1,000 terms. The Live variant streams over WebSockets with configurable VAD.",
+    url: "https://ai.google.dev/gemini-api/docs/changelog",
+  },
+  {
+    id: "google-37-flash",
+    date: "2026-08-13",
+    source: "Google",
+    tier: "Primary",
+    type: "Model release",
+    section: "product",
+    title: "Gemini 3.7 Flash GA",
+    summary:
+      "Positioned at coding and agentic work, at introductory pricing through December 31, 2026.",
+    url: "https://ai.google.dev/gemini-api/docs/changelog",
+  },
+  {
+    id: "google-sampling-deprecated",
+    date: "2026-07-21",
+    source: "Google",
+    tier: "Primary",
+    type: "Deprecation",
+    section: "product",
+    title: "temperature, top_p and top_k deprecated on Gemini",
+    summary:
+      "The second vendor this quarter to retire the sampling knobs. If your eval harness sweeps temperature, that dimension is disappearing.",
+    url: "https://ai.google.dev/gemini-api/docs/changelog",
+  },
+  {
+    id: "mcp-stateless",
+    date: "2026-07-28",
+    source: "MCP",
+    tier: "Primary",
+    type: "Protocol",
+    section: "product",
+    title: "MCP 2026-07-28 final: the protocol goes stateless",
+    summary:
+      "No Mcp-Session-Id, no initialize handshake, tools/list cacheable via ttlMs, cross-call state as server-minted handles. Roots, Sampling and Logging deprecated on a 12-month floor.",
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/changelog",
+  },
+  {
+    id: "arxiv-vista",
+    date: "2026-07-23",
+    source: "arXiv 2606.30005",
+    tier: "Primary",
+    type: "Research",
+    section: "innovation",
+    title: "VISTA: agents as their own context managers",
+    summary:
+      "Training-free, model-agnostic layer giving typed, addressable context blocks with archival and recovery. Drops over an existing agent loop.",
+    url: "https://arxiv.org/abs/2606.30005",
+  },
+  {
+    id: "arxiv-tokenpilot",
+    date: "2026-06-20",
+    source: "arXiv 2606.17016",
+    tier: "Primary",
+    type: "Research",
+    section: "innovation",
+    title: "TokenPilot: compaction that keeps the prefix cache",
+    summary:
+      "Cache-efficient context management. Read it if you suspect your compaction step is quietly destroying cache hit rate.",
+    url: "https://arxiv.org/pdf/2606.17016",
+  },
+  {
+    id: "arxiv-smoothagent",
+    date: "2026-07-01",
+    source: "arXiv 2607.00151",
+    tier: "Primary",
+    type: "Research",
+    section: "innovation",
+    title: "SmoothAgent: lookahead context engineering for serving",
+    summary:
+      "Aimed at latency rather than accuracy, which is a rare framing. The closest of the three to observability work.",
+    url: "https://arxiv.org/pdf/2607.00151",
+  },
+  {
+    id: "openai-jalapeno",
+    date: "2026-08-25",
+    source: "OpenAI",
+    tier: "Secondary",
+    type: "Industry",
+    section: "business",
+    title: "Jalapeño inference chip — announced, not available",
+    summary:
+      "Throughput, latency and power claims are sourced only to OpenAI, and the chip is in deployment planning. Nothing here changes what you can ship.",
+    url: "https://releasebot.io/updates/openai",
+    flagged: "Vendor benchmark only",
+  },
+];

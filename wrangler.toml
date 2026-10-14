@@ -1,0 +1,34 @@
+name = "ai-wire"
+main = "worker/index.js"
+compatibility_date = "2026-08-01"
+
+# The built site. The Worker serves these and falls through to them for any
+# path that isn't /api/*.
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# Rebuild the feed every 15 minutes. Cron is UTC and does not retry.
+[triggers]
+crons = ["*/15 * * * *"]
+
+# Which provider the scheduled job uses. Change and redeploy to swap.
+[vars]
+WIRE_PROVIDER = "ollama"
+WIRE_MODEL = "qwen3:32b"
+
+# A Worker runs in Cloudflare's network and cannot reach localhost, so a
+# deployed cron needs an Ollama endpoint reachable from the internet — a tunnel
+# to your machine, or a hosted runtime. Left unset, scheduled checks will fail
+# while local dev keeps working.
+# OLLAMA_BASE_URL = "https://ollama.example.com"
+
+# wrangler kv namespace create WIRE  →  paste the id here
+[[kv_namespaces]]
+binding = "WIRE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Secrets are NOT set here. Use:
+#   wrangler secret put ADMIN_TOKEN
+# Ollama needs no key; add a provider key here if you re-enable a hosted one.

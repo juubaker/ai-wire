@@ -133,6 +133,8 @@ src/
   lib/storage.js         localStorage-backed persistence
   styles/wire.css        the visual system (custom properties + components)
   index.css              Tailwind layers and page reset
+demo/build-artifact.mjs  generates a single-file demo for a Claude artifact
+demo/artifact.jsx        GENERATED — re-run `npm run demo`, don't edit
 worker/index.js          production: assets + /api/feed + cron check (Cloudflare)
 wrangler.toml            Worker config, cron schedule, KV binding
 deploy/vercel/           the same endpoints for a Vercel deployment

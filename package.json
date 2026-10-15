@@ -15,7 +15,8 @@
     "cf:tail": "wrangler tail",
     "cf:check": "wrangler dev --test-scheduled",
     "check": "node scripts/check.mjs",
-    "build:pages": "VITE_WIRE_MODE=feed VITE_FEED_URL=feed.json vite build"
+    "build:pages": "VITE_WIRE_MODE=feed VITE_FEED_URL=feed.json vite build",
+    "demo": "node demo/build-artifact.mjs"
   },
   "dependencies": {
     "react": "^19.2.8",

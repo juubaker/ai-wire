@@ -1,8 +1,22 @@
 /**
- * The entries the wire starts with: the Aug 13-27, 2026 briefing.
+ * The entries the wire starts with: the Aug 13-27, 2026 briefing, plus Jev.
  * Anything the update check finds is merged in front of these and saved locally.
  */
 export const SEED = [
+  {
+    id: "typesafe-jev-launch",
+    date: "2026-09-15",
+    source: "TypeSafe AI",
+    tier: "Primary",
+    type: "Model release",
+    section: "product",
+    models: ["jev"],
+    title: "Jev: a model that decides instead of writing",
+    summary:
+      "TypeSafe AI's first 'System One' model returns a typed choice, score or boolean with a calibrated confidence, never text. Constrained output means it can't break your schema — but it can be confident and still pick the wrong valid option.",
+    url: "https://docs.typesafe.ai",
+    flagged: "Vendor benchmark only",
+  },
   {
     id: "anthropic-browser-use",
     date: "2026-08-19",

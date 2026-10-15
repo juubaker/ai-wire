@@ -97,14 +97,45 @@ describe("modelsFor — which model families an entry concerns", () => {
     }
   });
 
-  test("classifies the seed entries as expected", () => {
-    const tally = {};
-    for (const e of SEED) {
-      const families = modelsFor(e);
-      if (families.length === 0) tally.none = (tally.none || 0) + 1;
-      for (const f of families) tally[f] = (tally[f] || 0) + 1;
-    }
-    assert.deepEqual(tally, { gpt: 3, gemini: 3, claude: 5, none: 4 });
+  describe("against the seed entries", () => {
+    // Properties, not an exact tally: a snapshot of the counts would break on
+    // every seed edit without catching anything a property wouldn't.
+    const ids = new Set(MODEL_FAMILIES.map((f) => f.id));
+
+    test("only ever returns registered family ids", () => {
+      for (const e of SEED) {
+        for (const f of modelsFor(e)) assert.ok(ids.has(f), `${f} is not a registered family`);
+      }
+    });
+
+    test("no entry is assigned the same family twice", () => {
+      for (const e of SEED) {
+        const got = modelsFor(e);
+        assert.equal(new Set(got).size, got.length, `${e.title} has duplicates`);
+      }
+    });
+
+    test("vendor entries resolve to their family", () => {
+      const bySource = (s) => SEED.filter((e) => e.source === s);
+      for (const [source, family] of [
+        ["Anthropic", "claude"],
+        ["OpenAI", "gpt"],
+        ["Google", "gemini"],
+      ]) {
+        const entries = bySource(source);
+        assert.ok(entries.length > 0, `no seed entries from ${source}`);
+        for (const e of entries) {
+          assert.ok(modelsFor(e).includes(family), `${e.title} should be ${family}`);
+        }
+      }
+    });
+
+    test("model-agnostic entries get no family", () => {
+      // The MCP revision and the arXiv papers are about no particular model.
+      const agnostic = SEED.filter((e) => ["MCP"].includes(e.source) || /^arXiv/.test(e.source));
+      assert.ok(agnostic.length > 0, "expected some model-agnostic seed entries");
+      for (const e of agnostic) assert.deepEqual(modelsFor(e), [], `${e.title} should have none`);
+    });
   });
 });
 

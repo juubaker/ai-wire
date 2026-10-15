@@ -15,23 +15,47 @@ const ENDPOINT = "https://ollama.com/api/web_search";
 /**
  * What to look for. Deliberately source-shaped rather than topic-shaped — the
  * wire's editorial rule is primary sources, so the queries name them.
+ *
+ * Grouped by the section each is meant to feed, because the first version of
+ * this list was all changelogs: every result came back `product`, and the
+ * Business and Innovations tabs stayed frozen however often the check ran.
+ * Retrieval has to cover the taxonomy, or the taxonomy is decorative.
+ *
+ * If you add a section to SECTIONS, add queries for it here too.
  */
-export const QUERIES = [
+
+/** product — what shipped and is usable today. */
+const PRODUCT_QUERIES = [
   "Anthropic API changelog release notes",
   "OpenAI API changelog deprecations",
   "Google Gemini API changelog",
   "Model Context Protocol specification changelog",
-  "arXiv LLM agent context management paper",
-
-  // TypeSafe AI's Jev. Model aliases are versioned (jev-latest → jev-1.13.0),
-  // so a version bump in the docs is the changelog. The gateway query is the
-  // early-warning net: Jev reached Vercel, Cloudflare, OpenRouter and Portkey
-  // within weeks of launch, and each announces independently of TypeSafe.
+  // Jev ships as versioned aliases (jev-latest → jev-1.13.0), so a bump in the
+  // docs is the changelog. The gateway query is an early-warning net: Jev
+  // reached Vercel, Cloudflare, OpenRouter and Portkey within weeks of launch,
+  // and each announces independently of TypeSafe.
   "TypeSafe AI Jev docs changelog",
   "Jev model release jev-latest version",
-  "TypeSafe AI funding announcement",
-  "Vercel AI Gateway Cloudflare Workers AI Jev",
+  "Vercel AI Gateway Cloudflare Workers AI new model",
 ];
+
+/** business — funding, acquisitions, regulation, market moves. */
+const BUSINESS_QUERIES = [
+  "AI startup funding round acquisition this week",
+  "AI company acquisition announcement",
+  "EU AI Act enforcement AI regulation developers",
+  "AI lab earnings compute deal datacenter investment",
+];
+
+/** innovation — research and new technique, shipped or not. */
+const INNOVATION_QUERIES = [
+  "arXiv LLM agent context management paper",
+  "arXiv retrieval augmented generation new method",
+  "new LLM benchmark evaluation results agents",
+  "AI research breakthrough paper architecture efficiency",
+];
+
+export const QUERIES = [...PRODUCT_QUERIES, ...BUSINESS_QUERIES, ...INNOVATION_QUERIES];
 
 /** Snippets run long; this keeps the assembled prompt inside a sane context. */
 const MAX_CHARS_PER_RESULT = 600;

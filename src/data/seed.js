@@ -7,6 +7,58 @@
  * is what keeps the wire current from here.
  */
 export const SEED = [
+  {
+    id: "eu-ai-act-gpai-enforcement",
+    date: "2026-08-02",
+    source: "AI Act tracker",
+    tier: "Secondary",
+    type: "Regulation",
+    section: "business",
+    models: [],
+    title: "EU AI Act: Commission gains GPAI enforcement powers",
+    summary:
+      "The obligations applied from August 2025; what started now is enforcement. The Commission can demand documentation, run its own evaluations, and restrict, withdraw or recall a model, with fines to 3% of worldwide turnover or EUR 15M. Models released before Aug 2 2025 have until Aug 2 2027.",
+    url: "https://artificialintelligenceact.eu/enforcement/",
+  },
+  {
+    id: "amd-world-labs",
+    date: "2026-09-28",
+    source: "AI Funding Tracker",
+    tier: "Secondary",
+    type: "Acquisition",
+    section: "business",
+    models: [],
+    title: "AMD to buy World Labs for about $8.2B in stock",
+    summary:
+      "Fei-Fei Li's spatial-intelligence startup, in an all-stock deal expected to close by end of 2026 subject to regulatory approval. Reported figure, not a filing.",
+    url: "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/",
+  },
+  {
+    id: "supabase-turso",
+    date: "2026-10-01",
+    source: "AI Funding Tracker",
+    tier: "Secondary",
+    type: "Acquisition",
+    section: "business",
+    models: [],
+    title: "Supabase acquires Turso; raises $150M led by GIC",
+    summary:
+      "No price disclosed on the Turso deal. Worth watching if your retrieval layer sits on Postgres — embedded SQLite under a Postgres vendor is a hint about where edge-local reads are going.",
+    url: "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/",
+  },
+  {
+    id: "instinct-series-c",
+    date: "2026-10-02",
+    source: "AI Funding Tracker",
+    tier: "Secondary",
+    type: "Funding",
+    section: "business",
+    models: [],
+    title: "Instinct raises $1B Series C at a $10B valuation",
+    summary:
+      "Led by Sequoia, Benchmark and Coatue. The largest single round in a week that totalled roughly $2.6B across the sector.",
+    url: "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/",
+  },
   // ── Anthropic ────────────────────────────────────────────────────────
   {
     id: "anthropic-otel",

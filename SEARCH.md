@@ -77,9 +77,13 @@ is primary sources, so the queries name them:
 ...
 ```
 
-Nine queries currently: the five majors, plus four covering TypeSafe AI's Jev.
-Two patterns worth copying when you add a vendor:
+Fifteen queries, **grouped by the section each is meant to feed**. The first
+version of this list was all changelogs, and the result was that every entry
+came back `product` while the Business and Innovations tabs stayed frozen no
+matter how often the check ran. Retrieval has to cover the taxonomy, or the
+taxonomy is decorative. If you add a section to `SECTIONS`, add queries for it.
 
+Two more patterns worth copying when you add a vendor:
 - **Chase the version string, not the product name.** Jev ships as versioned
   aliases (`jev-latest` → `jev-1.13.0`), so `"Jev model release jev-latest
   version"` catches a bump that no blog post announces.

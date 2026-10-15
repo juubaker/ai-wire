@@ -151,3 +151,9 @@
 /* Secondary metadata, demoted below the summary. */
 .entry .meta{font-size:.62rem;opacity:.85;}
 .entry .meta .badge{letter-spacing:.06em;}
+
+/* "also watching N more" — the registered families with no entries yet. */
+.alsotracking{
+  font-size:.64rem;color:var(--ink-soft);opacity:.75;
+  padding:.3rem .2rem;cursor:help;border-bottom:1px dotted var(--rule);
+}

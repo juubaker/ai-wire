@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { SEED } from "./data/seed.js";
-import { SECTIONS, sectionFor, modelsFor, familyLabel } from "./lib/check.js";
+import { SECTIONS, sectionFor, modelsFor, familyLabel, MODEL_FAMILIES } from "./lib/check.js";
 import { storage } from "./lib/storage.js";
 import { fetchUpdates, isFeedMode } from "./lib/wire-api.js";
 import { PROVIDERS, byId, DEFAULT_PROVIDER } from "./lib/providers/index.js";
@@ -244,6 +244,13 @@ export default function Wire() {
     });
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, [inRange, filter]);
+
+  // Registered families with nothing on the wire yet. Named rather than
+  // charted, so "where's my filter?" has an answer on the page.
+  const untrackedFamilies = useMemo(() => {
+    const present = new Set(placed.flatMap((i) => i.models || []));
+    return MODEL_FAMILIES.filter((f) => !present.has(f.id)).map((f) => f.label);
+  }, [placed]);
 
   const shown = useMemo(() => {
     const list = inRange.filter((i) => matchesType(i) && matchesModel(i));
@@ -508,6 +515,15 @@ export default function Wire() {
                 {familyLabel(id)} · {n}
               </button>
             ))}
+            {/* Chips only exist for families that have entries, which reads as
+                "this family isn't tracked" when it just means nothing has
+                mentioned it yet. One muted line answers that, where a dozen
+                zero-count chips would only add noise. */}
+            {untrackedFamilies.length > 0 && (
+              <span className="alsotracking mono" title={untrackedFamilies.join(", ")}>
+                also watching {untrackedFamilies.length} more
+              </span>
+            )}
           </div>
         )}
         </>

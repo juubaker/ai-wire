@@ -8,6 +8,73 @@
  */
 export const SEED = [
   {
+    id: "jev-114-preview",
+    date: "2026-10-14",
+    source: "System One Models",
+    tier: "Secondary",
+    type: "Model release",
+    section: "product",
+    models: ["jev"],
+    title: "Jev 1.14 preview — and jev-latest moves around Oct 21",
+    summary:
+      "Out under the jev-preview alias at 1.13 prices. Anything sending jev-latest or relying on the SDK default switches automatically in about a week, so pin jev-1.13.0 if you want to choose your own moment.",
+    url: "https://systemonemodels.org/guides/jev-1-14/",
+  },
+  {
+    id: "jev-114-danger-zone",
+    date: "2026-10-14",
+    source: "System One Models",
+    tier: "Secondary",
+    type: "API & tooling",
+    section: "product",
+    models: ["jev"],
+    title: "Jev adds vision and 262k context, both opt-in and unready",
+    summary:
+      "Image input via a request header, a Box question type returning a bounding box, and long context to 262k tokens — TypeSafe labels all three not production-ready. Box has no 'not found' answer, so pair it with a Noul question or it will always point somewhere.",
+    url: "https://systemonemodels.org/guides/jev-1-14/",
+    flagged: "Vendor labels these unready",
+  },
+  {
+    id: "typesafe-series-a",
+    date: "2026-10-09",
+    source: "Implicator.ai",
+    tier: "Secondary",
+    type: "Funding",
+    section: "business",
+    models: ["jev"],
+    title: "TypeSafe raises $870M Series A at $7.5B, 24 days after launch",
+    summary:
+      "Led by Andreessen Horowitz with Sequoia and seed investor DCVC; Martin Casado joins the board. The seed was $40M — a roughly 20x step in under a month, on a model that cannot write a sentence.",
+    url: "https://www.implicator.ai/typesafe-ai-raises-870-million-for-jev-as-openai-amazon-and-cloudflare-ship-rivals/",
+  },
+  {
+    id: "strands-decider-rivals",
+    date: "2026-10-01",
+    source: "Implicator.ai",
+    tier: "Secondary",
+    type: "Model release",
+    section: "product",
+    models: ["jev", "gpt"],
+    title: "AWS ships Strands Decider 2B open source; typed decisions become a category",
+    summary:
+      "Apache 2.0, and small enough to self-host. With OpenAI's Decisions API on Oct 6 and Cloudflare's Clef on Workers AI, three rivals to Jev landed inside nine days — worth routing against rather than committing to one vendor.",
+    url: "https://www.implicator.ai/typesafe-ai-raises-870-million-for-jev-as-openai-amazon-and-cloudflare-ship-rivals/",
+  },
+  {
+    id: "meta-muse-glimmer",
+    date: "2026-08-10",
+    source: "Meta",
+    tier: "Secondary",
+    type: "Model release",
+    section: "product",
+    models: ["muse"],
+    title: "Muse Glimmer: a 30B agent model under Apache 2.0",
+    summary:
+      "Distilled from Meta's closed Muse Spark and sized to run agent workflows on one consumer GPU — ~29.6B dense, 131k context, controllable reasoning effort, with 24GB and 32GB quantizations. Reverses the closed turn Muse Spark took in April.",
+    url: "https://rits.shanghai.nyu.edu/ai/meta-releases-muse-glimmer-a-30b-agent-model-for-a-single-gpu/",
+    flagged: "Vendor benchmark only",
+  },
+  {
     id: "eu-ai-act-gpai-enforcement",
     date: "2026-08-02",
     source: "AI Act tracker",

@@ -13,7 +13,9 @@ npm run verify     # lint + test + build
 
 npm run check      # run a wire check now, writes public/feed.json
 npm run demo       # regenerate demo/artifact.jsx
-npm run build      # production bundle into dist/
+npm run build      # production bundle into dist/ (mounted at /)
+npm run build:pages   # GitHub Pages build, mounted at /ai-wire/
+npm run preview:pages # check that sub-path build locally
 npm run deploy     # build + wrangler deploy (Cloudflare)
 ```
 

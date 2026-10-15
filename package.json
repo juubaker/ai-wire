@@ -15,11 +15,12 @@
     "cf:tail": "wrangler tail",
     "cf:check": "wrangler dev --test-scheduled",
     "check": "node scripts/check.mjs",
-    "build:pages": "VITE_WIRE_MODE=feed VITE_FEED_URL=feed.json vite build",
+    "build:pages": "VITE_BASE=/ai-wire/ VITE_WIRE_MODE=feed VITE_FEED_URL=feed.json vite build",
     "demo": "node demo/build-artifact.mjs",
     "test": "node --test",
     "test:watch": "node --test --watch",
-    "verify": "npm run lint && npm test && npm run build"
+    "verify": "npm run lint && npm test && npm run build",
+    "preview:pages": "npm run build:pages && vite preview --base /ai-wire/"
   },
   "dependencies": {
     "react": "^19.2.8",

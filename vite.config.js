@@ -113,6 +113,10 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     // "/" for a custom domain or a user site; "/<repo>/" for project pages.
+    // Where the app is mounted. "/ai-wire/" for GitHub Pages, which serves a
+    // project repo from a subdirectory; "/" everywhere else, because Vercel
+    // and Cloudflare serve from the domain root and a base they don't use
+    // would 404 every asset. `npm run build:pages` sets this.
     base: env.VITE_BASE || "/",
     plugins: [react(), tailwindcss(), wireProxy(env)],
     server: { port: 5173, open: false },

@@ -44,12 +44,32 @@ Actions (hourly cron) → scripts/check.mjs → public/feed.json → commit → 
 1. Push the repo to GitHub.
 2. **Settings → Pages → Source: GitHub Actions.**
 3. **Settings → Secrets and variables → Actions:**
-   - Secret `GOOGLE_API_KEY` — your key.
-   - Variable `VITE_BASE` — `/ai-wire/` for a project repo, or `/` for a custom
-     domain or a `<user>.github.io` repo. Getting this wrong is the usual cause
-     of a blank page with 404s on the JS bundle.
+   - Secret `OLLAMA_API_KEY` — your search key (see [SEARCH.md](SEARCH.md)).
+   - Variable `OLLAMA_BASE_URL` — a host a runner can reach, e.g.
+     `https://ollama.com`. Runners have no GPU and can't see your laptop.
 4. **Actions → pages → Run workflow** to trigger the first check by hand. The
    model field lets you override the model for one run.
+
+### The base path
+
+The app is mounted at **`/ai-wire/`**, because GitHub serves a project repo
+from a subdirectory of `<user>.github.io`. That's the default in both
+`npm run build:pages` and the workflow, so there's nothing to configure.
+
+Only override it if the app stops living in a subdirectory — a custom domain
+or a `<user>.github.io` repo, where it sits at the root. Then set repository
+variable `VITE_BASE` to `/`. Getting this wrong is the usual cause of a blank
+page with 404s on the JS bundle.
+
+Every other target keeps `/`: Cloudflare and Vercel serve from a domain root,
+and a base they don't use would 404 every asset. So `npm run build` is
+unchanged, and only the Pages build carries the sub-path.
+
+To check the sub-path build locally before pushing:
+
+```bash
+npm run preview:pages    # serves at http://localhost:4173/ai-wire/
+```
 
 ### What the workflow does
 

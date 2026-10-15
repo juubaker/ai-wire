@@ -21,9 +21,18 @@ export const isFeedMode = MODE === "feed";
 /**
  * Where the prebuilt feed lives. A Worker serves it from /api/feed; GitHub
  * Pages has no server, so there it's a static file emitted next to the app.
- * Relative, so it resolves correctly under a project-pages sub-path.
+ *
+ * A bare relative value is resolved against BASE_URL rather than the document,
+ * so it still points at the right file when the app is mounted under a
+ * sub-path and the visitor landed on "/ai-wire" without the trailing slash —
+ * where document-relative resolution would reach for "/feed.json".
  */
-const FEED_URL = import.meta.env.VITE_FEED_URL || "/api/feed";
+const FEED_URL = (() => {
+  const configured = import.meta.env.VITE_FEED_URL;
+  if (!configured) return "/api/feed";
+  if (/^(https?:)?\/\//.test(configured) || configured.startsWith("/")) return configured;
+  return `${import.meta.env.BASE_URL}${configured}`;
+})();
 
 async function fromFeed(known) {
   const res = await fetch(FEED_URL, { headers: { accept: "application/json" } });

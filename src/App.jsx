@@ -588,15 +588,32 @@ export default function Wire() {
           className="mono mt-8 pt-4"
           style={{ fontSize: ".65rem", color: "var(--ink-soft)", borderTop: "1px solid var(--rule)" }}
         >
-          Entries are kept on this device between visits. Checks search primary sources and the
-          model assigns each entry a type, so the filter row grows as new kinds of news arrive. The
-          {isFeedMode
-            ? "This site reads a shared feed rebuilt on a schedule, so no key is involved and every visitor sees the same wire. Running it locally in direct mode calls a provider live — "
-            : "The provider is swappable — "}
-          <a href={provider.docs} target="_blank" rel="noopener noreferrer" style={{ color: "var(--signal)" }}>
-            {provider.label} API
-          </a>{" "}
-          {isFeedMode ? "built the entries below." : "is answering right now."}
+          {/* Two different claims, so two different sentences. The old copy
+              named the local provider in feed mode and said it "built the
+              entries", which was false twice over: the scheduled job builds
+              them, and the per-entry "via" badge is the accurate attribution. */}
+          Entries are kept on this device between visits, and each one is classified by the model
+          that filed it — so the filter rows grow as new kinds of news arrive.{" "}
+          {isFeedMode ? (
+            <>
+              This site reads a shared feed rebuilt on a schedule: no key is involved and every
+              visitor sees the same wire. Each entry&rsquo;s <span className="badge second">via</span>{" "}
+              badge names the provider that filed it.
+            </>
+          ) : (
+            <>
+              The provider is swappable, and{" "}
+              <a
+                href={provider.docs}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--signal)" }}
+              >
+                {provider.label}
+              </a>{" "}
+              is answering right now.
+            </>
+          )}
         </footer>
       </div>
     </div>

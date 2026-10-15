@@ -12,5 +12,11 @@
       "path": "/api/cron/check",
       "schedule": "0 13 * * *"
     }
+  ],
+ "rewrites": [
+    {
+      "source": "/ai-wire/:path*",
+      "destination": "https://ai-wire-project.vercel.app/ai-wire/:path*"
+    }
   ]
 }

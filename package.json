@@ -20,7 +20,9 @@
     "test": "node --test",
     "test:watch": "node --test --watch",
     "verify": "npm run lint && npm test && npm run build",
-    "preview:pages": "npm run build:pages && vite preview --base /ai-wire/"
+    "preview:pages": "npm run build:pages && vite preview --base /ai-wire/",
+    "build:vercel": "VITE_BASE=/ai-wire/ vite build --outDir dist/ai-wire",
+    "preview:vercel": "npm run build:vercel && vite preview --outDir dist"
   },
   "dependencies": {
     "react": "^19.2.8",

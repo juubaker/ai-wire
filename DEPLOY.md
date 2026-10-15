@@ -74,6 +74,31 @@ Then point a domain at it in the Workers dashboard, or use the
 
 ### Vercel
 
+The app is served at **`/ai-wire/`**, with `/` redirecting to it.
+
+One thing to know before changing any of this: **Vite's `base` rewrites asset
+URLs but does not nest the output directory.** What the right setting is depends
+entirely on what the host does with `dist/`:
+
+| Host | Serves `dist/` at | Needs |
+| --- | --- | --- |
+| Cloudflare | the domain root, no sub-path | `npm run build` — base `/` |
+| GitHub Pages | `/<repo>/`, mounted by GitHub | `npm run build:pages` — base only |
+| Vercel | the domain root | `npm run build:vercel` — base **and** `--outDir dist/ai-wire` |
+
+Set a base without nesting on a root-serving host and every asset 404s against
+an HTML file that loaded fine — a blank page with a working document request,
+which is a confusing way to spend an afternoon.
+
+`/api/feed` is unaffected: Vercel serves functions from the root regardless of
+`outputDirectory`, and the client passes root-relative feed URLs through
+untouched.
+
+```bash
+npm run preview:vercel   # builds nested, serves dist/ at the root like Vercel does
+```
+
+
 `api/feed.js` and `api/cron/check.js` are at the project root, so `/api/feed`
 serves on Vercel exactly as it does on Cloudflare — no client configuration, and
 the same URL in both deploys.

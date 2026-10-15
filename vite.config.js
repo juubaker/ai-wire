@@ -113,10 +113,20 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     // "/" for a custom domain or a user site; "/<repo>/" for project pages.
-    // Where the app is mounted. "/ai-wire/" for GitHub Pages, which serves a
-    // project repo from a subdirectory; "/" everywhere else, because Vercel
-    // and Cloudflare serve from the domain root and a base they don't use
-    // would 404 every asset. `npm run build:pages` sets this.
+    // Where the app is mounted, as the generated asset URLs see it.
+    //
+    // This rewrites URLs only — it does NOT nest the output directory — so the
+    // right value depends on what the host does with dist/:
+    //
+    //   GitHub Pages  mounts the artifact at /<repo>/ itself, so dist stays
+    //                 flat and base alone is enough     → npm run build:pages
+    //   Vercel        serves dist/ at the domain root, so the files have to
+    //                 physically live under ai-wire/    → npm run build:vercel
+    //                 (that script passes --outDir dist/ai-wire)
+    //   Cloudflare    serves from the root with no sub-path → npm run build
+    //
+    // Set base without nesting on a root-serving host and every asset 404s,
+    // which is the failure this comment exists to prevent.
     base: env.VITE_BASE || "/",
     plugins: [react(), tailwindcss(), wireProxy(env)],
     server: { port: 5173, open: false },

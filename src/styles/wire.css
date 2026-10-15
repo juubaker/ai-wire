@@ -105,3 +105,11 @@
   border-radius:999px;padding:0 .32rem;line-height:1.5;
 }
 .tab[data-on="true"] .tabcount{border-color:var(--signal);color:var(--signal);}
+
+/* A model badge is also a filter control — the one clickable badge, so it gets
+   a hover state the static ones don't have. */
+.badge-model{
+  font-family:inherit;background:transparent;border:1px solid var(--tier);
+  color:var(--tier);cursor:pointer;
+}
+.badge-model:hover{background:var(--tier);color:var(--panel);}

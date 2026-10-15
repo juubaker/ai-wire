@@ -69,9 +69,23 @@ in `src/lib/check.js`, and changing a `brief` there changes how entries get sort
 check. Entries that arrive without a recognisable section fall back to a mapping from their type,
 so nothing is ever dropped.
 
-Within a tab, two filter rows narrow further: **When** (presets or a custom date range) and **What**
-(the finer, model-invented types). Counts on the tabs respect the date range, and the type chip
-resets if you switch to a tab where that type doesn't exist.
+Within a tab, three filter rows narrow further, combining with AND:
+
+- **When** — presets (7/30/90 days) or a custom date range.
+- **What** — the finer, model-invented types.
+- **Model** — the model family an entry concerns: Claude, GPT, Gemini, Llama, Muse, Qwen, Jev and
+  the rest of `MODEL_FAMILIES` in `src/lib/check.js`. Families, not versions, so narrowing to
+  Claude gets every Claude item rather than one release.
+
+An entry can belong to several families, or to none — a protocol revision, a funding round and a
+paper about no particular model all legitimately have zero. Families come from the model's own
+`models` field, and are otherwise derived from the entry's title, summary and source, so the filter
+works on entries collected before the field existed. Each model badge on an entry is clickable and
+filters to that family.
+
+Counts stay honest: tab counts respect the date range, and the **What** and **Model** rows each
+count against the other's active filter, so a count you can see is a count you can reach. A chip
+that stops matching anything resets itself rather than stranding you on an empty wire.
 
 ## How the update check works
 

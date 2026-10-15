@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { SEED } from "./data/seed.js";
-import { SECTIONS, sectionFor } from "./lib/check.js";
+import { SECTIONS, sectionFor, modelsFor, familyLabel } from "./lib/check.js";
 import { storage } from "./lib/storage.js";
 import { fetchUpdates, isFeedMode } from "./lib/wire-api.js";
 import { PROVIDERS, byId, DEFAULT_PROVIDER } from "./lib/providers/index.js";
@@ -55,6 +55,7 @@ export default function Wire() {
   const [filter, setFilter] = useState("All");
   const [range, setRange] = useState({ id: "all", from: "", to: "" });
   const [tab, setTab] = useState("all");
+  const [model, setModel] = useState("all");
   const [watching, setWatching] = useState(false);
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState("Reading saved entries…");
@@ -195,7 +196,10 @@ export default function Wire() {
   // reachable in the current window, rather than the whole archive.
   // Entries written before sections existed, or returned without one, are
   // placed by their type rather than dropped.
-  const placed = useMemo(() => items.map((i) => ({ ...i, section: sectionFor(i) })), [items]);
+  const placed = useMemo(
+    () => items.map((i) => ({ ...i, section: sectionFor(i), models: modelsFor(i) })),
+    [items]
+  );
 
   const inTab = useMemo(
     () => (tab === "all" ? placed : placed.filter((i) => i.section === tab)),
@@ -220,21 +224,41 @@ export default function Wire() {
     return counts;
   }, [placed, range]);
 
+  const matchesModel = (i) => model === "all" || (i.models || []).includes(model);
+  const matchesType = (i) => filter === "All" || i.type === filter;
+
+  // Each chip row counts against the OTHER row's active filter, so a count you
+  // can see is always a count you can reach. Showing totals here instead would
+  // let you click a chip and land on an empty list.
   const types = useMemo(() => {
     const counts = new Map();
-    inRange.forEach((i) => counts.set(i.type, (counts.get(i.type) || 0) + 1));
+    inRange.filter(matchesModel).forEach((i) => counts.set(i.type, (counts.get(i.type) || 0) + 1));
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [inRange]);
+  }, [inRange, model]);
 
-  const shown = useMemo(() => {
-    const list = filter === "All" ? inRange : inRange.filter((i) => i.type === filter);
-    return [...list].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const modelCounts = useMemo(() => {
+    const counts = new Map();
+    inRange.filter(matchesType).forEach((i) => {
+      // An entry can belong to several families and is counted under each.
+      (i.models || []).forEach((m) => counts.set(m, (counts.get(m) || 0) + 1));
+    });
+    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, [inRange, filter]);
 
-  // The oldest entry bounds the pickers, so you can't select an empty past.
+  const shown = useMemo(() => {
+    const list = inRange.filter((i) => matchesType(i) && matchesModel(i));
+    return [...list].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  }, [inRange, filter, model]);
+
+  // A chip that no longer matches anything would silently strand the view, so
+  // it resets rather than leaving you on an empty wire.
   useEffect(() => {
     if (filter !== "All" && !inRange.some((i) => i.type === filter)) setFilter("All");
   }, [inRange, filter]);
+
+  useEffect(() => {
+    if (model !== "all" && !inRange.some((i) => (i.models || []).includes(model))) setModel("all");
+  }, [inRange, model]);
 
   const earliest = useMemo(
     () => items.map((i) => i.date).sort()[0] || "2026-01-01",
@@ -377,10 +401,10 @@ export default function Wire() {
         </div>
 
         {/* type filter — labels come from the model, not a fixed list */}
-        <div className="filterrow flex flex-wrap items-center gap-2 mt-2 mb-7">
+        <div className="filterrow flex flex-wrap items-center gap-2 mt-2">
           <span className="filterlabel mono">What</span>
           <button className="chip mono" data-on={filter === "All"} onClick={() => setFilter("All")}>
-            All · {inRange.length}
+            All · {inRange.filter(matchesModel).length}
           </button>
           {types.map(([t, n]) => (
             <button
@@ -394,6 +418,28 @@ export default function Wire() {
           ))}
         </div>
 
+        {/* model family — only families actually present are offered */}
+        {modelCounts.length > 0 && (
+          <div className="filterrow flex flex-wrap items-center gap-2 mt-2">
+            <span className="filterlabel mono">Model</span>
+            <button className="chip mono" data-on={model === "all"} onClick={() => setModel("all")}>
+              Any · {inRange.filter(matchesType).length}
+            </button>
+            {modelCounts.map(([id, n]) => (
+              <button
+                key={id}
+                className="chip mono"
+                data-on={model === id}
+                onClick={() => setModel(id)}
+              >
+                {familyLabel(id)} · {n}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="mb-7" />
+
         <div className="rail">
           {shown.length === 0 && (
             <p className="mono" style={{ fontSize: ".8rem", color: "var(--ink-soft)" }}>
@@ -401,7 +447,9 @@ export default function Wire() {
                 ? "Nothing filed in this section yet. Run a check, or try another tab."
                 : inRange.length === 0
                   ? "No entries in that date range. Widen it, or try another tab."
-                  : `Nothing filed under ${filter} in that date range.`}
+                  : `No ${filter === "All" ? "" : `${filter} `}entries${
+                      model === "all" ? "" : ` for ${familyLabel(model)}`
+                    } in that date range.`}
             </p>
           )}
           {shown.map((i) => {
@@ -418,6 +466,16 @@ export default function Wire() {
                     {i.tier}
                   </span>
                   <span className="badge second">{i.type}</span>
+                  {(i.models || []).map((m) => (
+                    <button
+                      key={m}
+                      className="badge badge-model"
+                      onClick={() => setModel(m)}
+                      title={`Filter to ${familyLabel(m)}`}
+                    >
+                      {familyLabel(m)}
+                    </button>
+                  ))}
                   {i.via && <span className="badge second">via {byId(i.via).label}</span>}
                   {i.flagged && <span className="badge warn">⚑ {i.flagged}</span>}
                   {isNew && <span className="badge warn">New</span>}

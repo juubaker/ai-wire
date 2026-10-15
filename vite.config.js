@@ -117,7 +117,7 @@ export default defineConfig(({ mode }) => {
     // project repo from a subdirectory; "/" everywhere else, because Vercel
     // and Cloudflare serve from the domain root and a base they don't use
     // would 404 every asset. `npm run build:pages` sets this.
-    base: env.VITE_BASE || "/ai-wire/",
+    base: env.VITE_BASE || "/",
     plugins: [react(), tailwindcss(), wireProxy(env)],
     server: { port: 5173, open: false },
   };

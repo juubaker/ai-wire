@@ -28,8 +28,23 @@ export default [
     },
   },
   {
-    // The Worker and the Vercel functions run on a server, not in a browser.
-    files: ["worker/**/*.js", "deploy/**/*.js", "vite.config.js"],
+    // Everything outside src/ runs on a server or in a terminal, not a browser:
+    // the Worker, the Vercel functions, the check script, the demo generator,
+    // the test suite and this build config.
+    files: [
+      "worker/**/*.js",
+      "api/**/*.js",
+      "scripts/**/*.mjs",
+      "demo/**/*.mjs",
+      "test/**/*.js",
+      "vite.config.js",
+      "eslint.config.js",
+    ],
     languageOptions: { globals: { ...globals.node, ...globals.worker } },
+  },
+  {
+    // The generated demo is a build artifact — linting it reports the same
+    // issues twice, against a file nobody edits.
+    ignores: ["demo/artifact.jsx"],
   },
 ];

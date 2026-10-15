@@ -3,6 +3,20 @@
 A live changelog for LLM systems work: model releases, API changes, deprecations, pricing and
 papers, each linked to the announcement it came from. Leave the tab open and it keeps checking.
 
+## Commands
+
+```bash
+npm run dev        # http://localhost:5173
+npm test           # 45 tests, Node's built-in runner, no network
+npm run lint
+npm run verify     # lint + test + build
+
+npm run check      # run a wire check now, writes public/feed.json
+npm run demo       # regenerate demo/artifact.jsx
+npm run build      # production bundle into dist/
+npm run deploy     # build + wrangler deploy (Cloudflare)
+```
+
 Deploying it is a different shape from running it locally — see **[DEPLOY.md](DEPLOY.md)** for the
 Cloudflare Worker, or **[PAGES.md](PAGES.md)** for GitHub Pages with Gemini, which is the free
 route.

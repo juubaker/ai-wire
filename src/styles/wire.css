@@ -116,3 +116,38 @@
   color:var(--tier);cursor:pointer;
 }
 .badge-model:hover{background:var(--tier);color:var(--panel);}
+
+/* ── usability pass ───────────────────────────────────────────────────── */
+
+.standfirst{color:var(--ink-soft);margin:.3rem 0 0;font-size:.88rem;}
+
+/* Collapsed filter bar: the resting state of the controls. */
+.filterbar{row-gap:.5rem;font-size:.7rem;}
+.activefilter{
+  font-family:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  font-size:.7rem;display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--ink);color:var(--panel);border:1px solid var(--ink);
+  border-radius:2px;padding:.3rem .5rem;cursor:pointer;
+}
+.activefilter:hover{background:var(--signal);border-color:var(--signal);}
+.linkbtn{
+  background:none;border:none;color:var(--ink-soft);font-size:.7rem;
+  text-decoration:underline;cursor:pointer;padding:.3rem .2rem;
+}
+.linkbtn:hover{color:var(--signal);}
+.showing{font-size:.66rem;color:var(--ink-soft);letter-spacing:.06em;}
+
+/* Dateline above the headline; the rest of the metadata moves below. */
+.dateline{
+  font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:.15rem;
+}
+.dateline-source{color:var(--ink);}
+
+/* The headline now leads, so it reads as the link it is. */
+.entry a.head{font-size:1.02rem;border-bottom-color:var(--rule);}
+.entry a.head:hover{border-bottom-color:var(--signal);}
+
+/* Secondary metadata, demoted below the summary. */
+.entry .meta{font-size:.62rem;opacity:.85;}
+.entry .meta .badge{letter-spacing:.06em;}

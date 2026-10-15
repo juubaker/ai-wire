@@ -250,20 +250,52 @@ export default function Wire() {
     return [...list].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
   }, [inRange, filter, model]);
 
-  // A chip that no longer matches anything would silently strand the view, so
-  // it resets rather than leaving you on an empty wire.
-  useEffect(() => {
-    if (filter !== "All" && !inRange.some((i) => i.type === filter)) setFilter("All");
-  }, [inRange, filter]);
-
-  useEffect(() => {
-    if (model !== "all" && !inRange.some((i) => (i.models || []).includes(model))) setModel("all");
-  }, [inRange, model]);
+  // There used to be two effects here that silently reset a chip whenever it
+  // matched nothing. They were wrong in the common case: narrowing the date
+  // range to zero results also wiped the type and model the user had picked,
+  // discarding an explicit choice without saying so. The active-filter pills
+  // do that job honestly — every filter is visible and one click removes it —
+  // so the magic is gone.
 
   const earliest = useMemo(
     () => items.map((i) => i.date).sort()[0] || "2026-01-01",
     [items]
   );
+
+  /**
+   * What's narrowing the view right now, each with its own undo. This doubles
+   * as the collapsed state of the filter drawer: with four independent
+   * dimensions, you need one place that says what's applied and one way out.
+   * The tab isn't included — it's navigation, and it's always visible above.
+   */
+  const activeFilters = useMemo(() => {
+    const active = [];
+    if (range.id !== "all") {
+      const preset = RANGES.find((r) => r.id === range.id);
+      active.push({
+        key: "when",
+        label:
+          range.id === "custom"
+            ? `${range.from || "any"} → ${range.to || "now"}`
+            : preset.label,
+        clear: () => setRange({ id: "all", from: "", to: "" }),
+      });
+    }
+    if (filter !== "All") active.push({ key: "what", label: filter, clear: () => setFilter("All") });
+    if (model !== "all")
+      active.push({ key: "model", label: familyLabel(model), clear: () => setModel("all") });
+    return active;
+  }, [range, filter, model]);
+
+  const clearFilters = () => {
+    setRange({ id: "all", from: "", to: "" });
+    setFilter("All");
+    setModel("all");
+  };
+
+  // Opening the drawer is a deliberate act; it stays open until dismissed, so
+  // adjusting two filters in a row doesn't mean two trips.
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
     <div className="wire-root">
@@ -271,9 +303,9 @@ export default function Wire() {
         <header className="masthead">
           <div className="eyebrow mono">Primary sources only · LLM systems desk</div>
           <h1>AI WIRE</h1>
-          <p style={{ color: "var(--ink-soft)", margin: ".35rem 0 0", fontSize: ".9rem" }}>
-            Model releases, API changes, deprecations, pricing and papers, each with the announcement
-            behind it. Leave this open and new entries drop in at the top.
+          {/* One line, not three: this is read once and then skipped forever. */}
+          <p className="standfirst">
+            What shipped, from the announcement itself. Leave it open and new entries drop in.
           </p>
         </header>
 
@@ -302,8 +334,9 @@ export default function Wire() {
             />
             {watching ? `WATCHING · every ${POLL_MINUTES} min` : "WATCH OFF"}
           </span>
+          {/* The entry count lives on the tabs; repeating it here just taught
+              the eye to skip counts, including the ones that narrow. */}
           <span>LAST CHECK {fmtClock(lastCheck)}</span>
-          <span>{items.length} ENTRIES</span>
           {!isFeedMode && (
             <label className="flex items-center gap-1">
               <span className="sr-only">Model</span>
@@ -355,6 +388,46 @@ export default function Wire() {
           {status}
         </div>
 
+        {/* Collapsed by default: three always-open rows pushed the first entry
+            below the fold. The summary below carries the active state. */}
+        <div className="filterbar flex flex-wrap items-center gap-2 mt-3">
+          <button
+            className="chip mono"
+            data-on={filtersOpen}
+            aria-expanded={filtersOpen}
+            onClick={() => setFiltersOpen((o) => !o)}
+          >
+            {filtersOpen ? "Hide filters" : "Filters"}
+            {activeFilters.length > 0 && <span className="tabcount">{activeFilters.length}</span>}
+          </button>
+
+          {activeFilters.map((f) => (
+            <button
+              key={f.key}
+              className="activefilter mono"
+              onClick={f.clear}
+              title={`Remove the ${f.key} filter`}
+            >
+              {f.label}
+              <span aria-hidden="true">✕</span>
+            </button>
+          ))}
+
+          {activeFilters.length > 1 && (
+            <button className="linkbtn mono" onClick={clearFilters}>
+              clear all
+            </button>
+          )}
+
+          <span className="ml-auto mono showing">
+            {shown.length === items.length
+              ? `${items.length} entries`
+              : `${shown.length} of ${items.length}`}
+          </span>
+        </div>
+
+        {filtersOpen && (
+        <>
         {/* date range */}
         <div className="filterrow flex flex-wrap items-center gap-2 mt-3">
           <span className="filterlabel mono">When</span>
@@ -419,7 +492,7 @@ export default function Wire() {
         </div>
 
         {/* model family — only families actually present are offered */}
-        {modelCounts.length > 0 && (
+        {(modelCounts.length > 0 || model !== "all") && (
           <div className="filterrow flex flex-wrap items-center gap-2 mt-2">
             <span className="filterlabel mono">Model</span>
             <button className="chip mono" data-on={model === "all"} onClick={() => setModel("all")}>
@@ -436,6 +509,8 @@ export default function Wire() {
               </button>
             ))}
           </div>
+        )}
+        </>
         )}
 
         <div className="mb-7" />
@@ -459,12 +534,22 @@ export default function Wire() {
                 <span className="node mono" data-new={isNew} aria-hidden="true">
                   {isNew ? "+" : "·"}
                 </span>
-                <div className="meta mono flex flex-wrap items-center gap-2">
+                {/* Dateline, then headline, then the rest. The title is what
+                    people scan for, so nothing but the date precedes it. */}
+                <div className="dateline mono flex flex-wrap items-center gap-2">
                   <span>{fmtDate(i.date)}</span>
-                  <span>{i.source}</span>
-                  <span className={"badge" + (i.tier === "Secondary" ? " second" : "")}>
-                    {i.tier}
-                  </span>
+                  <span className="dateline-source">{i.source}</span>
+                  {isNew && <span className="badge warn">New</span>}
+                  {i.flagged && <span className="badge warn">⚑ {i.flagged}</span>}
+                </div>
+                <a className="head" href={i.url} target="_blank" rel="noopener noreferrer">
+                  {i.title} ↗
+                </a>
+                <p>{i.summary}</p>
+                <div className="meta mono flex flex-wrap items-center gap-2 mt-1">
+                  {/* "Primary" on 14 of 15 entries is a label for the default,
+                      which costs a slot and carries nothing. Flag the exception. */}
+                  {i.tier === "Secondary" && <span className="badge second">Secondary</span>}
                   <span className="badge second">{i.type}</span>
                   {(i.models || []).map((m) => (
                     <button
@@ -477,18 +562,7 @@ export default function Wire() {
                     </button>
                   ))}
                   {i.via && <span className="badge second">via {byId(i.via).label}</span>}
-                  {i.flagged && <span className="badge warn">⚑ {i.flagged}</span>}
-                  {isNew && <span className="badge warn">New</span>}
                 </div>
-                <a
-                  className="head inline-block mt-1"
-                  href={i.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {i.title} ↗
-                </a>
-                <p>{i.summary}</p>
               </article>
             );
           })}

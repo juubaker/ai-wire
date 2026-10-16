@@ -32,11 +32,13 @@ export const ollama = {
     stream: false,
     format: "json",
     // Search results run to thousands of tokens and Ollama's default context
-    // would silently truncate them — but context costs memory too, and 32k on
-    // a large model is what pushes a laptop into CPU offload. The worst-case
-    // prompt measures ~11k tokens, so 16k leaves headroom for the 2k reply
-    // at half the footprint.
-    options: { num_predict: 2000, num_ctx: 16000 },
+    // would silently truncate them — but context costs memory too, and 32k is
+    // what pushes a laptop into CPU offload. Measured: a real 15-query search
+    // builds a ~12.1k-token prompt, so 20k covers it plus the 2k reply with
+    // ~25% slack for a fuller-than-usual result set. KV cost is ~2.8 GiB.
+    // If you widen QUERIES or raise the per-result trim, re-measure: the tell
+    // is `task.n_tokens` in llama-server's log.
+    options: { num_predict: 2000, num_ctx: 20000 },
     messages: [{ role: "user", content: prompt }],
   }),
   extractText: (json) => json?.message?.content || "",

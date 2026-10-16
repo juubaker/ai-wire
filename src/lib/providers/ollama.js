@@ -15,7 +15,13 @@ export const ollama = {
   supportsSearch: false,
   envKey: "",
   endpoint: (env) => `${env.OLLAMA_BASE_URL || "http://localhost:11434"}/api/chat`,
-  headers: () => ({ "content-type": "application/json" }),
+  // A local daemon needs no auth, but a hosted runtime does — and a CI runner
+  // has no GPU, so the scheduled check has to point at one. Without this the
+  // cron 401s on every run, silently, forever.
+  headers: (_key, env = {}) => ({
+    "content-type": "application/json",
+    ...(env.OLLAMA_API_KEY ? { authorization: `Bearer ${env.OLLAMA_API_KEY}` } : {}),
+  }),
   buildBody: ({ prompt, model }) => ({
     model,
     stream: false,

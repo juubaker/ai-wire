@@ -266,6 +266,25 @@ export default function Wire() {
   // do that job honestly — every filter is visible and one click removes it —
   // so the magic is gone.
 
+  /**
+   * A stale wire looks exactly like a fresh one — same entries, same layout —
+   * which is the worst failure mode a news page can have. Say it outright.
+   *
+   * Measured from the newest entry rather than the last check: a check that
+   * runs hourly and finds nothing is fine, but a wire whose newest item is a
+   * week old means retrieval has quietly stopped working.
+   */
+  const staleness = useMemo(() => {
+    const newest = items.map((i) => i.date).sort().slice(-1)[0];
+    if (!newest) return null;
+    const days = Math.floor((Date.now() - new Date(`${newest}T00:00:00`)) / 86400000);
+    if (days < 2) return null;
+    return {
+      days,
+      everChecked: Boolean(lastCheck),
+    };
+  }, [items, lastCheck]);
+
   const earliest = useMemo(
     () => items.map((i) => i.date).sort()[0] || "2026-01-01",
     [items]
@@ -396,6 +415,15 @@ export default function Wire() {
         <div className="mono px-3 py-2" style={{ fontSize: ".7rem", color: "var(--ink-soft)" }}>
           {status}
         </div>
+
+        {staleness && (
+          <div className="stale mono" role="status">
+            <strong>Nothing new in {staleness.days} days.</strong>{" "}
+            {staleness.everChecked
+              ? "Checks are running but finding nothing, which usually means retrieval has broken rather than that the industry went quiet."
+              : "No check has succeeded yet — everything here is seed content."}
+          </div>
+        )}
 
         {/* Collapsed by default: three always-open rows pushed the first entry
             below the fold. The summary below carries the active state. */}

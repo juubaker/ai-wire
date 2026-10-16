@@ -102,6 +102,12 @@ silently truncate the results — which looks like the model ignoring sources.
 
 ## In CI
 
+**The model endpoint needs auth too.** Runners have no GPU, so a scheduled
+check must point at a hosted runtime — and `OLLAMA_API_KEY` is sent as a bearer
+token on the chat call, not only on search. A local daemon needs no auth and
+gets none; anything else 401s without it.
+
+
 Actions runners have no GPU, so the scheduled check needs a hosted endpoint. Set
 repository variable `OLLAMA_BASE_URL` to `https://ollama.com` (Ollama Cloud) or
 a tunnel to a machine of yours, and secret `OLLAMA_API_KEY`. The same key covers

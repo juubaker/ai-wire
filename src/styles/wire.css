@@ -165,3 +165,12 @@
 }
 .colophon a{color:var(--ink-soft);text-decoration:underline;}
 .colophon a:hover{color:var(--signal);}
+
+/* Staleness notice. Loud enough to notice, not loud enough to be an error —
+   a quiet week is possible, a broken retrieval pipeline is likelier. */
+.stale{
+  margin-top:.5rem;padding:.55rem .75rem;font-size:.7rem;line-height:1.5;
+  color:var(--signal);background:rgba(168,91,16,.06);
+  border:1px solid var(--signal);border-radius:2px;
+}
+.stale strong{font-weight:600;}

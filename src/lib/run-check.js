@@ -21,15 +21,17 @@ import { webSearch } from "./search.js";
  * @param {string} opts.model
  * @param {Array}  opts.known    entries already on the wire
  * @param {Record<string,string>} opts.env
+ * @param {object} [opts.search]  passed through to webSearch (concurrency,
+ *                                retries, baseMs, queries, fetchImpl)
  * @returns {Promise<{fresh: Array, mode: string, searched: number}>}
  */
-export async function runCheck({ provider, model, known, env }) {
+export async function runCheck({ provider, model, known, env, search = {} }) {
   let results = null;
   let mode = provider.supportsSearch ? "native" : "memory";
 
   if (!provider.supportsSearch && env.OLLAMA_API_KEY) {
     try {
-      results = await webSearch({ env });
+      results = await webSearch({ env, ...search });
       mode = "injected";
     } catch (err) {
       throw new Error(`pre-search failed: ${err.message}`);

@@ -39,7 +39,18 @@ afterEach(() => {
   globalThis.fetch = realFetch;
 });
 
-const run = (env) => runCheck({ provider: ollama, model: "test", known: SEED, env });
+// A short query list and near-zero backoff: these tests exercise runCheck's
+// funnel, not the retry policy, which test/search.test.js covers. Without this
+// the two network-failure cases below sit through 15 queries' worth of real
+// exponential backoff and the suite takes half a minute.
+const run = (env) =>
+  runCheck({
+    provider: ollama,
+    model: "test",
+    known: SEED,
+    env,
+    search: { queries: ["q1"], baseMs: 1, retries: 1 },
+  });
 
 describe("retrieval mode", () => {
   test("pre-searches when a search key is present", async () => {

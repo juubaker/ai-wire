@@ -6,10 +6,13 @@
  * result into public/feed.json, and exits. The workflow commits the file and
  * Pages redeploys.
  *
- *   node scripts/check.mjs [--provider ollama] [--model qwen3:32b] [--no-search]
+ *   node scripts/check.mjs [--provider ollama] [--model qwen3:8b]
+ *                          [--no-search] [--fresh]
  *
  * --no-search skips retrieval entirely, so the model answers from memory. A
  * diagnostic, not a mode to run on a schedule.
+ * --fresh ignores the search cache. Costs real rate-limit budget, so it is not
+ * the default — iterating on the model should not re-spend retrieval.
  *
  * Exits 0 when there's nothing new, 1 only on a real failure, so a quiet day
  * doesn't show up as a red build.
@@ -21,7 +24,54 @@ import { runCheck } from "../src/lib/run-check.js";
 import { SEED } from "../src/data/seed.js";
 
 const FEED_PATH = resolve(process.cwd(), "public/feed.json");
+const CACHE_PATH = resolve(process.cwd(), ".cache/search.json");
 const MAX_ENTRIES = 150;
+/**
+ * How long a search result stays usable. Long enough that iterating on the
+ * model or the prompt costs no retrieval budget, short enough that a scheduled
+ * run an hour later still sees new material.
+ */
+const CACHE_TTL_MS = 30 * 60 * 1000;
+
+/**
+ * A file-backed cache for search results, passed into webSearch.
+ *
+ * It lives here rather than in search.js because that module also runs in the
+ * Worker and behind the Vite proxy, where there is no filesystem. The seam is
+ * a plain {get, set}, so each caller brings storage that suits it.
+ *
+ * This exists because debugging the model used to re-spend the whole query
+ * budget on every run, which is what exhausted the rate limiter.
+ */
+async function openCache({ ttlMs = CACHE_TTL_MS, fresh = false } = {}) {
+  let store = {};
+  if (!fresh) {
+    try {
+      store = JSON.parse(await readFile(CACHE_PATH, "utf8"));
+    } catch {
+      // No cache yet, or it's corrupt — either way, start clean.
+    }
+  }
+  let writes = 0;
+  return {
+    hits: 0,
+    get(query) {
+      const row = store[query];
+      if (!row || Date.now() - row.at > ttlMs) return null;
+      this.hits++;
+      return row.results;
+    },
+    set(query, results) {
+      store[query] = { at: Date.now(), results };
+      writes++;
+    },
+    async flush() {
+      if (!writes) return;
+      await mkdir(dirname(CACHE_PATH), { recursive: true });
+      await writeFile(CACHE_PATH, `${JSON.stringify(store)}\n`);
+    },
+  };
+}
 
 /**
  * Vite loads .env.local for the dev proxy; a plain Node script does not. Without
@@ -90,15 +140,34 @@ async function main() {
   console.log(`checking via ${provider.id} / ${model}`);
 
   const feed = await loadFeed();
+
+  // Retrieval can take a minute and the model another; without a heartbeat the
+  // two are indistinguishable from a hang, which is how a 12-minute retry storm
+  // went unnoticed. Rewrites one line rather than scrolling.
+  const tty = process.stdout.isTTY;
+  const onProgress = (n, total) => {
+    if (tty) process.stdout.write(`\r  searching     ${n}/${total} queries`);
+    else if (n === total) console.log(`  searching     ${n}/${total} queries`);
+  };
+
+  const cache = await openCache({ fresh: flag("fresh") });
+
   const { fresh, mode, searched, returned, duplicates, dropped } = await runCheck({
+    search: { onProgress, cache },
     provider,
     model,
     known: feed.items,
     env: flag("no-search") ? { ...process.env, OLLAMA_API_KEY: "" } : process.env,
   });
 
+  await cache.flush();
+  if (tty) process.stdout.write("\r\x1b[K"); // clear the progress line
+
   // Print every stage, so a zero-result run says which stage produced the zero.
-  if (mode === "injected") console.log(`  searched      ${searched} results`);
+  if (mode === "injected") {
+    const cached = cache.hits ? ` (${cache.hits} from cache)` : "";
+    console.log(`  searched      ${searched} results${cached}`);
+  }
   else console.log(`  searched      none (mode: ${mode})`);
   console.log(`  model returned ${returned} entr${returned === 1 ? "y" : "ies"}`);
   if (duplicates) console.log(`  already known  ${duplicates} dropped`);

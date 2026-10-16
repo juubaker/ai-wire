@@ -56,15 +56,35 @@ async function main() {
   console.log(`checking via ${provider.id} / ${model}`);
 
   const feed = await loadFeed();
-  const { fresh, mode, searched, dropped } = await runCheck({
+  const { fresh, mode, searched, returned, duplicates, dropped } = await runCheck({
     provider,
     model,
     known: feed.items,
     env: flag("no-search") ? { ...process.env, OLLAMA_API_KEY: "" } : process.env,
   });
 
-  if (mode === "injected") console.log(`pre-searched: ${searched} results`);
-  if (dropped) console.log(`dropped ${dropped} entr${dropped === 1 ? "y" : "ies"} with an unlisted url`);
+  // Print every stage, so a zero-result run says which stage produced the zero.
+  if (mode === "injected") console.log(`  searched      ${searched} results`);
+  else console.log(`  searched      none (mode: ${mode})`);
+  console.log(`  model returned ${returned} entr${returned === 1 ? "y" : "ies"}`);
+  if (duplicates) console.log(`  already known  ${duplicates} dropped`);
+  if (dropped) console.log(`  unlisted url   ${dropped} dropped`);
+  console.log(`  kept          ${fresh.length}`);
+
+  if (fresh.length === 0) {
+    const why =
+      searched === 0 && mode === "injected"
+        ? "search returned nothing — check OLLAMA_API_KEY and the queries in src/lib/search.js"
+        : mode === "memory"
+          ? "no OLLAMA_API_KEY, so the model answered from memory and was told to prefer []"
+          : returned === 0
+            ? "the model returned an empty list — it may be too small for the prompt, or genuinely found nothing new since " +
+              feed.items.map((i) => i.date).sort().slice(-1)[0]
+            : dropped === returned
+              ? "every entry cited a url that wasn't in the search results — the model is paraphrasing links"
+              : "everything found was already on the wire";
+    console.log(`nothing added: ${why}`);
+  }
 
   const next = {
     items: [...fresh, ...feed.items].slice(0, MAX_ENTRIES),

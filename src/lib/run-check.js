@@ -63,7 +63,12 @@ export async function runCheck({ provider, model, known, env }) {
   const body = await res.json();
   if (!res.ok) throw new Error(provider.extractError?.(body) || `HTTP ${res.status}`);
 
-  const fresh = normalize(parseArray(provider.extractText(body)), known, provider.id);
+  // The funnel is reported stage by stage, because "found nothing" has four
+  // very different causes and they need different fixes: the model returned
+  // nothing, it returned things already on the wire, it invented urls, or the
+  // search came back empty. One number can't tell them apart.
+  const raw = parseArray(provider.extractText(body));
+  const fresh = normalize(raw, known, provider.id);
 
   // A local model given search results will still occasionally paraphrase a URL
   // rather than copy it. Anything not traceable to a result is dropped.
@@ -74,6 +79,8 @@ export async function runCheck({ provider, model, known, env }) {
     fresh: kept,
     mode,
     searched: results?.length ?? 0,
+    returned: raw.length,
+    duplicates: raw.length - fresh.length,
     dropped: fresh.length - kept.length,
   };
 }

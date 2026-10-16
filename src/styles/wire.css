@@ -157,3 +157,11 @@
   font-size:.64rem;color:var(--ink-soft);opacity:.75;
   padding:.3rem .2rem;cursor:help;border-bottom:1px dotted var(--rule);
 }
+
+/* Colophon — licence and attribution, quieter than the note above it. */
+.colophon{
+  margin-top:.55rem;padding-top:.5rem;border-top:1px dotted var(--rule);
+  font-size:.6rem;opacity:.8;line-height:1.6;
+}
+.colophon a{color:var(--ink-soft);text-decoration:underline;}
+.colophon a:hover{color:var(--signal);}

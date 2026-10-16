@@ -170,6 +170,14 @@ const WIRE_CSS = `:root{
   padding:.3rem .2rem;cursor:help;border-bottom:1px dotted var(--rule);
 }
 
+/* Colophon — licence and attribution, quieter than the note above it. */
+.colophon{
+  margin-top:.55rem;padding-top:.5rem;border-top:1px dotted var(--rule);
+  font-size:.6rem;opacity:.8;line-height:1.6;
+}
+.colophon a{color:var(--ink-soft);text-decoration:underline;}
+.colophon a:hover{color:var(--signal);}
+
 /* layout utilities, shimmed — see demo/build-artifact.mjs */
 .flex{display:flex}
 .inline-block{display:inline-block}
@@ -963,6 +971,8 @@ async function fetchUpdates() {
    the app, inlined from src/App.jsx
    ──────────────────────────────────────────────────────────────────── */
 
+const REPO = "https://github.com/juubaker/ai-wire";
+
 const STORE_KEY = "items:v1";
 const MODEL_KEY = "model:v1";
 const POLL_MINUTES = Number(undefined || 5);
@@ -1573,6 +1583,22 @@ function Wire() {
               is answering right now.
             </>
           )}
+
+          {/* The MIT grant covers the code and nothing else. Every entry
+              summarises and links to someone else's announcement or paper,
+              which stays theirs — worth stating where people read it, not
+              only in the repo. */}
+          <div className="colophon">
+            <a href={`${REPO}/blob/main/LICENSE`} target="_blank" rel="noopener noreferrer">
+              MIT licensed
+            </a>
+            {" · "}
+            <a href={REPO} target="_blank" rel="noopener noreferrer">
+              source
+            </a>
+            {" · "}© {new Date().getFullYear()} John William Baker. Entries summarise and link to
+            other people&rsquo;s announcements, which remain theirs.
+          </div>
         </footer>
       </div>
     </div>

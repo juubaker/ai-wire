@@ -23,6 +23,27 @@ import { SEED } from "../src/data/seed.js";
 const FEED_PATH = resolve(process.cwd(), "public/feed.json");
 const MAX_ENTRIES = 150;
 
+/**
+ * Vite loads .env.local for the dev proxy; a plain Node script does not. Without
+ * this the browser's Check now button pre-searched while `npm run check` quietly
+ * answered from memory — the same code reaching two different conclusions, and
+ * only one of them visible. Real env wins, so CI secrets are never shadowed.
+ */
+async function loadEnvLocal() {
+  let text;
+  try {
+    text = await readFile(resolve(process.cwd(), ".env.local"), "utf8");
+  } catch {
+    return; // Fine in CI, where the values come from secrets.
+  }
+  for (const line of text.split("\n")) {
+    const m = line.match(/^\s*(?:export\s+)?([A-Z_][A-Z0-9_]*)\s*=\s*(.*)$/i);
+    if (!m) continue;
+    const value = m[2].trim().replace(/^(['"])(.*)\1$/s, "$2");
+    if (process.env[m[1]] === undefined) process.env[m[1]] = value;
+  }
+}
+
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);
   return i > -1 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
@@ -41,6 +62,8 @@ async function loadFeed() {
 }
 
 async function main() {
+  await loadEnvLocal();
+
   // No hardcoded fallback: byId() falls back to the first registered provider,
   // so the registry stays the single source of truth for what the default is.
   const provider = byId(arg("provider", process.env.WIRE_PROVIDER));
@@ -50,6 +73,17 @@ async function main() {
   if (provider.envKey && !key) {
     throw new Error(
       `${provider.envKey} is not set. Add it as a repository secret and pass it through in the workflow env.`
+    );
+  }
+
+  // Memory mode tells the model that [] is the correct answer, so it reliably
+  // finds nothing and exits 0 — a green build that has never worked. It's a
+  // useful diagnostic but never a schedule, so it has to be asked for.
+  if (!provider.supportsSearch && !process.env.OLLAMA_API_KEY && !flag("no-search")) {
+    throw new Error(
+      `${provider.label} can't search, and OLLAMA_API_KEY is not set — the check would answer from memory and find nothing.\n` +
+        `  Put OLLAMA_API_KEY in .env.local (key: https://ollama.com/settings/keys), or in CI as a repository secret.\n` +
+        `  To run without retrieval anyway, pass --no-search.`
     );
   }
 

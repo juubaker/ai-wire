@@ -11,7 +11,12 @@ export const ollama = {
   id: "ollama",
   label: "Ollama (local)",
   docs: "https://github.com/ollama/ollama/blob/main/docs/api.md",
-  models: ["qwen3:32b", "llama4:16x17b", "mistral-small3.2:24b"],
+  // Smallest first, deliberately. This job is summarising search results into
+  // JSON — it does not need a frontier model, and the previous default
+  // (qwen3:32b, 18.8 GiB) spilled half its layers to CPU on an 18 GiB laptop
+  // and took minutes per run. Rough footprints: 8b ~5 GiB, 14b ~9 GiB,
+  // 32b ~19 GiB. Pick one that fits your GPU with the context below to spare.
+  models: ["qwen3:8b", "qwen3:14b", "qwen3:32b"],
   supportsSearch: false,
   envKey: "",
   endpoint: (env) => `${env.OLLAMA_BASE_URL || "http://localhost:11434"}/api/chat`,
@@ -26,9 +31,12 @@ export const ollama = {
     model,
     stream: false,
     format: "json",
-    // Search results run to thousands of tokens; Ollama's default context is
-    // far smaller and would silently truncate them.
-    options: { num_predict: 2000, num_ctx: 32000 },
+    // Search results run to thousands of tokens and Ollama's default context
+    // would silently truncate them — but context costs memory too, and 32k on
+    // a large model is what pushes a laptop into CPU offload. The worst-case
+    // prompt measures ~11k tokens, so 16k leaves headroom for the 2k reply
+    // at half the footprint.
+    options: { num_predict: 2000, num_ctx: 16000 },
     messages: [{ role: "user", content: prompt }],
   }),
   extractText: (json) => json?.message?.content || "",

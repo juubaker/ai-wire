@@ -214,7 +214,18 @@ export async function webSearch({
                 : res.status === 429
                   ? " (rate limited — retried and still refused)"
                   : "";
-            const e = new Error(`"${query}" → HTTP ${res.status}${detail}`);
+            // The status alone sent us chasing concurrency for an hour while
+            // the server was presumably saying why in the body. Never discard
+            // it again.
+            let said = "";
+            try {
+              said = (await res.text()).trim().slice(0, 300);
+            } catch {
+              // A body we can't read is not worth failing differently over.
+            }
+            const e = new Error(
+              `"${query}" → HTTP ${res.status}${detail}${said ? `\n    server said: ${said}` : ""}`
+            );
             e.retryable = res.status === 429 || res.status >= 500;
             e.rateLimited = res.status === 429;
             // Ollama sends Retry-After in seconds; respect it over our own backoff.

@@ -1,6 +1,76 @@
 {
   "items": [
     {
+      "date": "2026-10-16",
+      "source": "Secondary",
+      "tier": "Secondary",
+      "section": "business",
+      "title": "Suki Raises $90M Series E",
+      "summary": "Suki has raised $90M Series E to scale healthcare AI agents for health systems and health tech companies.",
+      "url": "https://www.suki.ai/press-releases/suki-secures-90-million-to-build-and-scale-ai-agents-for-health-systems-and-health-tech-companies/",
+      "models": [],
+      "flagged": "",
+      "id": "live-1792308327269-0",
+      "type": "API & tooling",
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "Secondary",
+      "tier": "Secondary",
+      "section": "business",
+      "title": "Rocket Software Acquires Geniez AI",
+      "summary": "Rocket Software has acquired Geniez AI to accelerate agentic AI for mainframe modernization.",
+      "url": "https://www.rocketsoftware.com/en-us/news/rocket-software-announces-acquisition-of-geniez-ai-to-accelerate-agentic-ai-for-mainframe-modernization",
+      "models": [],
+      "flagged": "",
+      "id": "live-1792308327269-1",
+      "type": "API & tooling",
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "Secondary",
+      "tier": "Secondary",
+      "section": "business",
+      "title": "EU AI Act Enforcement Begins",
+      "summary": "The European Commission starts enforcing AI Act rules and new transparency requirements from 2 August.",
+      "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august",
+      "models": [],
+      "flagged": "",
+      "id": "live-1792308327269-2",
+      "type": "API & tooling",
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-17",
+      "source": "Secondary",
+      "tier": "Secondary",
+      "section": "business",
+      "title": "Nebius Signs with VOLT's Rotterdam AI Gigafactory",
+      "summary": "Nebius has signed as the first customer for VOLT's €7 billion Rotterdam AI Gigafactory, securing 100,000 GPUs.",
+      "url": "https://www.techtimes.com/articles/328902/20261013/nebius-signs-first-customer-volts-eur7-billion-rotterdam-ai-gigafactory.htm",
+      "models": [],
+      "flagged": "",
+      "id": "live-1792308327269-3",
+      "type": "API & tooling",
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-17",
+      "source": "Secondary",
+      "tier": "Secondary",
+      "section": "innovation",
+      "title": "LiteRAG Paper Published",
+      "summary": "LiteRAG: Cost-Efficient Graph-Based Retrieval-Augmented Generation is a new paper introducing a graph-based RAG method.",
+      "url": "https://arxiv.org/abs/2609.10239",
+      "models": [],
+      "flagged": "",
+      "id": "live-1792308327269-4",
+      "type": "API & tooling",
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-15",
       "source": "Anthropic",
       "tier": "Primary",
@@ -434,7 +504,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1792305600617,
+  "checkedAt": 1792308327279,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

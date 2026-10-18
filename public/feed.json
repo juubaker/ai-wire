@@ -1,6 +1,240 @@
 {
   "items": [
     {
+      "date": "2026-10-15",
+      "source": "Anthropic",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Claude Haiku 5.5 Availability",
+      "summary": "Claude Haiku 5.5 is now available for high-volume, cost-sensitive tasks, with improved speed and efficiency for subagent tasks.",
+      "url": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
+      "flagged": "",
+      "id": "live-1792305600604-0",
+      "type": "API & tooling",
+      "models": [
+        "claude"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-17",
+      "source": "DeepSeek",
+      "tier": "Primary",
+      "section": "product",
+      "title": "DeepSeek V4.1 Flash 1017 Release",
+      "summary": "DeepSeek V4.1 Flash 1017 is now available on AI Gateway, with improvements in reasoning, coding, and image understanding.",
+      "url": "https://vercel.com/changelog/deepseek-v4-1-flash-1017-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1792305600604-1",
+      "type": "API & tooling",
+      "models": [
+        "deepseek"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-17",
+      "source": "MCP",
+      "tier": "Primary",
+      "section": "product",
+      "title": "MCP Spec TPM Updates",
+      "summary": "New SEPs are being proposed for the MCP specification, including the formation of the Tasks and Events Working Group.",
+      "url": "https://plan.modelcontextprotocol.io/seps",
+      "flagged": "",
+      "id": "live-1792305600604-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-13",
+      "source": "Google",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Argon Release",
+      "summary": "Gemini 4 Argon is now available for developers, built for long-horizon workflows requiring deep reasoning and structural precision.",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+      "flagged": "",
+      "id": "live-1792297529606-0",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-14",
+      "source": "TypeSafe AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Jev 1.14.0 Release",
+      "summary": "Jev 1.14.0 introduces experimental features like images, a new type, and longer context, available via the AI Gateway.",
+      "url": "https://vercel.com/changelog/typesafe-ais-jev-1-14-is-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1792297529606-1",
+      "type": "API & tooling",
+      "models": [
+        "jev"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "GPT-Live Voices",
+      "summary": "Nine new natural voices for GPT-Live were added, including Nuri, Juni, and Flitz (German), Brise and Sillage (French), and others.",
+      "url": "https://openai.com/products/release-notes/",
+      "flagged": "",
+      "id": "live-1792297529606-2",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-14",
+      "source": "TypeSafe AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Jev 1.14.0 Release",
+      "summary": "Jev 1.14.0 is now available, with experimental features like images, a Box type, and 262k context, accessible via danger-zone headers.",
+      "url": "https://jevainews.com/jev-day-2026/",
+      "flagged": "",
+      "id": "live-1792297185622-1",
+      "type": "API & tooling",
+      "models": [
+        "jev"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "Anthropic",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Claude Haiku 5.5 Availability",
+      "summary": "Claude Haiku 5.5 is now available, designed for high-volume, cost-sensitive tasks and pairs well with Opus 5.5 and Sonnet 5.5 as a subagent.",
+      "url": "https://www.anthropic.com/claude-haiku-5-5",
+      "flagged": "",
+      "id": "live-1792297185622-2",
+      "type": "API & tooling",
+      "models": [
+        "claude"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Prompt-to-Voice Feature",
+      "summary": "Prompt-to-voice feature released for all API customers, allowing creation of custom voices through the API or voice Playground.",
+      "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+      "flagged": "",
+      "id": "live-1792297185622-3",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Ultrafast for GPT-6.1 Sol",
+      "summary": "Ultrafast mode for GPT-6.1 Sol is now available, offering up to 8x faster speeds than standard, ideal for rapid development workflows.",
+      "url": "https://community.openai.com/t/ultrafast-is-rolling-out-today-for-gpt-6-1-sol-in-the-api-codex-and-chatgpt-work/1404475/1",
+      "flagged": "None",
+      "id": "live-1792296803963-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Prompt-to-Voice Feature",
+      "summary": "Prompt-to-voice is now available for all API customers, allowing custom voice creation from text descriptions.",
+      "url": "https://developers.openai.com/api/docs/changelog",
+      "flagged": "None",
+      "id": "live-1792296803963-1",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "TypeSafe AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Jev 1.14.0 Release",
+      "summary": "Jev 1.14.0 is now available, featuring experimental features like images and longer context, available behind danger-zone headers.",
+      "url": "https://jevmodel.ai/jev-day-2026/",
+      "flagged": "None",
+      "id": "live-1792296803963-2",
+      "type": "API & tooling",
+      "models": [
+        "jev"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "Cloudflare",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Clef-omni Availability",
+      "summary": "Clef-omni, a decision model that supports audio and video input, is now available on Workers AI.",
+      "url": "https://developers.cloudflare.com/changelog/post/2026-10-09-clef-omni-workers-ai/",
+      "flagged": "None",
+      "id": "live-1792296803963-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "Anthropic",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Claude Haiku 5.5 Availability",
+      "summary": "Claude Haiku 5.5 is now available on AWS, optimized for speed and cost-sensitive tasks.",
+      "url": "https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws/",
+      "flagged": "None",
+      "id": "live-1792296803963-5",
+      "type": "API & tooling",
+      "models": [
+        "claude"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "MCP",
+      "tier": "Primary",
+      "section": "product",
+      "title": "MCP Specification Update",
+      "summary": "The MCP specification was updated to remove protocol-level sessions and introduce cacheable list results.",
+      "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/changelog.mdx",
+      "flagged": "None",
+      "id": "live-1792296803963-6",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "id": "jev-114-preview",
       "date": "2026-10-14",
       "source": "System One Models",
@@ -15,21 +249,6 @@
       "url": "https://systemonemodels.org/guides/jev-1-14/"
     },
     {
-      "id": "jev-114-danger-zone",
-      "date": "2026-10-14",
-      "source": "System One Models",
-      "tier": "Secondary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "jev"
-      ],
-      "title": "Jev adds vision and 262k context, both opt-in and unready",
-      "summary": "Image input via a request header, a Box question type returning a bounding box, and long context to 262k tokens — TypeSafe labels all three not production-ready. Box has no 'not found' answer, so pair it with a Noul question or it will always point somewhere.",
-      "url": "https://systemonemodels.org/guides/jev-1-14/",
-      "flagged": "Vendor labels these unready"
-    },
-    {
       "id": "typesafe-series-a",
       "date": "2026-10-09",
       "source": "Implicator.ai",
@@ -41,21 +260,6 @@
       ],
       "title": "TypeSafe raises $870M Series A at $7.5B, 24 days after launch",
       "summary": "Led by Andreessen Horowitz with Sequoia and seed investor DCVC; Martin Casado joins the board. The seed was $40M — a roughly 20x step in under a month, on a model that cannot write a sentence.",
-      "url": "https://www.implicator.ai/typesafe-ai-raises-870-million-for-jev-as-openai-amazon-and-cloudflare-ship-rivals/"
-    },
-    {
-      "id": "strands-decider-rivals",
-      "date": "2026-10-01",
-      "source": "Implicator.ai",
-      "tier": "Secondary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "jev",
-        "gpt"
-      ],
-      "title": "AWS ships Strands Decider 2B open source; typed decisions become a category",
-      "summary": "Apache 2.0, and small enough to self-host. With OpenAI's Decisions API on Oct 6 and Cloudflare's Clef on Workers AI, three rivals to Jev landed inside nine days — worth routing against rather than committing to one vendor.",
       "url": "https://www.implicator.ai/typesafe-ai-raises-870-million-for-jev-as-openai-amazon-and-cloudflare-ship-rivals/"
     },
     {
@@ -98,30 +302,6 @@
       "url": "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/"
     },
     {
-      "id": "supabase-turso",
-      "date": "2026-10-01",
-      "source": "AI Funding Tracker",
-      "tier": "Secondary",
-      "type": "Acquisition",
-      "section": "business",
-      "models": [],
-      "title": "Supabase acquires Turso; raises $150M led by GIC",
-      "summary": "No price disclosed on the Turso deal. Worth watching if your retrieval layer sits on Postgres — embedded SQLite under a Postgres vendor is a hint about where edge-local reads are going.",
-      "url": "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/"
-    },
-    {
-      "id": "instinct-series-c",
-      "date": "2026-10-02",
-      "source": "AI Funding Tracker",
-      "tier": "Secondary",
-      "type": "Funding",
-      "section": "business",
-      "models": [],
-      "title": "Instinct raises $1B Series C at a $10B valuation",
-      "summary": "Led by Sequoia, Benchmark and Coatue. The largest single round in a week that totalled roughly $2.6B across the sector.",
-      "url": "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/"
-    },
-    {
       "id": "anthropic-otel",
       "date": "2026-10-14",
       "source": "Anthropic",
@@ -136,162 +316,6 @@
       "url": "https://platform.claude.com/docs/en/release-notes/overview"
     },
     {
-      "id": "anthropic-dynamic-workflows",
-      "date": "2026-10-09",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "Managed Agents dynamic workflows",
-      "summary": "Beta. An agent writes a program that runs many agents in phases and the server executes it as a workflow run, followed through workflow_run.* events. Orchestration moves server-side rather than living in your loop.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "anthropic-haiku-55",
-      "date": "2026-10-07",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "Claude Haiku 5.5 — 1M context, 128k output",
-      "summary": "Adaptive thinking on a Haiku. Breaking: budget_tokens, sampling parameters and assistant prefill now return 400, so Haiku 4.5 code needs changes. Sonnet 5.5 cache reads halved to $0.10/MTok the same day.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "anthropic-sonnet-55",
-      "date": "2026-09-28",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "Claude Sonnet 5.5 — five breaking changes",
-      "summary": "thinking: {\"type\": \"between_tools\"} replaces \"disabled\", forced tool use returns 400, and thinking blocks are now bound to the account that produced them. Read the migration notes before bumping the model id.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "anthropic-opus-55",
-      "date": "2026-09-22",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "Claude Opus 5.5 at $4 / $20 per MTok",
-      "summary": "Down from Opus 5's $5/$25. Thinking can't be disabled at all, and tool_choice 'any' and 'tool' return 400 — the forced-tool-use pattern is gone on this line.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "anthropic-sonnet-45-eol",
-      "date": "2026-09-30",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Deprecation",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "Sonnet 4.5 retires November 30, 2026",
-      "summary": "Deprecation announced. Anything still pinning that dated id has roughly six weeks. Admin API methods also left beta and moved under client.organization.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "anthropic-compaction",
-      "date": "2026-09-14",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "On-demand conversation compaction",
-      "summary": "Beta, header compact-2026-09-04. Server-side compaction you trigger rather than a policy that runs on its own — the lever you want if you've been hand-rolling context trimming in a long agent loop.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "openai-decisions-api",
-      "date": "2026-10-06",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "gpt",
-        "jev"
-      ],
-      "title": "Decisions API beta — typed answers from gpt-6-luna",
-      "summary": "Text and images in, a typed answer out. The same shape TypeSafe's Jev launched on three weeks earlier, now from OpenAI on a general-purpose model rather than a dedicated one.",
-      "url": "https://developers.openai.com/api/docs/changelog"
-    },
-    {
-      "id": "openai-gpt61-sol",
-      "date": "2026-09-29",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "gpt"
-      ],
-      "title": "GPT-6.1 Sol, plus computer use in the Agents API",
-      "summary": "Aimed at complex coding below GPT-6 Astra's cost, with multi-agent delegation in beta. Computer use also landed in the Agents API, running in an OpenAI-hosted browser your app approves access for.",
-      "url": "https://developers.openai.com/api/docs/changelog"
-    },
-    {
-      "id": "openai-agents-api",
-      "date": "2026-09-10",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "gpt",
-        "claude"
-      ],
-      "title": "Agents API in public beta",
-      "summary": "Managed sessions, sandboxes and MCP server support — the server-side agent runtime, directly comparable to Anthropic's Managed Agents. GPT-Live 1 also went GA at $0.05/minute for full-duplex voice.",
-      "url": "https://developers.openai.com/api/docs/changelog"
-    },
-    {
-      "id": "openai-astra",
-      "date": "2026-09-03",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "gpt"
-      ],
-      "title": "GPT-6 Astra, with async tool calling and mid-turn steering",
-      "summary": "Reasoning effort can change mid-conversation and tool calls can run async, with steering over WebSockets. Migration notes cover unsupported reasoning effort, sampling settings and stricter tool-calling requirements.",
-      "url": "https://developers.openai.com/api/docs/changelog"
-    },
-    {
-      "id": "openai-error-split",
-      "date": "2026-09-02",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "gpt"
-      ],
-      "title": "Rate-limit and overload errors split apart",
-      "summary": "A traffic spike now returns 429 with slow_down; temporary capacity trouble returns 503 with server_is_overloaded. Worth separating in your retry policy — they want different backoff.",
-      "url": "https://developers.openai.com/api/docs/changelog"
-    },
-    {
       "id": "google-gemini-4-argon",
       "date": "2026-10-13",
       "source": "Google",
@@ -304,35 +328,6 @@
       "title": "Gemini 4 Argon GA",
       "summary": "First of the Gemini 4 line to reach general availability, aimed at complex coding, agentic work, maths and science.",
       "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "id": "google-flash-deprecations",
-      "date": "2026-10-08",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "Deprecation",
-      "section": "product",
-      "models": [
-        "gemini"
-      ],
-      "title": "Gemini 3.7 and 3.5 Flash deprecated, auto-routed",
-      "summary": "Requests silently route to 3.8 Flash and 3.6 Flash rather than failing — convenient, but your evals are now running against a different model than the id says. Deep Research deep-research-pro-preview-12-2025 shuts down October 23.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "id": "google-agentic-video",
-      "date": "2026-09-01",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "gemini"
-      ],
-      "title": "Agentic video understanding — up to 88% fewer tokens",
-      "summary": "The model requests transcripts, frames or audio on demand instead of ingesting everything up front. Google's figure, on long-form content; the retrieval-on-demand pattern is the interesting part.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog",
-      "flagged": "Vendor benchmark only"
     },
     {
       "id": "typesafe-jev-launch",
@@ -361,50 +356,6 @@
       "url": "https://docs.claude.com/en/release-notes/overview.md"
     },
     {
-      "id": "anthropic-files-skills-ga",
-      "date": "2026-08-19",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "title": "Files API and Skills API out of beta",
-      "summary": "Drop the files-api-2025-04-14 and skills-2025-10-02 headers. The Console session viewer picks up a timeline minimap, per-model-request transcript, and per-tool cost stats.",
-      "url": "https://docs.claude.com/en/release-notes/overview.md"
-    },
-    {
-      "id": "anthropic-python-sdk-1",
-      "date": "2026-08-20",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "title": "Python SDK v1.0 — breaking",
-      "summary": "httpx moves to httpx2, Python 3.10+ required, legacy Text Completions gone, temperature/top_p/top_k removed from Messages, AnthropicBedrock no longer defaults to us-east-1.",
-      "url": "https://docs.claude.com/en/release-notes/overview.md"
-    },
-    {
-      "id": "anthropic-sonnet5-price",
-      "date": "2026-08-10",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Pricing",
-      "section": "product",
-      "title": "Sonnet 5 stays at $2 / $10 per MTok",
-      "summary": "The increase to $3 / $15 scheduled for September 1 will not happen. Introductory pricing is now the standard price.",
-      "url": "https://docs.claude.com/en/release-notes/overview.md"
-    },
-    {
-      "id": "anthropic-opus41-retired",
-      "date": "2026-08-05",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "Deprecation",
-      "section": "product",
-      "title": "claude-opus-4-1-20250805 retired",
-      "summary": "Requests to the dated Opus 4.1 ID now hard-error rather than degrade. Opus 5 is the migration target.",
-      "url": "https://docs.claude.com/en/release-notes/overview.md"
-    },
-    {
       "id": "openai-sol-price-cut",
       "date": "2026-08-21",
       "source": "OpenAI",
@@ -425,39 +376,6 @@
       "title": "Assistants API removed",
       "summary": "One year after notice, the endpoint is gone; Responses plus Conversations is the path. Older GPT-5 and o3 snapshots follow on December 11.",
       "url": "https://developers.openai.com/api/docs/deprecations"
-    },
-    {
-      "id": "google-transcribe-ga",
-      "date": "2026-08-26",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "title": "Gemini 3.5 Transcribe and Transcribe Live GA",
-      "summary": "Diarization, word-level timestamps, and vocabulary biasing up to 1,000 terms. The Live variant streams over WebSockets with configurable VAD.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "id": "google-37-flash",
-      "date": "2026-08-13",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "title": "Gemini 3.7 Flash GA",
-      "summary": "Positioned at coding and agentic work, at introductory pricing through December 31, 2026.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "id": "google-sampling-deprecated",
-      "date": "2026-07-21",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "Deprecation",
-      "section": "product",
-      "title": "temperature, top_p and top_k deprecated on Gemini",
-      "summary": "The second vendor this quarter to retire the sampling knobs. If your eval harness sweeps temperature, that dimension is disappearing.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
     },
     {
       "id": "mcp-stateless",
@@ -516,7 +434,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1792191604676,
+  "checkedAt": 1792305600617,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -19,16 +19,19 @@ const realFetch = globalThis.fetch;
 /**
  * @param {object} opts
  * @param {Array}  opts.searchResults what the search API returns
- * @param {Array}  opts.entries       what the model returns
+ * @param {Array}  opts.entries       what the model returns, as JSON
+ * @param {string} opts.modelText     raw model output, overriding `entries` —
+ *                                    for the cases where it isn't valid JSON
  * @param {Array}  opts.prompts       collects the prompts sent to the model
  */
-function stubFetch({ searchResults = [], entries = [], prompts = [] } = {}) {
+function stubFetch({ searchResults = [], entries = [], modelText, prompts = [] } = {}) {
   globalThis.fetch = async (url, init) => {
     if (String(url).includes("web_search")) {
       return { ok: true, json: async () => ({ results: searchResults }) };
     }
     prompts.push(JSON.parse(init.body).messages[0].content);
-    return { ok: true, json: async () => ({ message: { content: JSON.stringify(entries) } }) };
+    const content = modelText !== undefined ? modelText : JSON.stringify(entries);
+    return { ok: true, json: async () => ({ message: { content } }) };
   };
 }
 
@@ -152,4 +155,63 @@ describe("failures are reported, not swallowed", () => {
     });
     await assert.rejects(run({}), /quota exceeded/);
   });
+});
+
+describe("a zero-entry run surfaces what the model said", () => {
+  test("carries the raw text back so prose can be told from an honest []", async () => {
+    // parseArray turns unparseable output into [], which makes a model that
+    // refused look identical to a model that found nothing. The raw text is
+    // the only thing that distinguishes them.
+    stubFetch({
+      searchResults: [{ title: "T", url: "https://a", content: "c" }],
+      modelText: "I cannot determine which of these are new.",
+    });
+    const r = await run({ OLLAMA_API_KEY: "k" });
+    assert.equal(r.returned, 0);
+    assert.match(r.rawText, /cannot determine/);
+  });
+
+  test("an honest empty array is reported as such", async () => {
+    stubFetch({
+      searchResults: [{ title: "T", url: "https://a", content: "c" }],
+      modelText: "[]",
+    });
+    const r = await run({ OLLAMA_API_KEY: "k" });
+    assert.equal(r.returned, 0);
+    assert.equal(r.rawText.trim(), "[]");
+  });
+});
+
+describe("the provider response survives an empty-content run", () => {
+  test("keeps done_reason and thinking, which is where an empty content is explained", async () => {
+    // The real shape of the failure: a reasoning model spends num_predict on
+    // message.thinking and emits no message.content. extractText sees "" and
+    // the funnel says "returned 0", which is indistinguishable from a model
+    // that read everything and honestly found nothing.
+    globalThis.fetch = async (url) => {
+      if (String(url).includes("web_search")) {
+        return { ok: true, json: async () => ({ results: [{ title: "T", url: "https://a", content: "c" }] }) };
+      }
+      return {
+        ok: true,
+        json: async () => ({
+          message: { content: "", thinking: "x".repeat(5000) },
+          done_reason: "length",
+          eval_count: 2000,
+        }),
+      };
+    };
+    const r = await run({ OLLAMA_API_KEY: "k" });
+    assert.equal(r.returned, 0);
+    assert.equal(r.rawText, "");
+    assert.equal(r.rawBody.done_reason, "length", "truncation must be visible");
+    assert.equal(r.rawBody.eval_count, 2000);
+    assert.match(r.rawBody.message.thinking, /5000 chars/, "long fields are truncated, not dropped");
+  });
+});
+
+test("ollama asks the model not to think", async () => {
+  const { byId } = await import("../src/lib/providers/index.js");
+  const body = byId("ollama").buildBody({ prompt: "p", model: "m" });
+  assert.equal(body.think, false, "reasoning competes with num_predict for the same budget");
 });

@@ -24,38 +24,71 @@ const ENDPOINT = "https://ollama.com/api/web_search";
  * If you add a section to SECTIONS, add queries for it here too.
  */
 
-/** product — what shipped and is usable today. */
-const PRODUCT_QUERIES = [
-  "Anthropic API changelog release notes",
-  "OpenAI API changelog deprecations",
-  "Google Gemini API changelog",
-  "Model Context Protocol specification changelog",
-  // Jev ships as versioned aliases (jev-latest → jev-1.13.0), so a bump in the
-  // docs is the changelog. The gateway query is an early-warning net: Jev
-  // reached Vercel, Cloudflare, OpenRouter and Portkey within weeks of launch,
-  // and each announces independently of TypeSafe.
-  "TypeSafe AI Jev docs changelog",
-  "Jev model release jev-latest version",
-  "Vercel AI Gateway Cloudflare Workers AI new model",
+/**
+ * Queries name EVENTS, not sources — and that distinction is the whole trick.
+ *
+ * The first version asked for "Anthropic API changelog release notes", which
+ * faithfully returned the changelog *page*. A page that exists continuously has
+ * no publication date, so a model correctly told "only report things newer than
+ * the wire's latest entry" can extract nothing defensible from it. A measured
+ * run returned 60 results of which ~37 were evergreen landing pages, docs,
+ * FAQs or papers from 2021-2025: they filled two thirds of the prompt and could
+ * not, even in principle, produce an entry.
+ *
+ * So the queries are built against the current month. "announced October 2026"
+ * finds the announcement; "changelog" finds the page the announcement is
+ * eventually listed on. The year alone does most of the work on arXiv, where
+ * the old list kept surfacing Self-RAG (2023) and MemoRAG (2024).
+ *
+ * Built at call time rather than module load, so a long-lived Worker doesn't
+ * keep asking about last month after midnight on the 1st.
+ */
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
-/** business — funding, acquisitions, regulation, market moves. */
-const BUSINESS_QUERIES = [
-  "AI startup funding round acquisition this week",
-  "AI company acquisition announcement",
-  "EU AI Act enforcement AI regulation developers",
-  "AI lab earnings compute deal datacenter investment",
-];
+export function buildQueries(now = new Date()) {
+  const month = MONTHS[now.getMonth()];
+  const year = now.getFullYear();
+  const when = `${month} ${year}`;
 
-/** innovation — research and new technique, shipped or not. */
-const INNOVATION_QUERIES = [
-  "arXiv LLM agent context management paper",
-  "arXiv retrieval augmented generation new method",
-  "new LLM benchmark evaluation results agents",
-  "AI research breakthrough paper architecture efficiency",
-];
+  /** product — what shipped and is usable today. */
+  const product = [
+    `Anthropic Claude new model API announcement ${when}`,
+    `OpenAI new model API announcement ${when}`,
+    `Google Gemini model release announcement ${when}`,
+    `Model Context Protocol specification revision ${when}`,
+    // Jev ships as versioned aliases (jev-latest → jev-1.13.0), so the version
+    // string is the story and often predates any post. The gateway query is an
+    // early-warning net: Jev reached Vercel, Cloudflare, OpenRouter and Portkey
+    // within weeks of launch, each announcing independently of TypeSafe.
+    `TypeSafe Jev model release version ${when}`,
+    `"jev-latest" new version released`,
+    `new model added Vercel AI Gateway Cloudflare Workers AI ${when}`,
+  ];
 
-export const QUERIES = [...PRODUCT_QUERIES, ...BUSINESS_QUERIES, ...INNOVATION_QUERIES];
+  /** business — funding, acquisitions, regulation, market moves. */
+  const business = [
+    `AI startup funding round announced ${when}`,
+    `AI company acquires acquisition announced ${when}`,
+    `EU AI Act enforcement ruling guidance ${when}`,
+    `AI compute datacenter deal announced ${when}`,
+  ];
+
+  /** innovation — research and new technique, shipped or not. */
+  const innovation = [
+    `arXiv ${year} LLM agent context management paper`,
+    `arXiv ${year} retrieval augmented generation new method`,
+    `new LLM agent benchmark released ${when}`,
+    `LLM inference efficiency architecture paper ${when}`,
+  ];
+
+  return [...product, ...business, ...innovation];
+}
+
+/** Convenience snapshot for callers that just want the current list. */
+export const QUERIES = buildQueries();
 
 /** Snippets run long; this keeps the assembled prompt inside a sane context. */
 const MAX_CHARS_PER_RESULT = 600;
@@ -142,7 +175,7 @@ async function pool(items, limit, worker) {
  */
 export async function webSearch({
   env,
-  queries = QUERIES,
+  queries = buildQueries(),
   fetchImpl = fetch,
   concurrency = CONCURRENCY,
   retries = MAX_RETRIES,
@@ -166,6 +199,12 @@ export async function webSearch({
   let done = 0;
   let lastRequestAt = 0;
   let served = 0;
+  /**
+   * Set when the server says the budget is spent for a while. The remaining
+   * queries would each burn another request to be told the same thing, so they
+   * fail without asking.
+   */
+  let halted = null;
 
   /** Keeps a minimum gap between requests, whatever the concurrency. */
   const paced = async (fn) => {
@@ -185,6 +224,7 @@ export async function webSearch({
         served++;
         return hit;
       }
+      if (halted) throw halted;
       return await withRetry(
         async () => {
           let res;
@@ -208,11 +248,16 @@ export async function webSearch({
             throw e;
           }
           if (!res.ok) {
+            const after = Number(res.headers?.get?.("retry-after"));
+            const waitMs = Number.isFinite(after) && after > 0 ? after * 1000 : 0;
+            const tooLong = waitMs > maxRetryAfterMs;
             const detail =
               res.status === 401
                 ? " (check OLLAMA_API_KEY)"
                 : res.status === 429
-                  ? " (rate limited — retried and still refused)"
+                  ? tooLong
+                    ? " (rate limited)"
+                    : " (rate limited — retried and still refused)"
                   : "";
             // The status alone sent us chasing concurrency for an hour while
             // the server was presumably saying why in the body. Never discard
@@ -223,15 +268,25 @@ export async function webSearch({
             } catch {
               // A body we can't read is not worth failing differently over.
             }
+            // A limiter that wants longer than we're prepared to wait is not a
+            // transient failure, it's a closed door — Ollama's free tier answers
+            // an exhausted hourly budget with `retry-after: 2402`. Retrying that
+            // three times spends three more requests against the same budget and
+            // tells you nothing. Say when it reopens and stop.
+            const resumeAt = tooLong
+              ? `\n    resets at ${new Date(Date.now() + waitMs).toLocaleTimeString()}` +
+                ` (${Math.round(waitMs / 60000)} min) — not retrying`
+              : "";
+
             const e = new Error(
-              `"${query}" → HTTP ${res.status}${detail}${said ? `\n    server said: ${said}` : ""}`
+              `"${query}" → HTTP ${res.status}${detail}` +
+                `${said ? `\n    server said: ${said}` : ""}${resumeAt}`
             );
-            e.retryable = res.status === 429 || res.status >= 500;
+            e.retryable = (res.status === 429 || res.status >= 500) && !tooLong;
             e.rateLimited = res.status === 429;
-            // Ollama sends Retry-After in seconds; respect it over our own backoff.
-            const after = Number(res.headers?.get?.("retry-after"));
-            if (Number.isFinite(after) && after > 0)
-              e.retryAfterMs = Math.min(after * 1000, maxRetryAfterMs);
+            e.resetInMs = tooLong ? waitMs : 0;
+            if (waitMs && !tooLong) e.retryAfterMs = waitMs;
+            if (tooLong) halted = e;
             throw e;
           }
           const body = await res.json();
@@ -260,10 +315,28 @@ export async function webSearch({
   }
 
   const seen = new Set();
-  return settled
+  const byQuery = settled
     .filter((s) => s.status === "fulfilled")
-    .flatMap((s) => s.value)
-    .filter((r) => r.url && !seen.has(r.url) && seen.add(r.url));
+    .map((s) => s.value.filter((r) => r.url && !seen.has(r.url) && seen.add(r.url)));
+
+  // Interleave, one result per query per pass, instead of concatenating the
+  // query groups. Concatenated, every product result came first — and since the
+  // model is capped on how many entries it may return, it spent the whole
+  // budget on product and never reached the business or innovation results.
+  // Seven entries, all `product`, with an acquisition and four papers sitting
+  // unread further down the prompt. Round-robin gives each section a turn.
+  const out = [];
+  for (let i = 0; out.length < seen.size; i++) {
+    let moved = false;
+    for (const group of byQuery) {
+      if (group[i]) {
+        out.push(group[i]);
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  return out;
 }
 
 /** Rendered into the prompt. Numbered so the model can't invent a source. */

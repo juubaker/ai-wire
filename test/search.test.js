@@ -33,6 +33,7 @@ function stubFetch(plan) {
       status: step.status ?? 200,
       headers: { get: (h) => (h.toLowerCase() === "retry-after" ? step.retryAfter : undefined) },
       json: async () => ({ results: step.results ?? [] }),
+      text: async () => step.body ?? "",
     };
   };
   return { impl, calls, peak: () => peak };
@@ -131,21 +132,23 @@ test("stops retrying once the wall-clock budget is spent", async () => {
   assert.ok(elapsed < 2000, `took ${elapsed}ms; the budget should have cut it short`);
 });
 
-test("a server-sent Retry-After cannot exceed the cap", async () => {
+test("a Retry-After within the cap is honoured and retried", async () => {
   let n = 0;
   const s = stubFetch(() =>
-    ++n === 1 ? { status: 429, retryAfter: "600" } : ok("https://example.com/a")
+    ++n === 1 ? { status: 429, retryAfter: "0.03" } : ok("https://example.com/a")
   );
   const started = Date.now();
   const out = await webSearch({
     env,
     fetchImpl: s.impl,
     queries: ["q1"],
-    maxRetryAfterMs: 40,
+    maxRetryAfterMs: 5000,
+    baseMs: 10000,
     minIntervalMs: 0,
   });
-  assert.equal(out.length, 1);
-  assert.ok(Date.now() - started < 2000, "a 600s Retry-After must be capped, not obeyed");
+  assert.equal(out.length, 1, "a short wait is worth taking");
+  assert.equal(s.calls.length, 2);
+  assert.ok(Date.now() - started < 2000, "follow Retry-After, not the 10s backoff");
 });
 
 test("reports progress so a slow run isn't mistaken for a hang", async () => {
@@ -231,4 +234,109 @@ test("a 429 backs off harder than a 5xx — a limiter window is seconds, not mil
   await timed(500);
   await timed(429);
   assert.ok(delays[1] > delays[0], `429 waited ${delays[1]}ms, 5xx ${delays[0]}ms — 429 should wait longer`);
+});
+
+test("queries name the current month, so they ask for events not landing pages", async () => {
+  const { buildQueries } = await import("../src/lib/search.js");
+  const oct = buildQueries(new Date("2026-10-16T12:00:00Z"));
+  const jan = buildQueries(new Date("2027-01-03T12:00:00Z"));
+
+  assert.ok(
+    oct.some((q) => q.includes("October 2026")),
+    "October queries should say October 2026"
+  );
+  assert.ok(
+    jan.some((q) => q.includes("January 2027")),
+    "the list must roll over — a Worker shouldn't ask about last month forever"
+  );
+  assert.ok(
+    jan.some((q) => q.includes("arXiv 2027")),
+    "arXiv queries carry the year, which is what stopped 2023 papers surfacing"
+  );
+  // The regression this replaces: bare "changelog" queries returned the
+  // changelog page, which has no date and so can never yield an entry.
+  assert.equal(
+    oct.filter((q) => /changelog/i.test(q)).length,
+    0,
+    "no query should ask for a changelog page by name"
+  );
+  assert.equal(oct.length, 15);
+});
+
+test("a Retry-After longer than we'll wait fails fast instead of spending more budget", async () => {
+  // The real shape: Ollama's free tier answers an exhausted hourly budget with
+  // `retry-after: 2402`. Retrying that three times costs three more requests
+  // against the same budget and learns nothing.
+  const s = stubFetch({
+    status: 429,
+    retryAfter: "2402",
+    body: '{"error":"you have reached your web search hourly request limit"}',
+  });
+  const started = Date.now();
+  await assert.rejects(
+    () => webSearch({ env, fetchImpl: s.impl, queries: ["q1"], retries: 3, ...fast }),
+    (err) => {
+      assert.match(err.message, /hourly request limit/, "the server's reason must survive");
+      assert.match(err.message, /not retrying/);
+      assert.match(err.message, /resets at/);
+      return true;
+    }
+  );
+  assert.equal(s.calls.length, 1, "must not retry a budget that won't reopen for 40 minutes");
+  assert.ok(Date.now() - started < 1000);
+});
+
+test("an exhausted budget halts the remaining queries instead of confirming it 14 more times", async () => {
+  const s = stubFetch({
+    status: 429,
+    retryAfter: "2402",
+    body: '{"error":"you have reached your web search hourly request limit"}',
+  });
+  await assert.rejects(() =>
+    webSearch({
+      env,
+      fetchImpl: s.impl,
+      queries: ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"],
+      retries: 3,
+      ...fast,
+    })
+  );
+  assert.equal(
+    s.calls.length,
+    1,
+    `spent ${s.calls.length} requests; once the hour is gone the rest learn nothing`
+  );
+});
+
+test("results interleave across query groups instead of concatenating them", async () => {
+  // Concatenated, all seven product queries' results came first. The model is
+  // capped on entries returned, so it spent the budget on product and never
+  // reached the business or research results — an acquisition and four papers
+  // sat unread at the bottom of the prompt. Every section needs an early turn.
+  const impl = async (_url, opts) => {
+    const q = JSON.parse(opts.body).query;
+    return {
+      ok: true,
+      status: 200,
+      headers: { get: () => undefined },
+      json: async () => ({
+        results: [0, 1, 2].map((i) => ({ title: `${q}-${i}`, url: `https://x/${q}/${i}`, content: "c" })),
+      }),
+    };
+  };
+  const out = await webSearch({
+    env,
+    fetchImpl: impl,
+    queries: ["prod", "biz", "res"],
+    minIntervalMs: 0,
+  });
+  assert.equal(out.length, 9);
+  // The first pass must contain one result from each query, in order.
+  assert.deepEqual(
+    out.slice(0, 3).map((r) => r.query),
+    ["prod", "biz", "res"],
+    "every group gets a turn before any group gets a second"
+  );
+  // And no result is lost to the reordering.
+  assert.equal(new Set(out.map((r) => r.url)).size, 9);
 });

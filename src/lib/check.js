@@ -178,8 +178,48 @@ export function newestDate(known) {
  * @param {Array} [results] pre-fetched search results; when present the model
  *                          is told to work only from them
  */
+/**
+ * A JSON schema for the response, for runtimes that accept one.
+ *
+ * Ollama's `format: "json"` compiles to a grammar that permits a JSON *object*
+ * but not a top-level array — so however firmly the prompt says "return an
+ * array", the grammar wins and the model emits one entry. That capped every
+ * run at a single entry regardless of model size or how many results we fed
+ * it, which is why qwen3:8b and qwen3:14b returned identically.
+ *
+ * Wrapping the list in an object sidesteps it, and the enums fix a second
+ * symptom: the model was putting the section value ("product") in `tier`,
+ * where normalize() quietly defaulted it to Primary.
+ */
+export const RESPONSE_SCHEMA = {
+  type: "object",
+  properties: {
+    entries: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          date: { type: "string" },
+          source: { type: "string" },
+          tier: { type: "string", enum: ["Primary", "Secondary"] },
+          section: { type: "string", enum: SECTIONS.map((x) => x.id) },
+          type: { type: "string" },
+          models: { type: "array", items: { type: "string" } },
+          title: { type: "string" },
+          summary: { type: "string" },
+          url: { type: "string" },
+          flagged: { type: "string" },
+        },
+        required: ["date", "source", "tier", "section", "title", "summary", "url"],
+      },
+    },
+  },
+  required: ["entries"],
+};
+
 export function buildPrompt(known, { supportsSearch }, results = null) {
   const newest = newestDate(known);
+  const today = new Date().toISOString().slice(0, 10);
   const titles = known
     .slice(0, 25)
     .map((i) => `${i.date} ${i.source}: ${i.title}`)
@@ -190,7 +230,19 @@ export function buildPrompt(known, { supportsSearch }, results = null) {
     // Pre-search: retrieval already happened, so the model is a reader, not a
     // researcher. Naming the results as the only permitted source is what stops
     // a local model reaching for a plausible-looking URL from memory.
-    sourcing = `Below are live web search results retrieved just now. Work ONLY from them. Every entry you return must use a url that appears verbatim in these results — never write a url that is not listed here, and never adjust one. Ignore results that are not a primary source (model or API docs, official changelogs and release notes, official research blogs, arXiv, SEC filings, the MCP specification), that are older than ${newest}, or that are already on the wire below. If none of the results qualify, return [].
+    // No date filter here, deliberately. The search API returns only title,
+    // url and content — no publication date — so asking the model to drop
+    // results "older than ${newest}" asks it to filter on a field it cannot
+    // see. A careful model responds to an unanswerable constraint by returning
+    // nothing, which is exactly what it did: 59 results in, 1 entry out.
+    // Repeats are handled downstream instead, where it's a certainty rather
+    // than a guess: normalize() drops any entry whose url is already on the
+    // wire. The model's job is to spot what's notable; ours is to dedupe.
+    sourcing = `Below are live web search results retrieved just now. Work ONLY from them. Every entry you return must use a url that appears verbatim in these results — never write a url that is not listed here, and never adjust one.
+
+Report each result that is a genuine development a working engineer would want to know about, from a primary source: model or API docs, official changelogs and release notes, official research blogs, arXiv, SEC filings, company press releases, the MCP specification. Prefer the announcement itself over coverage of it.
+
+Skip a result when it is: a documentation landing page, index or FAQ rather than a specific announcement; a paper or release from before this year; an aggregator, listicle or newsletter roundup; or already on the wire listed below. If genuinely none of the results qualify, return [].
 
 SEARCH RESULTS
 ${formatResults(results)}`;
@@ -207,7 +259,7 @@ ${sourcing}
 Already on the wire, do not repeat:
 ${titles}
 
-${JSON_ONLY} Up to 5 objects, each:
+${JSON_ONLY} Up to 12 objects, each:
 {"date":"YYYY-MM-DD","source":"Anthropic|OpenAI|Google|MCP|arXiv 1234.5678|...","tier":"Primary"|"Secondary","section":"exactly one of: ${SECTIONS.map(
     (x) => `${x.id} (${x.brief})`
   ).join(" | ")}","type":"one of: ${TAXONOMY.join(
@@ -216,39 +268,106 @@ ${JSON_ONLY} Up to 5 objects, each:
     (f) => f.label
   ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars, specific, version numbers kept","summary":"1-2 sentences on what it changes for someone building LLM systems, not marketing copy","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
 
-If nothing qualifies, return [].`;
+Cover the whole list, not just the first few results. The results are
+interleaved across topics on purpose: product releases, business moves
+(funding, acquisitions, regulation, compute deals) and research all appear
+throughout. Work to the end before you stop.
+
+Field notes, which are instructions and must never appear in a value:
+- date: the publication date if the result itself states one, otherwise ${today}. Never guess a date and never copy this sentence into the field.
+- tier: "Primary" for the announcement, docs, changelog or paper itself; "Secondary" for reporting about it. It is never a section name.
+- section: exactly one of the ids listed above.
+
+If nothing qualifies, return an empty list.`;
 }
 
 /** Models wrap JSON in prose or fences often enough that this stays defensive. */
 export function parseArray(text) {
   const cleaned = (text || "").replace(/```json|```/g, "").trim();
+
+  // Parse the WHOLE payload before looking for brackets. The previous version
+  // scanned for the first "[" and the last "]", which on a bare entry object
+  // sliced out the first nested array it found — "models":["Claude"] — and
+  // returned that as the entry list. One array of one string, which normalize()
+  // then dropped for having no url, reported as "already known 1 dropped".
+  // Every zero-entry run we diagnosed was this.
+  const whole = (() => {
+    try {
+      return JSON.parse(cleaned);
+    } catch {
+      return undefined;
+    }
+  })();
+
+  // Only ever hand back entry objects. A top-level array of strings is not an
+  // entry list, and letting it through just defers the confusion to normalize().
+  if (Array.isArray(whole)) return whole.filter((x) => x && typeof x === "object");
+
+  if (whole && typeof whole === "object") {
+    // JSON mode often wraps the list: {"entries": [...]}. Require the members
+    // to be objects, so a stray string array like "models" can't pose as one.
+    const wrapped = Object.values(whole).find(
+      (v) => Array.isArray(v) && v.length > 0 && v.every((x) => x && typeof x === "object")
+    );
+    if (wrapped) return wrapped;
+    // A single entry, unwrapped — what Ollama's `format: "json"` produces,
+    // since that grammar permits an object but not a top-level array.
+    if (whole.url || whole.title) return [whole];
+    return [];
+  }
+
+  // Fall back to slicing only for output with prose wrapped around real JSON.
   const start = cleaned.indexOf("[");
   const end = cleaned.lastIndexOf("]");
-  if (start < 0 || end < start) {
-    // Some runtimes in JSON mode return a bare object wrapping the list.
-    try {
-      const arr = Object.values(JSON.parse(cleaned)).find(Array.isArray);
-      return arr || [];
-    } catch {
-      return [];
-    }
-  }
+  if (start < 0 || end < start) return [];
   try {
-    return JSON.parse(cleaned.slice(start, end + 1));
+    const sliced = JSON.parse(cleaned.slice(start, end + 1));
+    return Array.isArray(sliced) ? sliced.filter((x) => x && typeof x === "object") : [];
   } catch {
     return [];
   }
 }
 
 /** Drop repeats, coerce the fields the UI relies on, stamp the provider. */
+/**
+ * The URL is an entry's identity. Nothing else is stable.
+ *
+ * Dedupe used to key on `url + title`, but the title is model-written prose
+ * that varies between runs — so the same announcement came back with a
+ * reworded headline and sailed through as new. Trailing slashes, #fragments
+ * and utm_* parameters vary for the same reason.
+ */
+export function canonicalUrl(url) {
+  try {
+    const u = new URL(String(url));
+    u.hash = "";
+    for (const key of [...u.searchParams.keys()]) {
+      if (/^(utm_|ref$|source$|fbclid$|gclid$)/i.test(key)) u.searchParams.delete(key);
+    }
+    const path = u.pathname.replace(/\/+$/, "") || "/";
+    return `${u.protocol}//${u.host.toLowerCase()}${path}${u.search}`.toLowerCase();
+  } catch {
+    return String(url || "").trim().toLowerCase();
+  }
+}
+
 export function normalize(parsed, known, providerId) {
   const stamp = Date.now();
-  const seen = new Set(known.map((i) => i.url + i.title));
-  return (Array.isArray(parsed) ? parsed : [])
-    .filter((x) => x && x.url && x.title && !seen.has(x.url + x.title))
-    .map((x, n) => ({
+  const seen = new Set(known.map((i) => canonicalUrl(i.url)));
+  const out = [];
+
+  for (const x of Array.isArray(parsed) ? parsed : []) {
+    if (!x || !x.url || !x.title) continue;
+    const key = canonicalUrl(x.url);
+    // Add as we go. The previous version built `seen` once from `known` and
+    // never updated it, so a model that listed the same release twice in one
+    // response got it onto the wire twice — which it did.
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    out.push({
       ...x,
-      id: `live-${stamp}-${n}`,
+      id: `live-${stamp}-${out.length}`,
       type: (x.type || "API & tooling").trim(),
       section: sectionFor(x),
       models: modelsFor(x),
@@ -257,5 +376,7 @@ export function normalize(parsed, known, providerId) {
         ? x.date
         : new Date().toISOString().slice(0, 10),
       via: providerId,
-    }));
+    });
+  }
+  return out;
 }

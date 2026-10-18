@@ -27,10 +27,20 @@ export const ollama = {
     "content-type": "application/json",
     ...(env.OLLAMA_API_KEY ? { authorization: `Bearer ${env.OLLAMA_API_KEY}` } : {}),
   }),
-  buildBody: ({ prompt, model }) => ({
+  buildBody: ({ prompt, model, schema }) => ({
     model,
     stream: false,
-    format: "json",
+    // A schema, not the bare "json" flag. `format: "json"` compiles to a
+    // grammar that allows an object but not a top-level array, so the model
+    // could only ever return one entry however many results it was given.
+    format: schema || "json",
+    // qwen3 and friends are hybrid reasoning models, and Ollama returns their
+    // reasoning in message.thinking — separate from message.content, which is
+    // what we parse. Left on, a model can spend the whole num_predict budget
+    // thinking about 59 search results and emit no content at all, which
+    // surfaces as "returned 0 entries" and looks exactly like a model too
+    // small for the job. This job wants extraction, not deliberation.
+    think: false,
     // Search results run to thousands of tokens and Ollama's default context
     // would silently truncate them — but context costs memory too, and 32k is
     // what pushes a laptop into CPU offload. Measured: a real 15-query search

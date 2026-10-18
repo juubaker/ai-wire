@@ -25,6 +25,8 @@ import {
   familyLabel,
   MODEL_FAMILIES,
   SECTIONS,
+  RESPONSE_SCHEMA,
+  canonicalUrl,
 } from "../src/lib/check.js";
 import { SEED } from "../src/data/seed.js";
 
@@ -263,5 +265,157 @@ describe("buildPrompt — three retrieval modes", () => {
 
   test("newestDate handles an empty wire", () => {
     assert.match(newestDate([]), /^\d{4}-\d{2}-\d{2}$/);
+  });
+});
+
+describe("the injected prompt must not ask for what the data lacks", () => {
+  test("no date filter — search results carry no publication date", () => {
+    // Ollama's search API returns title, url and content. Nothing else.
+    // Telling the model to drop results "older than <date>" asks it to filter
+    // on a field it cannot see, and a careful model answers an unanswerable
+    // constraint with []. Measured before this change: 59 results, 1 entry.
+    const results = [{ title: "T", url: "https://a/b", content: "c", query: "q" }];
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.doesNotMatch(prompt, /older than/i, "cannot filter on an absent field");
+    assert.match(prompt, /appears verbatim/, "the url guard must survive");
+    assert.match(prompt, /already on the wire/i, "repeats are still called out");
+  });
+
+  test("instructions stay OUT of the example values", () => {
+    // A model emitted {"date":"2026-10-16 —"} because the guidance lived
+    // inside the example value and got copied out as data. Field notes go
+    // after the template, never in it.
+    const results = [{ title: "T", url: "https://a/b", content: "c", query: "q" }];
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    const today = new Date().toISOString().slice(0, 10);
+
+    assert.match(prompt, /"date":"YYYY-MM-DD"/, "the example value is a bare format");
+    assert.doesNotMatch(
+      prompt,
+      /"date":"YYYY-MM-DD[^"]/,
+      "nothing may follow the format inside the quoted value"
+    );
+    assert.ok(prompt.includes(today), "today's date must be supplied, not implied");
+    assert.match(prompt, /never guess a date/i);
+    assert.match(prompt, /must never appear in a value/i);
+  });
+
+  test("tier is explained, because the model was putting a section id there", () => {
+    const results = [{ title: "T", url: "https://a/b", content: "c", query: "q" }];
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(prompt, /never a section name/i);
+  });
+
+  test("searching providers keep their date anchor — they can see dates", () => {
+    const prompt = buildPrompt(SEED, { supportsSearch: true });
+    assert.match(prompt, /published AFTER/, "a model that searches knows publication dates");
+  });
+});
+
+describe("parseArray must not mistake a nested array for the entry list", () => {
+  // The bug that produced a day of misleading diagnostics. Ollama's
+  // `format: "json"` emitted one bare entry object; parseArray scanned for the
+  // first "[" and the last "]", found them inside "models":["Claude"], and
+  // returned ["Claude"] as the entry list. normalize() dropped that string for
+  // having no url, and the funnel reported "already known 1 dropped" — so every
+  // signal pointed at retrieval, the prompt, or model size. None of those.
+  const realFailure = JSON.stringify({
+    date: "2026-10-16",
+    source: "Anthropic",
+    tier: "Primary",
+    section: "product",
+    models: ["Claude"],
+    title: "Claude Haiku 5.5",
+    summary: "Fastest model in the 5.5 family.",
+    url: "https://www.anthropic.com/claude-haiku-5-5",
+  });
+
+  test("a bare entry object becomes one real entry, not its models array", () => {
+    const out = parseArray(realFailure);
+    assert.equal(out.length, 1);
+    assert.equal(typeof out[0], "object", "must be an entry, not the string 'Claude'");
+    assert.equal(out[0].url, "https://www.anthropic.com/claude-haiku-5-5");
+    assert.equal(out[0].title, "Claude Haiku 5.5");
+  });
+
+  test("a wrapped list is not confused by a sibling string array", () => {
+    const out = parseArray(
+      JSON.stringify({ note: "here", models: ["Claude", "GPT"], entries: [{ title: "a", url: "u" }] })
+    );
+    assert.equal(out.length, 1);
+    assert.equal(out[0].url, "u", "the object array wins over the string array");
+  });
+
+  test("every entry returned is an object, whatever the input shape", () => {
+    const shapes = [
+      '[{"title":"a","url":"u"}]',
+      '{"entries":[{"title":"a","url":"u"}]}',
+      'Sure:\n[{"title":"a","url":"u"}]',
+      '```json\n[{"title":"a","url":"u"}]\n```',
+      realFailure,
+    ];
+    for (const shape of shapes) {
+      const out = parseArray(shape);
+      assert.ok(out.length >= 1, `nothing parsed from: ${shape.slice(0, 40)}`);
+      for (const e of out) assert.equal(typeof e, "object", `non-object from: ${shape.slice(0, 40)}`);
+    }
+  });
+
+  test("an array of bare strings is not an entry list, in any shape", () => {
+    assert.deepEqual(parseArray('["Claude","GPT"]'), [], "top-level string array");
+    assert.deepEqual(parseArray('Here: ["Claude","GPT"]'), [], "sliced string array");
+    assert.deepEqual(parseArray('{"models":["Claude","GPT"]}'), [], "nested string array");
+  });
+
+  test("the schema asks for an array and constrains tier", () => {
+    const items = RESPONSE_SCHEMA.properties.entries;
+    assert.equal(items.type, "array", "the grammar must permit more than one entry");
+    assert.deepEqual(items.items.properties.tier.enum, ["Primary", "Secondary"]);
+    assert.ok(items.items.properties.section.enum.includes("product"));
+  });
+});
+
+describe("dedupe keys on the url alone", () => {
+  test("a reworded title is not a new entry", () => {
+    // The title is model-written prose. Keying on url+title meant the same
+    // announcement came back with a new headline and passed as new — three
+    // entries from one run reappeared in the next.
+    const known = [{ url: "https://a.com/x", title: "Thing shipped" }];
+    const out = normalize([{ url: "https://a.com/x", title: "Thing Availability" }], known, "p");
+    assert.equal(out.length, 0);
+  });
+
+  test("the same entry twice in one batch lands once", () => {
+    // `seen` was built from `known` and never updated, so a model that listed
+    // a release twice in one response got it onto the wire twice.
+    const batch = [
+      { url: "https://a.com/x", title: "A" },
+      { url: "https://a.com/x", title: "A" },
+    ];
+    assert.equal(normalize(batch, [], "p").length, 1);
+  });
+
+  test("trailing slashes, fragments and utm params are the same entry", () => {
+    const batch = [
+      { url: "https://a.com/x", title: "A" },
+      { url: "https://A.com/x/", title: "B" },
+      { url: "https://a.com/x?utm_source=news", title: "C" },
+      { url: "https://a.com/x#section", title: "D" },
+    ];
+    assert.equal(normalize(batch, [], "p").length, 1);
+  });
+
+  test("a different path is a different entry", () => {
+    const batch = [
+      { url: "https://a.com/x", title: "A" },
+      { url: "https://a.com/y", title: "B" },
+    ];
+    assert.equal(normalize(batch, [], "p").length, 2);
+  });
+
+  test("canonicalUrl survives junk without throwing", () => {
+    for (const bad of ["", null, undefined, "not a url", "://broken"]) {
+      assert.equal(typeof canonicalUrl(bad), "string");
+    }
   });
 });

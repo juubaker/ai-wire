@@ -12,7 +12,7 @@
  *   neither                     → the model answers from memory, and is told
  *                                 that [] is the right answer when unsure
  */
-import { buildPrompt, normalize, parseArray } from "./check.js";
+import { RESPONSE_SCHEMA, buildPrompt, normalize, parseArray } from "./check.js";
 import { webSearch } from "./search.js";
 
 /**
@@ -25,6 +25,18 @@ import { webSearch } from "./search.js";
  *                                retries, baseMs, queries, fetchImpl)
  * @returns {Promise<{fresh: Array, mode: string, searched: number}>}
  */
+/** Shallow-clone a response for logging, truncating anything long. */
+function summarize(value, depth = 0) {
+  if (typeof value === "string")
+    return value.length > 200 ? `${value.slice(0, 200)}… (${value.length} chars)` : value;
+  if (Array.isArray(value)) return depth > 2 ? `[${value.length} items]` : value.map((v) => summarize(v, depth + 1));
+  if (value && typeof value === "object") {
+    if (depth > 2) return "{…}";
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, summarize(v, depth + 1)]));
+  }
+  return value;
+}
+
 export async function runCheck({ provider, model, known, env, search = {} }) {
   let results = null;
   let mode = provider.supportsSearch ? "native" : "memory";
@@ -52,6 +64,7 @@ export async function runCheck({ provider, model, known, env, search = {} }) {
           prompt: buildPrompt(known, provider, results),
           model,
           search: provider.supportsSearch,
+          schema: RESPONSE_SCHEMA,
         })
       ),
     });
@@ -69,7 +82,13 @@ export async function runCheck({ provider, model, known, env, search = {} }) {
   // very different causes and they need different fixes: the model returned
   // nothing, it returned things already on the wire, it invented urls, or the
   // search came back empty. One number can't tell them apart.
-  const raw = parseArray(provider.extractText(body));
+  const text = provider.extractText(body);
+  const raw = parseArray(text);
+  // normalize() drops two very different things: entries already on the wire,
+  // and entries too malformed to use. Reporting them as one number is what had
+  // us chasing duplicate detection while the real problem was a parse that
+  // produced ["Claude"] — counted as "already known 1 dropped".
+  const usable = raw.filter((e) => e && e.url && e.title);
   const fresh = normalize(raw, known, provider.id);
 
   // A local model given search results will still occasionally paraphrase a URL
@@ -78,11 +97,22 @@ export async function runCheck({ provider, model, known, env, search = {} }) {
   const kept = allowed ? fresh.filter((f) => allowed.has(f.url)) : fresh;
 
   return {
+    // Returned so a zero-entry run can show what the model actually said.
+    // "returned 0" conflates two very different failures: the model answering
+    // [] honestly, and the model answering prose that parseArray quietly
+    // turned into []. Only the raw text tells them apart.
+    rawText: text,
+    // A shallow, truncated view of the provider's own response. When content
+    // comes back empty the answer is in the fields around it — Ollama's
+    // done_reason ("length" means num_predict ran out) and message.thinking
+    // (reasoning that consumed the budget) — and extractText discards both.
+    rawBody: summarize(body),
     fresh: kept,
     mode,
     searched: results?.length ?? 0,
     returned: raw.length,
-    duplicates: raw.length - fresh.length,
+    unusable: raw.length - usable.length,
+    duplicates: usable.length - fresh.length,
     dropped: fresh.length - kept.length,
   };
 }

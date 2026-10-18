@@ -107,26 +107,41 @@ mechanically detectable.
 
 ## Tuning what gets found
 
-`QUERIES` in `src/lib/search.js` is the retrieval strategy, and it's
-deliberately source-shaped rather than topic-shaped — the wire's editorial rule
-is primary sources, so the queries name them:
+`buildQueries()` in `src/lib/search.js` is the retrieval strategy, and the
+rule it encodes is: **name the event, not the source.**
+
+The first version named sources — `"Anthropic API changelog release notes"` —
+and faithfully got back the changelog *page*. A page that exists continuously
+has no publication date, so a model correctly told "only report things newer
+than the wire's latest entry" can extract nothing defensible from it. Measured
+on a real run: 60 results, of which **~37 were evergreen landing pages, docs,
+FAQs or papers from 2021-2025**. Two thirds of a 12k-token prompt, structurally
+incapable of producing an entry.
+
+So queries are built against the current month:
 
 ```js
-"Anthropic API changelog release notes",
-"OpenAI API changelog deprecations",
-...
+`Anthropic Claude new model API announcement ${month} ${year}`
+`arXiv ${year} retrieval augmented generation new method`
 ```
 
-Fifteen queries, **grouped by the section each is meant to feed**. The first
-version of this list was all changelogs, and the result was that every entry
-came back `product` while the Business and Innovations tabs stayed frozen no
-matter how often the check ran. Retrieval has to cover the taxonomy, or the
-taxonomy is decorative. If you add a section to `SECTIONS`, add queries for it.
+"announced October 2026" finds the announcement; "changelog" finds the page the
+announcement is eventually listed on. The year alone does most of the work on
+arXiv, where the old list kept surfacing Self-RAG (2023) and MemoRAG (2024).
+
+They're built at call time, not module load, so a long-lived Worker doesn't keep
+asking about last month after midnight on the 1st. A test pins the rollover.
+
+Queries stay **grouped by the section each feeds**. The version before that was
+all changelogs: every result came back `product` and the Business and
+Innovations tabs stayed frozen however often the check ran. Retrieval has to
+cover the taxonomy, or the taxonomy is decorative. If you add a section to
+`SECTIONS`, add queries for it here too.
 
 Two more patterns worth copying when you add a vendor:
 - **Chase the version string, not the product name.** Jev ships as versioned
-  aliases (`jev-latest` → `jev-1.13.0`), so `"Jev model release jev-latest
-  version"` catches a bump that no blog post announces.
+  aliases (`jev-latest` → `jev-1.13.0`), so `"jev-latest" new version released`
+  catches a bump that no blog post announces.
 - **Query the distribution channels too.** Jev reached Vercel AI Gateway,
   Cloudflare Workers AI, OpenRouter and Portkey within weeks of launch, and each
   announces independently of the vendor. Gateway availability is often the first
@@ -150,6 +165,34 @@ first attempt rather than taking four to tell you.
 
 The cost is a few seconds per check. The alternative is a wire that stops
 updating and a green build that says everything is fine.
+
+### The actual limit
+
+Ollama's free web search is capped **per hour**. The server states it plainly
+once you read the body:
+
+```
+HTTP 429
+retry-after: 2402
+{"error":"you have reached your web search hourly request limit,
+          upgrade for higher limits: https://ollama.com/upgrade"}
+```
+
+This cost most of an afternoon to establish, because the status code alone
+looks exactly like a concurrency problem. It isn't one: pacing, backoff and
+jitter are all irrelevant to a budget. **Read the body before theorising about
+the limiter.**
+
+What follows from it:
+
+- **A run costs 15 requests**, minus cache hits. Budget your checks accordingly;
+  an hourly cron is fine, a tight debug loop is not.
+- **The cache is load-bearing**, not an optimisation. A 30-minute TTL means
+  iterating on the model or the prompt costs nothing.
+- **A long `Retry-After` is a closed door, not a hiccup.** 2402 seconds will not
+  clear in 8. The check reports when it reopens and stops.
+- **One refusal halts the run.** The remaining queries would each spend another
+  request to be told the same thing. Measured: 60 requests down to 1.
 
 ### Bound every wait
 

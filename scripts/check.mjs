@@ -19,6 +19,7 @@
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
+import { canonicalUrl } from "../src/lib/check.js";
 import { byId } from "../src/lib/providers/index.js";
 import { runCheck } from "../src/lib/run-check.js";
 import { SEED } from "../src/data/seed.js";
@@ -104,7 +105,22 @@ const flag = (name) => process.argv.includes(`--${name}`);
 async function loadFeed() {
   try {
     const parsed = JSON.parse(await readFile(FEED_PATH, "utf8"));
-    if (Array.isArray(parsed.items) && parsed.items.length) return parsed;
+    if (Array.isArray(parsed.items) && parsed.items.length) {
+      // Heal duplicates already on the wire. Dedupe used to key on url+title,
+      // and since the title is model-written it varied between runs — so the
+      // same announcement landed more than once. Keep the earliest copy, which
+      // carries the date it was first seen.
+      const seen = new Set();
+      const items = parsed.items.filter((i) => {
+        const key = canonicalUrl(i.url);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      const removed = parsed.items.length - items.length;
+      if (removed) console.log(`  deduped      ${removed} duplicate entr${removed === 1 ? "y" : "ies"} already on the wire`);
+      return { ...parsed, items };
+    }
   } catch {
     // First run: no feed file yet.
   }
@@ -152,7 +168,7 @@ async function main() {
 
   const cache = await openCache({ fresh: flag("fresh") });
 
-  const { fresh, mode, searched, returned, duplicates, dropped } = await runCheck({
+  const { fresh, mode, searched, returned, duplicates, dropped, unusable, rawText, rawBody } = await runCheck({
     search: { onProgress, cache },
     provider,
     model,
@@ -170,6 +186,7 @@ async function main() {
   }
   else console.log(`  searched      none (mode: ${mode})`);
   console.log(`  model returned ${returned} entr${returned === 1 ? "y" : "ies"}`);
+  if (unusable) console.log(`  no url/title   ${unusable} dropped`);
   if (duplicates) console.log(`  already known  ${duplicates} dropped`);
   if (dropped) console.log(`  unlisted url   ${dropped} dropped`);
   console.log(`  kept          ${fresh.length}`);
@@ -187,6 +204,21 @@ async function main() {
               ? "every entry cited a url that wasn't in the search results — the model is paraphrasing links"
               : "everything found was already on the wire";
     console.log(`nothing added: ${why}`);
+
+    // Whenever nothing reaches the wire, print what the model actually said.
+    // Gated on `returned === 0` this stayed hidden for the case that mattered
+    // most: a model that returns one entry out of 59 results is telling you
+    // something about what it latched onto, and the counts can't convey it.
+    {
+      const said = (rawText || "").trim();
+      console.log(
+        said
+          ? `model said (${said.length} chars):\n${said.slice(0, 600)}${said.length > 600 ? "\n  …truncated" : ""}`
+          : "model said: nothing at all — empty response body"
+      );
+      // With no content, the surrounding fields are the whole story.
+      if (!rawText) console.log(`provider response:\n${JSON.stringify(rawBody, null, 2)}`);
+    }
   }
 
   const next = {

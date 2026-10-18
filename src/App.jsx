@@ -7,6 +7,27 @@ import { PROVIDERS, byId, DEFAULT_PROVIDER } from "./lib/providers/index.js";
 
 const REPO = "https://github.com/juubaker/ai-wire";
 
+/**
+ * Where feedback goes.
+ *
+ * GitHub issues rather than a mailto:, because an address published in plain
+ * HTML is harvested by scrapers within days, and an issue thread survives
+ * better than a one-off email. To use email instead, swap this for
+ * `mailto:you@example.com?subject=AI%20Wire%20feedback` — nothing else changes.
+ */
+const FEEDBACK_URL = `${REPO}/issues/new`;
+
+/**
+ * The clock, read once at module load rather than during render.
+ *
+ * A useState lazy initializer still runs during the first render, so
+ * `useState(() => Date.now())` is the same impurity in a nicer coat. Module
+ * scope runs before any render, so this is a constant as far as React is
+ * concerned. Everything derived from it changes by the day, and the hourly
+ * interval below keeps a long-lived tab honest.
+ */
+const LOADED_AT = Date.now();
+
 const STORE_KEY = "items:v1";
 const MODEL_KEY = "model:v1";
 const POLL_MINUTES = Number(import.meta.env.VITE_WIRE_POLL_MINUTES || 5);
@@ -22,12 +43,15 @@ const RANGES = [
 
 const iso = (d) => d.toISOString().slice(0, 10);
 
-function fmtDate(d) {
+function fmtDate(d, currentYear) {
   const t = new Date(d + "T00:00:00");
   if (isNaN(t)) return d;
   // The year is only shown when it isn't the current one — a changelog is
   // mostly recent, and repeating "2026" on every row is noise.
-  const sameYear = t.getFullYear() === new Date().getFullYear();
+  // `currentYear` is passed in rather than read here: this runs during render,
+  // and React requires render to be pure — two renders reading the clock could
+  // disagree.
+  const sameYear = t.getFullYear() === currentYear;
   return t
     .toLocaleDateString(undefined, {
       month: "short",
@@ -37,12 +61,17 @@ function fmtDate(d) {
     .toUpperCase();
 }
 
-/** Inclusive bounds for the active range, as YYYY-MM-DD strings or null. */
-function bounds(range) {
+/**
+ * Inclusive bounds for the active range, as YYYY-MM-DD strings or null.
+ *
+ * `now` is a parameter because this is called from useMemo — i.e. during
+ * render — and reading the clock there is impure.
+ */
+function bounds(range, now) {
   if (range.id === "custom") return { from: range.from || null, to: range.to || null };
   const preset = RANGES.find((r) => r.id === range.id);
   if (!preset?.days) return { from: null, to: null };
-  const start = new Date();
+  const start = new Date(now);
   start.setDate(start.getDate() - preset.days);
   return { from: iso(start), to: null };
 }
@@ -58,6 +87,21 @@ export default function Wire() {
   const [range, setRange] = useState({ id: "all", from: "", to: "" });
   const [tab, setTab] = useState("all");
   const [model, setModel] = useState("all");
+  /**
+   * One reading of the clock per tick, rather than a Date.now() wherever a date
+   * is needed. Render must be pure: calling the clock inside a useMemo or in
+   * JSX means two renders of the same state can disagree, and React flags it.
+   *
+   * Refreshed hourly, because everything derived from it — the staleness
+   * banner, relative date ranges, the copyright year — changes by the day.
+   */
+  const [now, setNow] = useState(LOADED_AT);
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 60 * 60 * 1000);
+    return () => clearInterval(id);
+  }, []);
+  const currentYear = useMemo(() => new Date(now).getFullYear(), [now]);
+
   const [watching, setWatching] = useState(false);
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState("Reading saved entries…");
@@ -209,22 +253,22 @@ export default function Wire() {
   );
 
   const inRange = useMemo(() => {
-    const { from, to } = bounds(range);
+    const { from, to } = bounds(range, now);
     if (!from && !to) return inTab;
     return inTab.filter((i) => (!from || i.date >= from) && (!to || i.date <= to));
-  }, [inTab, range]);
+  }, [inTab, range, now]);
 
   // Tab counts respect the date range but not the type chip, so switching tabs
   // never lands on an empty list because of a type that doesn't exist there.
   const tabCounts = useMemo(() => {
-    const { from, to } = bounds(range);
+    const { from, to } = bounds(range, now);
     const dated = placed.filter((i) => (!from || i.date >= from) && (!to || i.date <= to));
     const counts = { all: dated.length };
     SECTIONS.forEach((sec) => {
       counts[sec.id] = dated.filter((i) => i.section === sec.id).length;
     });
     return counts;
-  }, [placed, range]);
+  }, [placed, range, now]);
 
   const matchesModel = (i) => model === "all" || (i.models || []).includes(model);
   const matchesType = (i) => filter === "All" || i.type === filter;
@@ -277,13 +321,13 @@ export default function Wire() {
   const staleness = useMemo(() => {
     const newest = items.map((i) => i.date).sort().slice(-1)[0];
     if (!newest) return null;
-    const days = Math.floor((Date.now() - new Date(`${newest}T00:00:00`)) / 86400000);
+    const days = Math.floor((now - new Date(`${newest}T00:00:00`)) / 86400000);
     if (days < 2) return null;
     return {
       days,
       everChecked: Boolean(lastCheck),
     };
-  }, [items, lastCheck]);
+  }, [items, lastCheck, now]);
 
   const earliest = useMemo(
     () => items.map((i) => i.date).sort()[0] || "2026-01-01",
@@ -583,7 +627,7 @@ export default function Wire() {
                 {/* Dateline, then headline, then the rest. The title is what
                     people scan for, so nothing but the date precedes it. */}
                 <div className="dateline mono flex flex-wrap items-center gap-2">
-                  <span>{fmtDate(i.date)}</span>
+                  <span>{fmtDate(i.date, currentYear)}</span>
                   <span className="dateline-source">{i.source}</span>
                   {isNew && <span className="badge warn">New</span>}
                   {i.flagged && <span className="badge warn">⚑ {i.flagged}</span>}
@@ -657,7 +701,15 @@ export default function Wire() {
             <a href={REPO} target="_blank" rel="noopener noreferrer">
               source
             </a>
-            {" · "}© {new Date().getFullYear()} John William Baker. Entries summarise and link to
+            {" · "}
+            {/* A wire that classifies and summarises automatically will get
+                things wrong — a miscategorised entry, a thin summary, a source
+                worth adding. Saying so should take one click from the page
+                itself, not a hunt through the repo. */}
+            <a href={FEEDBACK_URL} target="_blank" rel="noopener noreferrer">
+              report a problem or suggest a source
+            </a>
+            {" · "}© {currentYear} John William Baker. Entries summarise and link to
             other people&rsquo;s announcements, which remain theirs.
           </div>
         </footer>

@@ -43,6 +43,24 @@ const RANGES = [
 
 const iso = (d) => d.toISOString().slice(0, 10);
 
+/**
+ * The entry's real host, shown next to the model-written `source`.
+ *
+ * `source` is prose the model chose and it is demonstrably unreliable: an
+ * audit of 46 entries found a university page filed as "Meta", an AWS page
+ * filed as "Anthropic", and a third-party release tracker filed as "OpenAI",
+ * alongside wikis and funding trackers presented as vendor announcements.
+ * The domain is the one thing that cannot be wrong, and it was the only part
+ * of the provenance not on screen.
+ */
+function hostOf(url) {
+  try {
+    return new URL(url).host.replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
 function fmtDate(d, currentYear) {
   const t = new Date(d + "T00:00:00");
   if (isNaN(t)) return d;
@@ -629,6 +647,7 @@ export default function Wire() {
                 <div className="dateline mono flex flex-wrap items-center gap-2">
                   <span>{fmtDate(i.date, currentYear)}</span>
                   <span className="dateline-source">{i.source}</span>
+                  {hostOf(i.url) && <span className="dateline-host">{hostOf(i.url)}</span>}
                   {isNew && <span className="badge warn">New</span>}
                   {i.flagged && <span className="badge warn">⚑ {i.flagged}</span>}
                 </div>

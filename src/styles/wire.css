@@ -174,3 +174,14 @@
   border:1px solid var(--signal);border-radius:2px;
 }
 .stale strong{font-weight:600;}
+
+/* The link's real host, beside the model's claim about it. Quieter than the
+   source label but always present: a reader comparing "Meta" against
+   rits.shanghai.nyu.edu can see the mismatch without clicking through. */
+.dateline-host {
+  color: var(--ink-soft);
+  opacity: .72;
+  text-transform: none;
+  letter-spacing: .02em;
+}
+.dateline-host:before { content: "· "; opacity: .6; }

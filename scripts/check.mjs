@@ -168,7 +168,7 @@ async function main() {
 
   const cache = await openCache({ fresh: flag("fresh") });
 
-  const { fresh, mode, searched, returned, duplicates, dropped, unusable, rawText, rawBody } = await runCheck({
+  const { fresh, mode, searched, returned, duplicates, dropped, unusable, blocked, rawText, rawBody, searchFailures } = await runCheck({
     search: { onProgress, cache },
     provider,
     model,
@@ -183,10 +183,16 @@ async function main() {
   if (mode === "injected") {
     const cached = cache.hits ? ` (${cache.hits} from cache)` : "";
     console.log(`  searched      ${searched} results${cached}`);
+    // A query that dies every run makes its whole beat look empty rather than
+    // broken. Name them.
+    for (const f of searchFailures || []) {
+      console.log(`  query failed   "${f.query.slice(0, 52)}" — ${f.message.split("\n")[0]}`);
+    }
   }
   else console.log(`  searched      none (mode: ${mode})`);
   console.log(`  model returned ${returned} entr${returned === 1 ? "y" : "ies"}`);
   if (unusable) console.log(`  no url/title   ${unusable} dropped`);
+  if (blocked) console.log(`  unofficial X   ${blocked} dropped`);
   if (duplicates) console.log(`  already known  ${duplicates} dropped`);
   if (dropped) console.log(`  unlisted url   ${dropped} dropped`);
   console.log(`  kept          ${fresh.length}`);

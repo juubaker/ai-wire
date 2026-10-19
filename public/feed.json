@@ -1,6 +1,64 @@
 {
   "items": [
     {
+      "date": "2026-10-14",
+      "source": "TypeSafe AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Jev 1.14.0 Release",
+      "summary": "Jev 1.14.0 is now available, with experimental features like images, a new question type, and longer context.",
+      "url": "https://jevwiki.ai/wiki/reference/models-and-pricing.md",
+      "flagged": "",
+      "id": "live-1792448724877-0",
+      "type": "API & tooling",
+      "models": [
+        "jev"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-19",
+      "source": "Tenstorrent",
+      "tier": "Primary",
+      "section": "business",
+      "title": "$1.5B Series E Funding",
+      "summary": "Tenstorrent closes $1.5B Series E at a $6.2B valuation, funding volume manufacturing and global expansion.",
+      "url": "https://tenstorrent.com/en/newsroom/tenstorrent-announces-series-e",
+      "flagged": "",
+      "id": "live-1792448385649-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-19",
+      "source": "Salesforce",
+      "tier": "Primary",
+      "section": "business",
+      "title": "Acquisition of Loops",
+      "summary": "Salesforce acquires Loops, an AI-powered analytics platform, to enhance its AI CRM capabilities.",
+      "url": "https://www.salesforce.com/in/news/stories/salesforce-signs-definitive-agreement-to-acquire-loops/",
+      "flagged": "",
+      "id": "live-1792448385649-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-19",
+      "source": "Algorithmine",
+      "tier": "Secondary",
+      "section": "business",
+      "title": "AI Funding Roundup",
+      "summary": "AI funding reached $2.42B in October 12-18, 2026, with Modal's $750M Series D being the largest round.",
+      "url": "https://aifundingtracker.com/ai-funding-hits-2-42b-as-modal-lands-750m-at-15-75b-oct-12-oct-18-2026/",
+      "flagged": "",
+      "id": "live-1792448385649-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-13",
       "source": "Google",
       "tier": "Primary",
@@ -594,7 +652,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1792448057686,
+  "checkedAt": 1792448724878,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

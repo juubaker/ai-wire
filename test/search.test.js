@@ -343,3 +343,40 @@ test("results interleave across query groups instead of concatenating them", asy
   // And no result is lost to the reordering.
   assert.equal(new Set(out.map((r) => r.url)).size, 9);
 });
+
+test("a query that fails is named, not just silently tolerated", async () => {
+  // Three X-targeted queries failed on every run for a day. Partial failure is
+  // deliberate — one dead query shouldn't sink a check — but the funnel said
+  // only "searched 35 results", so a broken beat was indistinguishable from a
+  // quiet one. Tolerated is not the same as invisible.
+  const impl = async (_url, opts) => {
+    const q = JSON.parse(opts.body).query;
+    if (q.includes("bad")) {
+      return {
+        ok: false,
+        status: 422,
+        headers: { get: () => undefined },
+        text: async () => '{"error":"unsupported query"}',
+      };
+    }
+    return {
+      ok: true,
+      status: 200,
+      headers: { get: () => undefined },
+      json: async () => ({ results: [{ title: "t", url: `https://a/${q}`, content: "c" }] }),
+    };
+  };
+  const failed = [];
+  const out = await webSearch({
+    env,
+    fetchImpl: impl,
+    queries: ["good one", "bad one", "good two"],
+    onQueryFail: (q, m) => failed.push({ q, m }),
+    retries: 0,
+    ...fast,
+  });
+  assert.equal(out.length, 2, "the working queries still return results");
+  assert.equal(failed.length, 1, "and the dead one is reported");
+  assert.equal(failed[0].q, "bad one");
+  assert.match(failed[0].m, /422/);
+});

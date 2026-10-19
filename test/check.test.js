@@ -502,3 +502,64 @@ describe("X posts: only the labs' own accounts are a primary source", () => {
     assert.match(prompt, /only a lab's or vendor's OWN account counts/i);
   });
 });
+
+describe("editorial rules that were being ignored", () => {
+  const results = [{ title: "T", url: "https://a/b", content: "c", query: "q" }];
+
+  test("titles must name their subject", () => {
+    // Shipped entries: "$1.5B Series E Funding" and "Acquisition of Loops".
+    // Neither says who. The guidance was three words inside the example value
+    // ("specific, version numbers kept") and got ignored; it's now a field note
+    // with the actual failures quoted back.
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(prompt, /name the subject/i);
+    assert.match(prompt, /Who raised, who acquired whom/i);
+    assert.doesNotMatch(prompt, /"title":"under 70 chars, specific/);
+  });
+
+  test("roundups are refused, and the rule says what to do instead", () => {
+    // "AI Funding Roundup" reached the wire despite the skip list, which had
+    // bundled roundups into a long sentence with four other exclusions.
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(prompt, /Skip roundups/);
+    assert.match(prompt, /One title, one event, one primary source/);
+  });
+});
+
+describe("one event, many write-ups", () => {
+  // "Jev 1.14.0 Release" reached the wire five times: a community wiki (twice),
+  // a gateway changelog, and two third-party news sites. Every url genuinely
+  // distinct, so url dedupe passed all five. An identical title is the
+  // strongest same-event signal available without fuzzy matching.
+  const sameEvent = [
+    { url: "https://jevwiki.ai/wiki/reference/models-and-pricing.md", title: "Jev 1.14.0 Release" },
+    { url: "https://jevwiki.ai/wiki/entities/jev.md", title: "Jev 1.14.0 Release" },
+    { url: "https://vercel.com/changelog/jev-1-14-gateway", title: "Jev 1.14.0 Release" },
+    { url: "https://jevainews.com/jev-day-2026/", title: "Jev 1.14.0 Release" },
+  ];
+
+  test("five write-ups of one release become one entry", () => {
+    assert.equal(normalize(sameEvent, [], "p").length, 1);
+  });
+
+  test("a title already on the wire is not re-reported under a new url", () => {
+    const known = [{ url: "https://somewhere.else/x", title: "Jev 1.14.0 Release" }];
+    assert.equal(normalize(sameEvent, known, "p").length, 0);
+  });
+
+  test("case and punctuation don't make it a new event", () => {
+    const batch = [
+      { url: "https://a.com/1", title: "Jev 1.14.0 Release" },
+      { url: "https://b.com/2", title: "jev 1.14.0  release!" },
+    ];
+    assert.equal(normalize(batch, [], "p").length, 1);
+  });
+
+  test("a different version is a different event", () => {
+    const batch = [
+      { url: "https://a.com/1", title: "Jev 1.14.0 Release" },
+      { url: "https://a.com/2", title: "Jev 1.15.0 Release" },
+    ];
+    assert.equal(normalize(batch, [], "p").length, 2, "version numbers distinguish releases");
+  });
+});

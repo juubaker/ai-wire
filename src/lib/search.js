@@ -200,6 +200,14 @@ export async function webSearch({
   maxRetryAfterMs = MAX_RETRY_AFTER_MS,
   minIntervalMs = MIN_INTERVAL_MS,
   onProgress = null,
+  /**
+   * Called once per query that failed outright. Partial failure is tolerated
+   * by design — one dead query shouldn't sink a check — but tolerated is not
+   * the same as invisible. Three X queries failed on every run and the funnel
+   * reported only "searched 35 results", so the dead beat looked like an empty
+   * one for a day.
+   */
+  onQueryFail = null,
   cache = null,
 }) {
   const key = env.OLLAMA_API_KEY;
@@ -325,6 +333,11 @@ export async function webSearch({
 
   // One dead query shouldn't sink the whole check — take what came back.
   const failures = settled.filter((s) => s.status === "rejected");
+  if (onQueryFail) {
+    settled.forEach((r, i) => {
+      if (r.status === "rejected") onQueryFail(queries[i], r.reason?.message || "unknown");
+    });
+  }
   if (failures.length === settled.length) {
     throw new Error(`every search failed: ${failures[0].reason?.message || "unknown"}`);
   }

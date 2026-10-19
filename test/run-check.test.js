@@ -215,3 +215,20 @@ test("ollama asks the model not to think", async () => {
   const body = byId("ollama").buildBody({ prompt: "p", model: "m" });
   assert.equal(body.think, false, "reasoning competes with num_predict for the same budget");
 });
+
+test("an X post from an unapproved account is reported as blocked, not as a duplicate", async () => {
+  // Anything with a valid url and title that doesn't reach the feed used to be
+  // counted as "already known". A gate rejection looks nothing like a
+  // duplicate, and reporting them as one is how a day gets lost.
+  stubFetch({
+    searchResults: [{ title: "T", url: "https://x.com/some_pundit/status/1", content: "c" }],
+    entries: [
+      { url: "https://x.com/some_pundit/status/1", title: "Hot take", date: "2026-10-19" },
+      { url: "https://x.com/AnthropicAI/status/2", title: "Real announcement", date: "2026-10-19" },
+    ],
+  });
+  const r = await run({ OLLAMA_API_KEY: "k" });
+  assert.equal(r.returned, 2);
+  assert.equal(r.blocked, 1, "the pundit post is a gate rejection");
+  assert.equal(r.duplicates, 0, "and must not be counted as already known");
+});

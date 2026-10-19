@@ -248,7 +248,9 @@ export function buildPrompt(known, { supportsSearch }, results = null) {
 
 Report each result that is a genuine development a working engineer would want to know about, from a primary source: model or API docs, official changelogs and release notes, official research blogs, arXiv, SEC filings, company press releases, the MCP specification. Prefer the announcement itself over coverage of it.
 
-Skip a result when it is: a documentation landing page, index or FAQ rather than a specific announcement; a paper or release from before this year; an aggregator, listicle or newsletter roundup; or already on the wire listed below. If genuinely none of the results qualify, return [].
+Skip a result when it is: a documentation landing page, index or FAQ rather than a specific announcement; a paper or release from before this year; or already on the wire listed below. If genuinely none of the results qualify, return an empty list.
+
+Skip roundups. A page covering several unrelated items — "AI Funding Roundup", "This week in AI", a newsletter issue, a funding tracker, a news category page — is not an announcement, and one was reported as an entry despite this rule. If a roundup mentions something worth having, you cannot use it: report the item only if its own announcement appears separately in the results, citing that url. One title, one event, one primary source.
 
 SEARCH RESULTS
 ${formatResults(results)}`;
@@ -276,7 +278,7 @@ ${JSON_ONLY} Up to 12 objects, each:
     ", "
   )} — or a better short label you choose","models":["model FAMILIES this concerns, from: ${MODEL_FAMILIES.map(
     (f) => f.label
-  ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars, specific, version numbers kept","summary":"1-2 sentences on what it changes for someone building LLM systems, not marketing copy","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
+  ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars","summary":"1-2 sentences on what it changes for someone building LLM systems, not marketing copy","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
 
 Cover the whole list, not just the first few results. The results are
 interleaved across the three beats on purpose, so they appear throughout. Work
@@ -291,6 +293,7 @@ nothing else — with the results drawn roughly evenly from each beat, that is
 unlikely.
 
 Field notes, which are instructions and must never appear in a value:
+- title: name the subject. Who raised, who acquired whom, which model, which version. "$1.5B Series E Funding" and "Acquisition of Loops" are both useless — the reader cannot tell who. Write "Suki raises $1.5B Series E" and "Figma acquires Loops". Keep version numbers exactly: "Jev 1.14.0", not "Jev update".
 - date: the publication date if the result itself states one, otherwise ${today}. Never guess a date and never copy this sentence into the field.
 - tier: "Primary" for the announcement, docs, changelog or paper itself; "Secondary" for reporting about it. It is never a section name.
 - section: exactly one of the ids listed above.
@@ -415,9 +418,27 @@ export function canonicalUrl(url) {
   }
 }
 
+/**
+ * A title, reduced to what it's actually about.
+ *
+ * URL dedupe is necessary but not sufficient: one release gets written up on
+ * the vendor's blog, a gateway changelog, two news sites and a community wiki,
+ * and every url is genuinely distinct. "Jev 1.14.0 Release" reached the wire
+ * five times that way. An event-level key catches it, and an identical title is
+ * the strongest signal of the same event available without fuzzy matching —
+ * two different announcements do not share a headline.
+ */
+function titleKey(title) {
+  return String(title || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
 export function normalize(parsed, known, providerId) {
   const stamp = Date.now();
   const seen = new Set(known.map((i) => canonicalUrl(i.url)));
+  const titles = new Set(known.map((i) => titleKey(i.title)));
   const out = [];
 
   for (const x of Array.isArray(parsed) ? parsed : []) {
@@ -430,7 +451,11 @@ export function normalize(parsed, known, providerId) {
     // never updated it, so a model that listed the same release twice in one
     // response got it onto the wire twice — which it did.
     if (seen.has(key)) continue;
+    // Same event under a different url — a different write-up of one release.
+    const tkey = titleKey(x.title);
+    if (titles.has(tkey)) continue;
     seen.add(key);
+    titles.add(tkey);
 
     out.push({
       ...x,

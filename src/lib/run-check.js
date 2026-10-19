@@ -12,7 +12,7 @@
  *   neither                     → the model answers from memory, and is told
  *                                 that [] is the right answer when unsure
  */
-import { RESPONSE_SCHEMA, buildPrompt, normalize, parseArray } from "./check.js";
+import { RESPONSE_SCHEMA, buildPrompt, isUnapprovedXPost, normalize, parseArray } from "./check.js";
 import { webSearch } from "./search.js";
 
 /**
@@ -39,11 +39,17 @@ function summarize(value, depth = 0) {
 
 export async function runCheck({ provider, model, known, env, search = {} }) {
   let results = null;
+  let searchFailures = [];
   let mode = provider.supportsSearch ? "native" : "memory";
 
   if (!provider.supportsSearch && env.OLLAMA_API_KEY) {
     try {
-      results = await webSearch({ env, ...search });
+      searchFailures = [];
+      results = await webSearch({
+        env,
+        onQueryFail: (query, message) => searchFailures.push({ query, message }),
+        ...search,
+      });
       mode = "injected";
     } catch (err) {
       throw new Error(`pre-search failed: ${err.message}`);
@@ -89,6 +95,11 @@ export async function runCheck({ provider, model, known, env, search = {} }) {
   // us chasing duplicate detection while the real problem was a parse that
   // produced ["Claude"] — counted as "already known 1 dropped".
   const usable = raw.filter((e) => e && e.url && e.title);
+  // Counted separately, because an X post rejected by the account allowlist
+  // has a perfectly good url and title and would otherwise be reported as a
+  // duplicate — the same conflation that made "already known 1 dropped" mean
+  // "malformed" for a day. A stage that drops things needs its own number.
+  const offPlatform = usable.filter((e) => isUnapprovedXPost(e.url));
   const fresh = normalize(raw, known, provider.id);
 
   // A local model given search results will still occasionally paraphrase a URL
@@ -110,9 +121,11 @@ export async function runCheck({ provider, model, known, env, search = {} }) {
     fresh: kept,
     mode,
     searched: results?.length ?? 0,
+    searchFailures,
     returned: raw.length,
     unusable: raw.length - usable.length,
-    duplicates: usable.length - fresh.length,
+    blocked: offPlatform.length,
+    duplicates: usable.length - offPlatform.length - fresh.length,
     dropped: fresh.length - kept.length,
   };
 }

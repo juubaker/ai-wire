@@ -494,12 +494,14 @@ describe("X posts: only the labs' own accounts are a primary source", () => {
     assert.match(out[0].url, /AnthropicAI/);
   });
 
-  test("the social section exists and is offered to the model", () => {
-    assert.ok(SECTIONS.some((s) => s.id === "social"));
-    const prompt = buildPrompt(SEED, { supportsSearch: false }, [
-      { title: "T", url: "https://a/b", content: "c", query: "q" },
-    ]);
-    assert.match(prompt, /only a lab's or vendor's OWN account counts/i);
+  test("the gate survives the section being cut", () => {
+    // The "On X" section is gone — X isn't indexed by the search API, which
+    // answered with mirrors and aggregators instead. The allowlist stays,
+    // because an x.com link can still arrive from any other query and only
+    // the labs' own accounts should pass when it does.
+    assert.equal(SECTIONS.some((s) => s.id === "social"), false);
+    assert.equal(isUnapprovedXPost("https://x.com/some_pundit/status/1"), true);
+    assert.equal(isUnapprovedXPost("https://x.com/AnthropicAI/status/1"), false);
   });
 });
 

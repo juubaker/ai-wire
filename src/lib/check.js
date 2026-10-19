@@ -26,12 +26,6 @@ export const SECTIONS = [
       "anything shipped and usable today: model releases, API and SDK changes, tooling, pricing, deprecations, protocol and spec revisions",
   },
   {
-    id: "social",
-    label: "On X",
-    brief:
-      "announcements posted to X by the labs and vendors themselves — a model shipping, an API change, a paper drop — where the post IS the announcement",
-  },
-  {
     id: "innovation",
     label: "Innovations",
     brief:
@@ -262,9 +256,7 @@ ${formatResults(results)}`;
 
   return `You maintain a news wire for a principal engineer who builds LLM systems: RAG, agent orchestration, evals, latency and observability, and the Anthropic/OpenAI/open-model APIs.
 
-It covers four beats, and they matter equally: what shipped, what the industry did (funding, acquisitions, regulation, compute deals), what the labs posted on X themselves, and what researchers published (papers, benchmarks, new methods). Called a "changelog" wire, earlier versions of this prompt filled every slot with model releases and left the other beats empty for days.
-
-On X, only a lab's or vendor's OWN account counts — @AnthropicAI announcing a model is the announcement. Commentary, analysis and threads about someone else's release are not, however insightful; skip them. Posts from accounts that aren't the source are discarded after you return them anyway, so reporting one just wastes a slot.
+It covers three beats, and all three matter equally: what shipped, what the industry did (funding, acquisitions, regulation, compute deals), and what researchers published (papers, benchmarks, new methods). Called a "changelog" wire, earlier versions of this prompt filled every slot with model releases and left the other beats empty for days.
 
 ${sourcing}
 
@@ -287,7 +279,7 @@ to the end before you stop.
 Spread your picks across sections. A model release is the easiest thing to spot
 and the easiest to over-pick: if the results contain a qualifying acquisition,
 funding round, regulatory development or compute deal, report it, and the same
-for a paper, benchmark or new method, and for a lab's own post on X. Do not
+for a paper, benchmark or new method. Do not
 return a list that is entirely "product" unless the results genuinely contain
 nothing else — with the results drawn roughly evenly from each beat, that is
 unlikely.

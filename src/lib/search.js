@@ -76,20 +76,20 @@ export function buildQueries(now = new Date()) {
     `AI compute datacenter deal announced ${when}`,
   ];
 
-  /**
-   * social — the labs' own X posts, which are often hours ahead of the blog.
-   * Only accounts on OFFICIAL_X_ACCOUNTS survive the gate in check.js, so
-   * these queries can be broad without letting commentary through.
+  /*
+   * There were three X-targeted queries here. Measured: 18 queries returned 71
+   * results and not one was an x.com link. X blocks crawlers, so the search API
+   * answered with mirrors (twiscan.com/en/x/AnthropicAI/...) and aggregators
+   * (postcutoff.com, digg.com) instead.
    *
-   * X blocks most crawlers, so expect these to be thinner than the others.
-   * If they return nothing useful for a week, cut them — three dead queries
-   * is 3 of your 15 hourly search requests spent on nothing.
+   * That made the beat worse than empty. OFFICIAL_X_ACCOUNTS gates x.com and
+   * twitter.com; a mirror domain carries the same content past it untouched —
+   * third-party republication presented as a primary source, which is the exact
+   * thing the wire's sourcing rule exists to exclude.
+   *
+   * The gate in check.js stays: an x.com link can still arrive via another
+   * query, and when it does only the labs' own accounts should pass.
    */
-  const social = [
-    `x.com AnthropicAI OR OpenAI post model announcement ${when}`,
-    `x.com GoogleDeepMind OR MistralAI OR deepseek_ai release post ${when}`,
-    `"x.com" AI lab official account announcement thread ${when}`,
-  ];
 
   /** innovation — research and new technique, shipped or not. */
   const innovation = [
@@ -99,7 +99,7 @@ export function buildQueries(now = new Date()) {
     `LLM inference efficiency architecture paper ${when}`,
   ];
 
-  return [...product, ...business, ...social, ...innovation];
+  return [...product, ...business, ...innovation];
 }
 
 /** Convenience snapshot for callers that just want the current list. */

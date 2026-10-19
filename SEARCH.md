@@ -93,37 +93,34 @@ is ~1,200 tokens, injected is ~4,000+. `llama-server` prints it as
 | `OLLAMA_API_KEY` is set | `injected` | "Work ONLY from these results" |
 | Neither | `memory` | "You cannot search… returning [] is correct" |
 
-## X posts: the account, not the platform
+## X: tried, measured, cut
 
-The wire's editorial rule is primary sources only, and it named X threads as
-something to skip. That was right about commentary and wrong about one case: a
-lab posting its own release **is** the announcement, often hours ahead of the
-blog post.
+An "On X" section ran for an afternoon on the reasoning that a lab's own post
+is the announcement, often hours ahead of the blog. The reasoning holds. The
+retrieval does not.
 
-So the line is drawn at the account, and drawn in code rather than in the
-prompt. `OFFICIAL_X_ACCOUNTS` in `src/lib/check.js` is an allowlist of handles;
-`isUnapprovedXPost()` drops any x.com or twitter.com link whose first path
-segment isn't on it, and `normalize()` calls that before anything reaches the
-feed. Non-X links are untouched.
+Measured: 18 queries, 71 results, **zero x.com links**. X blocks crawlers, so
+the search API answered with mirrors and aggregators instead:
 
-```js
-x.com/AnthropicAI/status/123   → kept
-x.com/some_pundit/status/77    → dropped
-arxiv.org/abs/2610.14146       → untouched
+```
+twiscan.com/en/x/AnthropicAI/2107894208547983705   ← third-party X mirror
+postcutoff.com/p/2026-10-15-openai-gpt-live...     ← aggregator
+doomers.ai · badinfluence.news · digg.com          ← aggregators
 ```
 
-The prompt is also told the rule, but the prompt is the softer half. An
-instruction a model can quietly stop following is not a guarantee; a list it
-cannot route around is. This project learned that twice — once when a prompt
-hint failed to balance the sections, and once when `format: "json"` overrode
-a prompt that asked for an array.
+Worse than empty. `OFFICIAL_X_ACCOUNTS` gates x.com and twitter.com; a mirror
+domain carries the same content past it untouched. The guard built for the
+feature had a hole the feature's own retrieval walked through — third-party
+republication arriving dressed as a primary source.
 
-To follow a new vendor, add its handle to the set. Being wrong about a handle
-fails safe: that account's posts are dropped, not admitted.
+So the three queries and the section are gone. **The gate stays**: an x.com
+link can still arrive from any other query, and when it does only the labs'
+own accounts should pass. `isUnapprovedXPost()` costs nothing and keeps
+working.
 
-**X blocks most crawlers**, so expect these three queries to return less than
-the others. If they stay dry, cut them — three dead queries is 3 of the 15
-hourly search requests spent on nothing.
+The transferable lesson: a source that can't be retrieved isn't a source. Test
+retrieval before building the section around it — the whole thing was three
+queries' worth of evidence away from never being built.
 
 ## The URL guard
 

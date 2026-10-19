@@ -1,6 +1,96 @@
 {
   "items": [
     {
+      "date": "2026-10-13",
+      "source": "Google",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Argon Release",
+      "summary": "Gemini 4 Argon is now available for developers, designed for complex coding, agentic, math, and science tasks.",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/",
+      "flagged": "",
+      "id": "live-1792448057675-0",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-13",
+      "source": "Google",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Argon App Availability",
+      "summary": "Gemini 4 Argon is now available in the Gemini app, delivering improved performance across complex tasks.",
+      "url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/",
+      "flagged": "",
+      "id": "live-1792448057675-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-14",
+      "source": "TypeSafe AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Jev 1.14.0 Release",
+      "summary": "TypeSafe AI released Jev 1.14.0, featuring images, a new Box question type, and 262k context.",
+      "url": "https://jevwiki.ai/wiki/entities/jev.md",
+      "flagged": "",
+      "id": "live-1792448057675-2",
+      "type": "API & tooling",
+      "models": [
+        "jev"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-15",
+      "source": "Cloudflare",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Clef Models Availability",
+      "summary": "Cloudflare's Clef models are now available on Workers AI, offering decision-making capabilities through typed questions.",
+      "url": "https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/",
+      "flagged": "",
+      "id": "live-1792448057675-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-16",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Latent Abstraction for RAG",
+      "summary": "A paper proposes Latent Abstraction for Retrieval-Augmented Generation, aiming to improve RAG systems with better query generation.",
+      "url": "https://arxiv.org/abs/2604.17866",
+      "flagged": "",
+      "id": "live-1792448057675-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-19",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Mercury 3 Availability",
+      "summary": "Mercury 3 is now available on AI Gateway with 50% off launch pricing and improved reasoning for latency-sensitive workloads.",
+      "url": "https://vercel.com/changelog/mercury-3-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1792448057675-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-16",
       "source": "Secondary",
       "tier": "Secondary",
@@ -504,7 +594,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1792308327279,
+  "checkedAt": 1792448057686,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -260,7 +260,10 @@ test("queries name the current month, so they ask for events not landing pages",
     0,
     "no query should ask for a changelog page by name"
   );
-  assert.equal(oct.length, 15);
+  // Not an exact tally — that breaks every time a beat gains a query. What
+  // matters is that each beat is represented and the list isn't runaway.
+  assert.ok(oct.length >= 12 && oct.length <= 24, `query count out of range: ${oct.length}`);
+  assert.ok(oct.some((q) => /x\.com/i.test(q)), "the social beat needs queries too");
 });
 
 test("a Retry-After longer than we'll wait fails fast instead of spending more budget", async () => {

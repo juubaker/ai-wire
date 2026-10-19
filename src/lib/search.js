@@ -76,6 +76,21 @@ export function buildQueries(now = new Date()) {
     `AI compute datacenter deal announced ${when}`,
   ];
 
+  /**
+   * social — the labs' own X posts, which are often hours ahead of the blog.
+   * Only accounts on OFFICIAL_X_ACCOUNTS survive the gate in check.js, so
+   * these queries can be broad without letting commentary through.
+   *
+   * X blocks most crawlers, so expect these to be thinner than the others.
+   * If they return nothing useful for a week, cut them — three dead queries
+   * is 3 of your 15 hourly search requests spent on nothing.
+   */
+  const social = [
+    `x.com AnthropicAI OR OpenAI post model announcement ${when}`,
+    `x.com GoogleDeepMind OR MistralAI OR deepseek_ai release post ${when}`,
+    `"x.com" AI lab official account announcement thread ${when}`,
+  ];
+
   /** innovation — research and new technique, shipped or not. */
   const innovation = [
     `arXiv ${year} LLM agent context management paper`,
@@ -84,7 +99,7 @@ export function buildQueries(now = new Date()) {
     `LLM inference efficiency architecture paper ${when}`,
   ];
 
-  return [...product, ...business, ...innovation];
+  return [...product, ...business, ...social, ...innovation];
 }
 
 /** Convenience snapshot for callers that just want the current list. */

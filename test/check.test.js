@@ -27,6 +27,7 @@ import {
   SECTIONS,
   RESPONSE_SCHEMA,
   canonicalUrl,
+  isUnapprovedXPost,
 } from "../src/lib/check.js";
 import { SEED } from "../src/data/seed.js";
 
@@ -417,5 +418,87 @@ describe("dedupe keys on the url alone", () => {
     for (const bad of ["", null, undefined, "not a url", "://broken"]) {
       assert.equal(typeof canonicalUrl(bad), "string");
     }
+  });
+});
+
+describe("the prompt must not bias toward one beat", () => {
+  const results = [{ title: "T", url: "https://a/b", content: "c", query: "q" }];
+
+  test("no 'changelog' framing — it filled every slot with releases", () => {
+    // Three consecutive runs returned entries that were 100% `product`, while
+    // acquisitions and 2026 papers sat unpicked in the same result set. The
+    // opening line called this a "changelog wire", which is a releases framing.
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.doesNotMatch(prompt, /changelog wire/);
+    assert.match(prompt, /three beats/);
+  });
+
+  test("every section is named with its brief", () => {
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    for (const sec of SECTIONS) {
+      assert.ok(prompt.includes(sec.id), `section id missing: ${sec.id}`);
+      assert.ok(prompt.includes(sec.brief), `section brief missing: ${sec.id}`);
+    }
+  });
+
+  test("an explicit instruction not to return only product", () => {
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(prompt, /Spread your picks across sections/);
+    assert.match(prompt, /entirely\s*"product"/);
+  });
+});
+
+describe("X posts: only the labs' own accounts are a primary source", () => {
+  test("an official account passes", () => {
+    for (const url of [
+      "https://x.com/AnthropicAI/status/123",
+      "https://x.com/openai/status/9",
+      "https://twitter.com/GoogleDeepMind/status/5",
+    ]) {
+      assert.equal(isUnapprovedXPost(url), false, url);
+    }
+  });
+
+  test("anyone else is blocked, however insightful the thread", () => {
+    // The wire's founding rule named X threads as something to skip. The
+    // reconciliation is the account, not the platform — and it's enforced
+    // here rather than asked for in the prompt, because an instruction a model
+    // can quietly stop following is not a guarantee.
+    for (const url of [
+      "https://x.com/some_pundit/status/77",
+      "https://x.com/",
+      "https://twitter.com/randomdev/status/1",
+    ]) {
+      assert.equal(isUnapprovedXPost(url), true, url);
+    }
+  });
+
+  test("non-X links are untouched by the gate", () => {
+    for (const url of [
+      "https://www.anthropic.com/news/thing",
+      "https://arxiv.org/abs/2610.14146",
+      "https://openai.com/index/x-com-partnership/",
+      "not a url",
+    ]) {
+      assert.equal(isUnapprovedXPost(url), false, url);
+    }
+  });
+
+  test("normalize drops an unapproved X post even with a valid url and title", () => {
+    const batch = [
+      { url: "https://x.com/some_pundit/status/77", title: "Hot take on Claude" },
+      { url: "https://x.com/AnthropicAI/status/88", title: "Claude Haiku 5.5 is out" },
+    ];
+    const out = normalize(batch, [], "p");
+    assert.equal(out.length, 1);
+    assert.match(out[0].url, /AnthropicAI/);
+  });
+
+  test("the social section exists and is offered to the model", () => {
+    assert.ok(SECTIONS.some((s) => s.id === "social"));
+    const prompt = buildPrompt(SEED, { supportsSearch: false }, [
+      { title: "T", url: "https://a/b", content: "c", query: "q" },
+    ]);
+    assert.match(prompt, /only a lab's or vendor's OWN account counts/i);
   });
 });

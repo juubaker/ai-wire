@@ -93,6 +93,38 @@ is ~1,200 tokens, injected is ~4,000+. `llama-server` prints it as
 | `OLLAMA_API_KEY` is set | `injected` | "Work ONLY from these results" |
 | Neither | `memory` | "You cannot search… returning [] is correct" |
 
+## X posts: the account, not the platform
+
+The wire's editorial rule is primary sources only, and it named X threads as
+something to skip. That was right about commentary and wrong about one case: a
+lab posting its own release **is** the announcement, often hours ahead of the
+blog post.
+
+So the line is drawn at the account, and drawn in code rather than in the
+prompt. `OFFICIAL_X_ACCOUNTS` in `src/lib/check.js` is an allowlist of handles;
+`isUnapprovedXPost()` drops any x.com or twitter.com link whose first path
+segment isn't on it, and `normalize()` calls that before anything reaches the
+feed. Non-X links are untouched.
+
+```js
+x.com/AnthropicAI/status/123   → kept
+x.com/some_pundit/status/77    → dropped
+arxiv.org/abs/2610.14146       → untouched
+```
+
+The prompt is also told the rule, but the prompt is the softer half. An
+instruction a model can quietly stop following is not a guarantee; a list it
+cannot route around is. This project learned that twice — once when a prompt
+hint failed to balance the sections, and once when `format: "json"` overrode
+a prompt that asked for an array.
+
+To follow a new vendor, add its handle to the set. Being wrong about a handle
+fails safe: that account's posts are dropped, not admitted.
+
+**X blocks most crawlers**, so expect these three queries to return less than
+the others. If they stay dry, cut them — three dead queries is 3 of the 15
+hourly search requests spent on nothing.
+
 ## The URL guard
 
 A small model given search results will still occasionally paraphrase a URL

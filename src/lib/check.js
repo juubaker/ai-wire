@@ -26,6 +26,12 @@ export const SECTIONS = [
       "anything shipped and usable today: model releases, API and SDK changes, tooling, pricing, deprecations, protocol and spec revisions",
   },
   {
+    id: "social",
+    label: "On X",
+    brief:
+      "announcements posted to X by the labs and vendors themselves — a model shipping, an API change, a paper drop — where the post IS the announcement",
+  },
+  {
     id: "innovation",
     label: "Innovations",
     brief:
@@ -252,7 +258,11 @@ ${formatResults(results)}`;
     sourcing = `You cannot search. List only developments published AFTER ${newest} that you are confident about from your own knowledge, and give the canonical primary-source URL for each: official docs, changelogs, research blogs, or arXiv. If you are unsure a URL is real, omit the entry. Returning [] is the correct answer when you have nothing verifiable.`;
   }
 
-  return `You maintain a changelog wire for a principal engineer who builds LLM systems: RAG, agent orchestration, evals, latency and observability, and the Anthropic/OpenAI/open-model APIs.
+  return `You maintain a news wire for a principal engineer who builds LLM systems: RAG, agent orchestration, evals, latency and observability, and the Anthropic/OpenAI/open-model APIs.
+
+It covers four beats, and they matter equally: what shipped, what the industry did (funding, acquisitions, regulation, compute deals), what the labs posted on X themselves, and what researchers published (papers, benchmarks, new methods). Called a "changelog" wire, earlier versions of this prompt filled every slot with model releases and left the other beats empty for days.
+
+On X, only a lab's or vendor's OWN account counts — @AnthropicAI announcing a model is the announcement. Commentary, analysis and threads about someone else's release are not, however insightful; skip them. Posts from accounts that aren't the source are discarded after you return them anyway, so reporting one just wastes a slot.
 
 ${sourcing}
 
@@ -269,9 +279,16 @@ ${JSON_ONLY} Up to 12 objects, each:
   ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars, specific, version numbers kept","summary":"1-2 sentences on what it changes for someone building LLM systems, not marketing copy","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
 
 Cover the whole list, not just the first few results. The results are
-interleaved across topics on purpose: product releases, business moves
-(funding, acquisitions, regulation, compute deals) and research all appear
-throughout. Work to the end before you stop.
+interleaved across the three beats on purpose, so they appear throughout. Work
+to the end before you stop.
+
+Spread your picks across sections. A model release is the easiest thing to spot
+and the easiest to over-pick: if the results contain a qualifying acquisition,
+funding round, regulatory development or compute deal, report it, and the same
+for a paper, benchmark or new method, and for a lab's own post on X. Do not
+return a list that is entirely "product" unless the results genuinely contain
+nothing else — with the results drawn roughly evenly from each beat, that is
+unlikely.
 
 Field notes, which are instructions and must never appear in a value:
 - date: the publication date if the result itself states one, otherwise ${today}. Never guess a date and never copy this sentence into the field.
@@ -337,6 +354,53 @@ export function parseArray(text) {
  * reworded headline and sailed through as new. Trailing slashes, #fragments
  * and utm_* parameters vary for the same reason.
  */
+/**
+ * X accounts whose posts count as a primary source.
+ *
+ * The wire's founding rule is primary sources only, and it named X threads as
+ * something to skip — correctly, because a pundit's thread is someone
+ * *asserting* a thing. But a lab posting its own release is the announcement
+ * itself, and often hours ahead of the blog post.
+ *
+ * So the distinction is the account, not the platform, and it's enforced here
+ * rather than in the prompt. Asking a model to "only use official accounts"
+ * is the kind of instruction that quietly stops being followed; a list it
+ * cannot route around is not. Handles are lowercase; add to this list rather
+ * than loosening the check.
+ */
+export const OFFICIAL_X_ACCOUNTS = new Set([
+  "anthropicai",
+  "openai",
+  "googledeepmind",
+  "googleai",
+  "aiatmeta",
+  "metaai",
+  "mistralai",
+  "deepseek_ai",
+  "qwen_ai",
+  "ollama",
+]);
+
+const X_HOSTS = new Set(["x.com", "www.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"]);
+
+/**
+ * True when a url is an X link we will NOT accept: an X post from an account
+ * that isn't on the allowlist. Anything that isn't an X link passes through —
+ * this gate is only about X.
+ */
+export function isUnapprovedXPost(url) {
+  let u;
+  try {
+    u = new URL(String(url));
+  } catch {
+    return false;
+  }
+  if (!X_HOSTS.has(u.host.toLowerCase())) return false;
+  const handle = u.pathname.split("/").filter(Boolean)[0]?.toLowerCase();
+  // A bare x.com link with no handle at all is not an announcement either.
+  return !handle || !OFFICIAL_X_ACCOUNTS.has(handle);
+}
+
 export function canonicalUrl(url) {
   try {
     const u = new URL(String(url));
@@ -358,6 +422,9 @@ export function normalize(parsed, known, providerId) {
 
   for (const x of Array.isArray(parsed) ? parsed : []) {
     if (!x || !x.url || !x.title) continue;
+    // Platform-agnostic everywhere except X, where only the labs' own accounts
+    // are a primary source. See OFFICIAL_X_ACCOUNTS.
+    if (isUnapprovedXPost(x.url)) continue;
     const key = canonicalUrl(x.url);
     // Add as we go. The previous version built `seen` once from `known` and
     // never updated it, so a model that listed the same release twice in one

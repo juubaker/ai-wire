@@ -102,6 +102,7 @@ function fmtClock(ts) {
 export default function Wire() {
   const [items, setItems] = useState(SEED);
   const [filter, setFilter] = useState("All");
+  const [query, setQuery] = useState("");
   const [range, setRange] = useState({ id: "all", from: "", to: "" });
   const [tab, setTab] = useState("all");
   const [model, setModel] = useState("all");
@@ -276,17 +277,43 @@ export default function Wire() {
     return inTab.filter((i) => (!from || i.date >= from) && (!to || i.date <= to));
   }, [inTab, range, now]);
 
-  // Tab counts respect the date range but not the type chip, so switching tabs
-  // never lands on an empty list because of a type that doesn't exist there.
+  /**
+   * Free-text match across everything a reader can see on an entry, including
+   * the host — searching "arxiv" or "anthropic.com" should work, and the host
+   * is on screen now so it ought to be searchable.
+   *
+   * Multiple words are ANDed, in any order and any field: "gemini pricing"
+   * matches an entry whose title says Gemini and whose type says Pricing.
+   */
+  const matchesQuery = useCallback(
+    (i) => {
+      const q = query.trim().toLowerCase();
+      if (!q) return true;
+      const hay = `${i.title} ${i.summary} ${i.source} ${i.type} ${hostOf(i.url)}`.toLowerCase();
+      return q.split(/\s+/).every((term) => hay.includes(term));
+    },
+    [query]
+  );
+
+  // Search narrows before the chip counts are taken, so the counts stay
+  // reachable: a type chip reading "3" means three entries you can actually
+  // land on, not three that exist somewhere outside the search.
+  const matched = useMemo(() => inRange.filter(matchesQuery), [inRange, matchesQuery]);
+
+  // Tab counts respect the date range and the search, but not the type chip,
+  // so switching tabs never lands on an empty list because of a type that
+  // doesn't exist there — while a search still tells you which tabs hold hits.
   const tabCounts = useMemo(() => {
     const { from, to } = bounds(range, now);
-    const dated = placed.filter((i) => (!from || i.date >= from) && (!to || i.date <= to));
+    const dated = placed.filter(
+      (i) => (!from || i.date >= from) && (!to || i.date <= to) && matchesQuery(i)
+    );
     const counts = { all: dated.length };
     SECTIONS.forEach((sec) => {
       counts[sec.id] = dated.filter((i) => i.section === sec.id).length;
     });
     return counts;
-  }, [placed, range, now]);
+  }, [placed, range, now, matchesQuery]);
 
   const matchesModel = (i) => model === "all" || (i.models || []).includes(model);
   const matchesType = (i) => filter === "All" || i.type === filter;
@@ -296,18 +323,18 @@ export default function Wire() {
   // let you click a chip and land on an empty list.
   const types = useMemo(() => {
     const counts = new Map();
-    inRange.filter(matchesModel).forEach((i) => counts.set(i.type, (counts.get(i.type) || 0) + 1));
+    matched.filter(matchesModel).forEach((i) => counts.set(i.type, (counts.get(i.type) || 0) + 1));
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [inRange, model]);
+  }, [matched, model]);
 
   const modelCounts = useMemo(() => {
     const counts = new Map();
-    inRange.filter(matchesType).forEach((i) => {
+    matched.filter(matchesType).forEach((i) => {
       // An entry can belong to several families and is counted under each.
       (i.models || []).forEach((m) => counts.set(m, (counts.get(m) || 0) + 1));
     });
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [inRange, filter]);
+  }, [matched, filter]);
 
   // Registered families with nothing on the wire yet. Named rather than
   // charted, so "where's my filter?" has an answer on the page.
@@ -317,9 +344,9 @@ export default function Wire() {
   }, [placed]);
 
   const shown = useMemo(() => {
-    const list = inRange.filter((i) => matchesType(i) && matchesModel(i));
+    const list = matched.filter((i) => matchesType(i) && matchesModel(i));
     return [...list].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
-  }, [inRange, filter, model]);
+  }, [matched, filter, model]);
 
   // There used to be two effects here that silently reset a chip whenever it
   // matched nothing. They were wrong in the common case: narrowing the date
@@ -378,6 +405,7 @@ export default function Wire() {
   }, [range, filter, model]);
 
   const clearFilters = () => {
+    setQuery("");
     setRange({ id: "all", from: "", to: "" });
     setFilter("All");
     setModel("all");
@@ -490,6 +518,44 @@ export default function Wire() {
         {/* Collapsed by default: three always-open rows pushed the first entry
             below the fold. The summary below carries the active state. */}
         <div className="filterbar flex flex-wrap items-center gap-2 mt-3">
+          <span className="searchbox">
+            <span className="searchicon mono" aria-hidden="true">⌕</span>
+            {/*
+              Escape clears an <input type="search"> natively WITHOUT firing an
+              input event. On a controlled input that desyncs the DOM from
+              React: the box looks empty, `query` still holds the old text, the
+              list stays filtered, and nothing reconciles the two because no
+              render is triggered. Handled explicitly, and `onInput` backs up
+              `onChange` for any other path a browser clears by.
+            */}
+            <input
+              type="search"
+              className="searchinput mono"
+              placeholder="Search entries…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onInput={(e) => setQuery(e.currentTarget.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
+                  e.preventDefault();
+                  setQuery("");
+                }
+              }}
+              aria-label="Search entries by keyword"
+            />
+            {query && (
+              <button
+                type="button"
+                className="searchclear mono"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                title="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </span>
+
           <button
             className="chip mono"
             data-on={filtersOpen}
@@ -576,7 +642,7 @@ export default function Wire() {
         <div className="filterrow flex flex-wrap items-center gap-2 mt-2">
           <span className="filterlabel mono">What</span>
           <button className="chip mono" data-on={filter === "All"} onClick={() => setFilter("All")}>
-            All · {inRange.filter(matchesModel).length}
+            All · {matched.filter(matchesModel).length}
           </button>
           {types.map(([t, n]) => (
             <button
@@ -595,7 +661,7 @@ export default function Wire() {
           <div className="filterrow flex flex-wrap items-center gap-2 mt-2">
             <span className="filterlabel mono">Model</span>
             <button className="chip mono" data-on={model === "all"} onClick={() => setModel("all")}>
-              Any · {inRange.filter(matchesType).length}
+              Any · {matched.filter(matchesType).length}
             </button>
             {modelCounts.map(([id, n]) => (
               <button
@@ -630,9 +696,11 @@ export default function Wire() {
                 ? "Nothing filed in this section yet. Run a check, or try another tab."
                 : inRange.length === 0
                   ? "No entries in that date range. Widen it, or try another tab."
-                  : `No ${filter === "All" ? "" : `${filter} `}entries${
-                      model === "all" ? "" : ` for ${familyLabel(model)}`
-                    } in that date range.`}
+                  : matched.length === 0
+                    ? `Nothing matches “${query.trim()}”. Try fewer words, or search another tab.`
+                    : `No ${filter === "All" ? "" : `${filter} `}entries${
+                        model === "all" ? "" : ` for ${familyLabel(model)}`
+                      }${query.trim() ? ` matching “${query.trim()}”` : ""} in that date range.`}
             </p>
           )}
           {shown.map((i) => {

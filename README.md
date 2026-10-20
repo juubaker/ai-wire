@@ -177,3 +177,21 @@ MIT — see [LICENSE](LICENSE).
 The code is MIT. The entries the wire collects are not: each one links to, and
 summarises, someone else's announcement or paper, and those remain the property
 of whoever published them.
+
+## Two modes, and which one you're looking at
+
+| Command | Mode | Reads | Shows |
+| --- | --- | --- | --- |
+| `npm run dev` | direct | the provider, live | `src/data/seed.js` + localStorage |
+| `npm run dev:feed` | feed | `public/feed.json` | what the scheduled check produced |
+| `npm run build:pages` | feed | `feed.json` | the deployed site |
+
+This bites. `npm run check` writes `public/feed.json`; `npm run dev` never
+reads it. So a terminal full of `added=6` alongside a browser whose newest
+entry is the seed list's last date means the modes are crossed, not that
+retrieval broke — the entries are real, they're just not in the view you're
+looking at.
+
+If the newest entry on screen matches `seed.js`'s newest date, you're in
+direct mode. `npm run dev:feed` shows the real feed.
+

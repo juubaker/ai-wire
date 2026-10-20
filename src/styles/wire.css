@@ -185,3 +185,28 @@
   letter-spacing: .02em;
 }
 .dateline-host:before { content: "· "; opacity: .6; }
+
+/* Search. Always visible rather than inside the drawer: it's the control
+   reached for most often, and the one most likely to be the reason someone
+   opened the filters at all. */
+.searchbox {
+  display: inline-flex; align-items: center; gap: .35rem;
+  border: 1px solid var(--rule); border-radius: 2px;
+  background: var(--panel); padding: .18rem .4rem;
+  transition: border-color .15s;
+}
+.searchbox:focus-within { border-color: var(--ink-soft); }
+.searchicon { color: var(--ink-soft); font-size: .85rem; line-height: 1; }
+.searchinput {
+  border: 0; outline: none; background: transparent; color: var(--ink);
+  font-size: .72rem; width: 11rem; padding: .12rem 0;
+}
+.searchinput::placeholder { color: var(--ink-soft); opacity: .75; }
+/* The browser's own clear button duplicates ours and styles badly. */
+.searchinput::-webkit-search-cancel-button { display: none; }
+.searchclear {
+  border: 0; background: none; cursor: pointer; padding: 0 .1rem;
+  color: var(--ink-soft); font-size: .7rem; line-height: 1;
+}
+.searchclear:hover { color: var(--signal); }
+@media (max-width: 30rem) { .searchinput { width: 7.5rem; } }

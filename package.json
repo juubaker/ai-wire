@@ -6,6 +6,7 @@
   "description": "A live changelog wire for LLM systems work \u2014 primary sources only.",
   "scripts": {
     "dev": "vite",
+    "dev:feed": "VITE_WIRE_MODE=feed VITE_FEED_URL=/feed.json vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "A live changelog wire for LLM systems work \u2014 primary sources only.",
+  "description": "A live changelog wire for LLM systems work — primary sources only.",
   "scripts": {
     "dev": "vite",
     "dev:feed": "VITE_WIRE_MODE=feed VITE_FEED_URL=/feed.json vite",
@@ -26,10 +26,12 @@
     "preview:vercel": "npm run build:vercel && vite preview --outDir dist"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@vitejs/plugin-react": "^6.1.1",
     "eslint": "^10.9.1",
@@ -37,13 +39,17 @@
     "globals": "^16.5.0",
     "tailwindcss": "^4.3.3",
     "vite": "^8.2.2",
-    "wrangler": "^4.127.1",
-    "@eslint/js": "^10.0.1"
+    "wrangler": "^4.127.1"
   },
   "license": "MIT",
   "author": "John William Baker",
   "repository": {
     "type": "git",
     "url": "https://github.com/juubaker/ai-wire.git"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true,
+    "workerd@1.20260923.1": true
   }
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { SEED } from "./data/seed.js";
 import { SECTIONS, sectionFor, modelsFor, familyLabel, MODEL_FAMILIES } from "./lib/check.js";
 import { storage } from "./lib/storage.js";
@@ -801,6 +802,18 @@ export default function Wire() {
           </div>
         </footer>
       </div>
+
+      {/*
+        Vercel Analytics. Renders nothing — it injects a script tag and reports
+        page views, so it belongs at the root of the tree where it mounts once
+        and stays mounted.
+
+        It only collects on a Vercel deployment: the script is served from
+        /_vercel/insights on Vercel's edge, so on the GitHub Pages build it
+        requests a path that doesn't exist and reports nothing. Harmless, but
+        Pages traffic will not appear in the dashboard.
+      */}
+      <Analytics />
     </div>
   );
 }

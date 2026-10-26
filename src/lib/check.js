@@ -7,6 +7,7 @@
  * questions or accepting different answers.
  */
 import { JSON_ONLY } from "./providers/provider.js";
+import { formatFeedItems } from "./feeds.js";
 import { formatResults } from "./search.js";
 
 /**
@@ -227,27 +228,32 @@ export function buildPrompt(known, { supportsSearch }, results = null) {
 
   let sourcing;
   if (results?.length) {
-    // Pre-search: retrieval already happened, so the model is a reader, not a
-    // researcher. Naming the results as the only permitted source is what stops
-    // a local model reaching for a plausible-looking URL from memory.
-    // No date filter here, deliberately. The search API returns only title,
-    // url and content — no publication date — so asking the model to drop
-    // results "older than ${newest}" asks it to filter on a field it cannot
-    // see. A careful model responds to an unanswerable constraint by returning
-    // nothing, which is exactly what it did: 59 results in, 1 entry out.
-    // Repeats are handled downstream instead, where it's a certainty rather
-    // than a guess: normalize() drops any entry whose url is already on the
-    // wire. The model's job is to spot what's notable; ours is to dedupe.
-    sourcing = `Below are live web search results retrieved just now. Work ONLY from them. Every entry you return must use a url that appears verbatim in these results — never write a url that is not listed here, and never adjust one.
+    // Feed items carry a publication date; search results do not. That single
+    // difference is why this branch can now state a cutoff: an earlier version
+    // asked the model to judge recency from undated snippets, which is an
+    // unanswerable question, and a careful model answered it by returning
+    // nothing at all — 59 results in, one entry out, for a day.
+    const dated = results.every((r) => r.date);
+    const listing = dated ? formatFeedItems(results) : formatResults(results);
 
-Report each result that is a genuine development a working engineer would want to know about, from a primary source: model or API docs, official changelogs and release notes, official research blogs, arXiv, SEC filings, company press releases, the MCP specification. Prefer the announcement itself over coverage of it.
+    sourcing = `Below are items published by the sources this wire follows, retrieved just now. Work ONLY from them. Every entry you return must use a url that appears verbatim below — never write a url that is not listed here, and never adjust one.
 
-Skip a result when it is: a documentation landing page, index or FAQ rather than a specific announcement; a paper or release from before this year; or already on the wire listed below. If genuinely none of the results qualify, return an empty list.
+${
+  dated
+    ? `Each item begins with its publication date and the source that published it. Those are facts, not guesses: use the date given, and do not infer one. Everything listed is already newer than the wire, so you do not need to judge recency — only whether it is worth reporting.`
+    : `Report each item that is a genuine development a working engineer would want to know about, from a primary source. Prefer the announcement itself over coverage of it.`
+}
 
-Skip roundups. A page covering several unrelated items — "AI Funding Roundup", "This week in AI", a newsletter issue, a funding tracker, a news category page — is not an announcement, and one was reported as an entry despite this rule. If a roundup mentions something worth having, you cannot use it: report the item only if its own announcement appears separately in the results, citing that url. One title, one event, one primary source.
+The reader builds LLM systems. An item earns a place only if it changes what they can build, how they build it, or what it costs: model and API releases, SDK and protocol changes, pricing and deprecations, retrieval and agent tooling, evaluation and observability, inference performance, and the funding, acquisitions and regulation that move those. Judge by that, strictly.
 
-SEARCH RESULTS
-${formatResults(results)}`;
+Most of what is listed will not qualify, and that is expected — these sources carry each vendor's whole output, not just the part this wire covers. A post about forest mapping, a TLD promotion, a regional certification, a PHP security rule or a general-interest research collaboration is not LLM-systems news however interesting it is. Returning six good entries beats returning thirty with four good ones in it.
+
+Skip an item when it is: outside that scope; a documentation landing page, index or FAQ rather than a specific announcement; or already on the wire listed below. If genuinely none qualify, return an empty list.
+
+Skip roundups. A page covering several unrelated items — "AI Funding Roundup", "This week in AI", a newsletter issue, a funding tracker, a news category page — is not an announcement, and one was reported as an entry despite this rule. If a roundup mentions something worth having, you cannot use it: report the item only if its own announcement appears separately below, citing that url. One title, one event, one primary source.
+
+ITEMS
+${listing}`;
   } else if (supportsSearch) {
     sourcing = `Search the web for developments published AFTER ${newest} from primary sources only: model and API docs, official changelogs and release notes, official research blogs (Anthropic, OpenAI, Google DeepMind, Meta AI, Mistral), arXiv, SEC filings, and the MCP specification. Ignore social posts, listicles, and anything without a traceable primary source.`;
   } else {
@@ -263,7 +269,7 @@ ${sourcing}
 Already on the wire, do not repeat:
 ${titles}
 
-${JSON_ONLY} Up to 12 objects, each:
+${JSON_ONLY} At most 6 objects. Only the six most consequential survive, so a weak candidate costs a strong one its place — returning two is a good answer when only two qualify. Each:
 {"date":"YYYY-MM-DD","source":"Anthropic|OpenAI|Google|MCP|arXiv 1234.5678|...","tier":"Primary"|"Secondary","section":"exactly one of: ${SECTIONS.map(
     (x) => `${x.id} (${x.brief})`
   ).join(" | ")}","type":"one of: ${TAXONOMY.join(
@@ -328,16 +334,68 @@ export function parseArray(text) {
     return [];
   }
 
-  // Fall back to slicing only for output with prose wrapped around real JSON.
+  // Fall back to slicing for output with prose wrapped around real JSON.
   const start = cleaned.indexOf("[");
   const end = cleaned.lastIndexOf("]");
-  if (start < 0 || end < start) return [];
-  try {
-    const sliced = JSON.parse(cleaned.slice(start, end + 1));
-    return Array.isArray(sliced) ? sliced.filter((x) => x && typeof x === "object") : [];
-  } catch {
-    return [];
+  if (start >= 0 && end > start) {
+    try {
+      const sliced = JSON.parse(cleaned.slice(start, end + 1));
+      if (Array.isArray(sliced)) return sliced.filter((x) => x && typeof x === "object");
+    } catch {
+      // Fall through to salvage.
+    }
   }
+
+  return salvageObjects(cleaned);
+}
+
+/**
+ * Recover whole objects from JSON that stops mid-stream.
+ *
+ * A reply cut off at the token limit is not junk: eleven complete entries
+ * followed by half a twelfth is eleven usable entries. Before this, that
+ * reported as "returned 0" — indistinguishable from a model that found
+ * nothing, which is the same conflation that has cost this project a day more
+ * than once.
+ *
+ * Brace-matching rather than a regex, because summaries contain braces and
+ * escaped quotes.
+ */
+function salvageObjects(text) {
+  const out = [];
+  // A stack, not a depth counter: entries live at depth 1 inside the
+  // {"entries": [...]} wrapper that JSON mode produces, so a counter that only
+  // captures at depth 0 never sees a single one. Each "}" closes the nearest
+  // unclosed "{", which is exactly what the stack gives.
+  const starts = [];
+  let inString = false;
+  let escaped = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inString) {
+      if (escaped) escaped = false;
+      else if (c === "\\") escaped = true;
+      else if (c === '"') inString = false;
+      continue;
+    }
+    if (c === '"') {
+      inString = true;
+    } else if (c === "{") {
+      starts.push(i);
+    } else if (c === "}") {
+      const start = starts.pop();
+      if (start === undefined) continue;
+      try {
+        const obj = JSON.parse(text.slice(start, i + 1));
+        // The wrapper itself is not an entry; an entry has a url or a title.
+        if (obj && typeof obj === "object" && (obj.url || obj.title)) out.push(obj);
+      } catch {
+        /* a block that doesn't parse on its own is simply skipped */
+      }
+    }
+  }
+  return out;
 }
 
 /** Drop repeats, coerce the fields the UI relies on, stamp the provider. */

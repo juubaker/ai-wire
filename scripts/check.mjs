@@ -7,7 +7,11 @@
  * Pages redeploys.
  *
  *   node scripts/check.mjs [--provider ollama] [--model qwen3:8b]
- *                          [--no-search] [--fresh]
+ *                          [--search] [--no-search] [--fresh]
+ *
+ * Retrieval is RSS/Atom feeds by default: free, unmetered, dated at source.
+ * --search additionally queries the search API, which is metered and capped
+ * monthly — worth it only for the business beat, which has no feed anywhere.
  *
  * --no-search skips retrieval entirely, so the model answers from memory. A
  * diagnostic, not a mode to run on a schedule.
@@ -161,15 +165,19 @@ async function main() {
   // two are indistinguishable from a hang, which is how a 12-minute retry storm
   // went unnoticed. Rewrites one line rather than scrolling.
   const tty = process.stdout.isTTY;
-  const onProgress = (n, total) => {
-    if (tty) process.stdout.write(`\r  searching     ${n}/${total} queries`);
-    else if (n === total) console.log(`  searching     ${n}/${total} queries`);
+  const progress = (noun) => (n, total) => {
+    if (tty) process.stdout.write(`\r  reading       ${n}/${total} ${noun}`);
+    else if (n === total) console.log(`  reading       ${n}/${total} ${noun}`);
   };
+  const onProgress = progress("queries");
+  const onFeedProgress = progress("feeds");
 
   const cache = await openCache({ fresh: flag("fresh") });
 
-  const { fresh, mode, searched, returned, duplicates, dropped, unusable, blocked, rawText, rawBody, searchFailures } = await runCheck({
+  const { fresh, mode, searched, returned, duplicates, dropped, unusable, blocked, rawText, rawBody, searchFailures, feedFailures, overflow, skippedModel } = await runCheck({
     search: { onProgress, cache },
+    feeds: { onProgress: onFeedProgress },
+    useSearch: flag("search"),
     provider,
     model,
     known: feed.items,
@@ -180,9 +188,14 @@ async function main() {
   if (tty) process.stdout.write("\r\x1b[K"); // clear the progress line
 
   // Print every stage, so a zero-result run says which stage produced the zero.
-  if (mode === "injected") {
+  if (mode !== "memory") {
     const cached = cache.hits ? ` (${cache.hits} from cache)` : "";
-    console.log(`  searched      ${searched} results${cached}`);
+    console.log(`  retrieved     ${searched} items via ${mode}${cached}`);
+    // A feed that dies every run makes its vendor look quiet rather than
+    // unreachable. Name them.
+    for (const f of feedFailures || []) {
+      console.log(`  feed failed    ${f.query} — ${f.message.split("\n")[0]}`);
+    }
     // A query that dies every run makes its whole beat look empty rather than
     // broken. Name them.
     for (const f of searchFailures || []) {
@@ -194,13 +207,16 @@ async function main() {
   if (unusable) console.log(`  no url/title   ${unusable} dropped`);
   if (blocked) console.log(`  unofficial X   ${blocked} dropped`);
   if (duplicates) console.log(`  already known  ${duplicates} dropped`);
+  if (overflow) console.log(`  over the cap   ${overflow} held back for the next run`);
   if (dropped) console.log(`  unlisted url   ${dropped} dropped`);
   console.log(`  kept          ${fresh.length}`);
 
   if (fresh.length === 0) {
     const why =
-      searched === 0 && mode === "injected"
-        ? "search returned nothing — check OLLAMA_API_KEY and the queries in src/lib/search.js"
+      searched === 0 && mode !== "memory"
+        ? (feedFailures || []).length
+          ? `every source that answered had nothing new, and ${feedFailures.length} could not be reached — see the lines above`
+          : `nothing published since ${feed.items.map((i) => i.date).sort().slice(-1)[0]}; the wire is current (the model was not called)`
         : mode === "memory"
           ? "no OLLAMA_API_KEY, so the model answered from memory and was told to prefer []"
           : returned === 0
@@ -215,7 +231,8 @@ async function main() {
     // Gated on `returned === 0` this stayed hidden for the case that mattered
     // most: a model that returns one entry out of 59 results is telling you
     // something about what it latched onto, and the counts can't convey it.
-    {
+    // Skipped only when the model was never called — there is no output to show.
+    if (!skippedModel) {
       const said = (rawText || "").trim();
       console.log(
         said

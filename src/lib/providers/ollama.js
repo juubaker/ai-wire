@@ -48,7 +48,11 @@ export const ollama = {
     // ~25% slack for a fuller-than-usual result set. KV cost is ~2.8 GiB.
     // If you widen QUERIES or raise the per-result trim, re-measure: the tell
     // is `task.n_tokens` in llama-server's log.
-    options: { num_predict: 2000, num_ctx: 20000 },
+    // 2000 truncated a real reply mid-JSON: 12 entries of feed-quality summary
+    // ran to ~7.5k characters, the parse failed, and the run reported "returned
+    // 0" while the model had in fact done the job. Output is the cheap half of
+    // the budget — the ~11k-token prompt leaves ample room.
+    options: { num_predict: 4000, num_ctx: 20000 },
     messages: [{ role: "user", content: prompt }],
   }),
   extractText: (json) => json?.message?.content || "",

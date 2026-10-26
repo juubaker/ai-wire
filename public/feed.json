@@ -1,6 +1,94 @@
 {
   "items": [
     {
+      "date": "2026-10-26",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "GPT-6.1 Terra",
+      "summary": "GPT-6.1 Terra is now available on AI Gateway, offering fast visual reasoning and computer use capabilities for high-volume work.",
+      "url": "https://vercel.com/changelog/gpt-6-1-terra-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1793050084156-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Vercel Agent Validation",
+      "summary": "Vercel Agent can now validate alerts before paging, filtering critical alerts based on logs and metrics.",
+      "url": "https://vercel.com/changelog/vercel-agent-can-now-validate-alerts-before-paging-you",
+      "flagged": "",
+      "id": "live-1793050084156-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Validating Comparison in LLM Evaluation",
+      "summary": "A paper challenges the use of overall accuracy in LLM evaluation, highlighting prompt-specific scorer errors.",
+      "url": "https://arxiv.org/abs/2610.31678",
+      "flagged": "",
+      "id": "live-1793050084156-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MisconceptDialogue for LLM Tutoring",
+      "summary": "A new framework for evaluating math tutoring LLMs that focuses on detecting misconceptions and remediation through dialogue.",
+      "url": "https://arxiv.org/abs/2610.31679",
+      "flagged": "",
+      "id": "live-1793050084156-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Graph-Based Reasoning in Structured Generation",
+      "summary": "A paper rethinking structured generation as an ambiguity-aware inference problem using graph-based reasoning.",
+      "url": "https://arxiv.org/abs/2610.31681",
+      "flagged": "",
+      "id": "live-1793050084156-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-26",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Schema Coherence Inventory for LLMs",
+      "summary": "A new tool measures whether a belief assigned to an LLM organizes its behavior or is merely a mood.",
+      "url": "https://arxiv.org/abs/2610.31683",
+      "flagged": "",
+      "id": "live-1793050084156-5",
+      "type": "API & tooling",
+      "models": [
+        "command"
+      ],
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-14",
       "source": "TypeSafe AI",
       "tier": "Primary",
@@ -652,7 +740,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1792451126869,
+  "checkedAt": 1793050084161,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

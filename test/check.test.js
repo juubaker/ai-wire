@@ -247,7 +247,9 @@ describe("buildPrompt — three retrieval modes", () => {
     // This instruction plus the url guard in run-check is what keeps a local
     // model from filling the wire with plausible-looking dead links.
     const p = buildPrompt(SEED, { supportsSearch: false }, results);
-    assert.match(p, /SEARCH RESULTS/);
+    // The heading is now ITEMS rather than SEARCH RESULTS: retrieval moved
+    // from the search API to RSS/Atom feeds, and the listing covers both.
+    assert.match(p, /ITEMS/);
     assert.match(p, /never write a url that is not listed here/);
     assert.ok(p.includes("https://docs.example/x"));
   });
@@ -563,5 +565,82 @@ describe("one event, many write-ups", () => {
       { url: "https://a.com/2", title: "Jev 1.15.0 Release" },
     ];
     assert.equal(normalize(batch, [], "p").length, 2, "version numbers distinguish releases");
+  });
+});
+
+describe("a reply cut off at the token limit is not a reply of nothing", () => {
+  // The real failure: 12 feed-quality entries ran to ~7,500 characters,
+  // num_predict was 2000 tokens, and the JSON stopped mid-entry. JSON.parse
+  // failed, the bracket scan found no closing "]", and the run reported
+  // "model returned 0" — identical to a model that found nothing. The budget
+  // is raised so it shouldn't happen; this is what happens when it does.
+  const entry = (n) =>
+    JSON.stringify({
+      date: "2026-10-25",
+      source: "Ollama",
+      tier: "Primary",
+      section: "product",
+      title: `Ollama v0.40.${n} Released`,
+      summary: 'Notes with a { brace and a "quote" inside.',
+      url: `https://github.com/ollama/ollama/releases/tag/v0.40.${n}`,
+    });
+
+  test("complete entries are recovered from a truncated reply", () => {
+    const cut = `{"entries":[${entry(11)},${entry(9)},${entry(7).slice(0, 60)}`;
+    const out = parseArray(cut);
+    assert.equal(out.length, 2, "two whole entries survived the cut");
+    assert.equal(out[0].title, "Ollama v0.40.11 Released");
+    assert.equal(out[1].url, "https://github.com/ollama/ollama/releases/tag/v0.40.9");
+  });
+
+  test("entries nested in the JSON-mode wrapper are found", () => {
+    // Entries sit at depth 1 inside {"entries": [...]}, so a depth-0 scan
+    // finds none of them — which is exactly how the first fix failed.
+    const cut = `{"entries":[${entry(11)},${entry(9)},${entry(7)},${entry(5)},{"date":"2026`;
+    assert.equal(parseArray(cut).length, 4);
+  });
+
+  test("braces inside summaries don't break the scan", () => {
+    const out = parseArray(`{"entries":[{"title":"a {b} c","url":"u"}]}`);
+    assert.equal(out.length, 1);
+    assert.equal(out[0].title, "a {b} c");
+  });
+
+  test("the wrapper object is not mistaken for an entry", () => {
+    assert.deepEqual(parseArray('{"entries":[]}'), []);
+  });
+
+  test("prose still yields nothing", () => {
+    assert.deepEqual(parseArray("I could not determine which of these are new."), []);
+  });
+
+  test("the output budget is big enough to make this rare", async () => {
+    const { byId } = await import("../src/lib/providers/index.js");
+    const body = byId("ollama").buildBody({ prompt: "p", model: "m" });
+    assert.ok(
+      body.options.num_predict >= 4000,
+      `num_predict ${body.options.num_predict} — 12 entries need ~2k tokens of headroom`
+    );
+  });
+});
+
+describe("relevance, not just recency", () => {
+  const results = [{ title: "T", url: "https://a/b", content: "c", query: "q", date: "2026-10-25" }];
+
+  test("the prompt states what earns a place and what doesn't", () => {
+    // A run added 50 entries including a TLD promotion, a PHP security rule,
+    // forest-type mapping and a regional ISMS certification. The feeds carry
+    // each vendor's whole output; the wire covers one slice of it, and the
+    // prompt named the audience without ever telling the model to exclude.
+    const p = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(p, /changes what they can build/i);
+    assert.match(p, /Most of what is listed will not qualify/i);
+    assert.match(p, /Returning six good entries beats/i);
+  });
+
+  test("the cap reads as a ceiling, not a target", () => {
+    const p = buildPrompt(SEED, { supportsSearch: false }, results);
+    assert.match(p, /At most 6 objects/);
+    assert.match(p, /a weak candidate costs a strong one its place/);
   });
 });

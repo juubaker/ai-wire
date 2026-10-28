@@ -1,0 +1,116 @@
+# Build AI Wire, refresh the feed on a schedule, and publish to GitHub Pages.
+#
+# Pages serves static files only, so the feed is a committed file rather than an
+# endpoint: the check job writes public/feed.json, commits it if it changed, and
+# the deploy job publishes whatever is on main.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Hourly. GitHub fires schedules on a best-effort basis and they can lag
+    # under load — fine for a changelog, where late is acceptable and wrong is not.
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Override the model for this run (must be an Ollama Cloud model)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write # the check job commits the feed
+  pages: write
+  id-token: write
+
+# Never let a scheduled run and a push deploy at the same time; don't cancel a
+# check mid-flight, because a half-written feed would be committed.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    # Skipped on push: a code change doesn't need to spend an API call.
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Run the check
+        env:
+          # Pre-search: we run the queries, the model reads the results.
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+          # Actions runners have no GPU, so this must be a hosted endpoint —
+          # Ollama Cloud, or a tunnel to a machine of yours.
+          OLLAMA_BASE_URL: ${{ vars.OLLAMA_BASE_URL || 'https://ollama.com' }}
+          WIRE_PROVIDER: ollama
+          # NOT qwen3 — that is a local model and Ollama Cloud does not serve
+          # it, so the previous default here could never have run.
+          #
+          # Cloud model names carry a "-cloud" suffix, which the catalogue page
+          # doesn't show: gemma4:31b-cloud, not gemma4. And most cloud models
+          # are NOT in the free plan — deepseek-v4.1-flash returns "add usage
+          # credits". gemma4:31b-cloud is free-tier at time of writing, and the
+          # API names a free alternative in its error when one isn't.
+          #
+          # Verify before trusting the schedule — note this spends 15 search
+          # requests even when the model call is what fails:
+          #   OLLAMA_BASE_URL=https://ollama.com npm run check -- --model gemma4:31b-cloud
+          WIRE_MODEL: ${{ github.event.inputs.model || vars.WIRE_MODEL || 'gemma4:31b-cloud' }}
+        run: node scripts/check.mjs
+
+      - name: Commit the feed if it changed
+        run: |
+          if git diff --quiet -- public/feed.json; then
+            echo "No change to the feed."
+            exit 0
+          fi
+          git config user.name  "ai-wire bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/feed.json
+          git commit -m "feed: refresh $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
+
+  deploy:
+    needs: check
+    # Runs even when check is skipped (push) or fails (stale feed still deploys).
+    if: always()
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main # pick up the commit the check job just pushed
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - name: Allow the toolchain's install scripts
+        run: npm rebuild esbuild workerd || true
+
+      - name: Build
+        env:
+          # Project pages serve from /<repo>/. Override the repository
+          # variable to "/" if you move this to a custom domain or a
+          # <user>.github.io repo, where the app sits at the root.
+          VITE_BASE: ${{ vars.VITE_BASE || '/ai-wire/' }}
+          VITE_WIRE_MODE: feed
+          VITE_FEED_URL: feed.json
+        run: npm run build
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

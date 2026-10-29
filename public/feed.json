@@ -1,6 +1,94 @@
 {
   "items": [
     {
+      "date": "2026-10-28",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "OpenAI and ServiceNow Partnership",
+      "summary": "OpenAI and ServiceNow expand their partnership to integrate OpenAI models and agents into ServiceNow workflows and ChatGPT.",
+      "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
+      "flagged": "",
+      "id": "live-1793235248208-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "Google DeepMind",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Carbon",
+      "summary": "Google DeepMind introduces Gemini 4 Carbon, a next-generation model for advanced AI tasks.",
+      "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/",
+      "flagged": "",
+      "id": "live-1793235248208-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Virtual Models on AI Gateway",
+      "summary": "Vercel introduces virtual models on AI Gateway, allowing centralized model configuration and updates without redeploying apps.",
+      "url": "https://vercel.com/blog/ai-gateway-virtual-models",
+      "flagged": "",
+      "id": "live-1793235248208-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "AI Traffic Insights",
+      "summary": "Vercel Observability now includes AI traffic insights to analyze how AI bots access websites.",
+      "url": "https://vercel.com/changelog/ai-traffic-insights-now-available-in-vercel-observability",
+      "flagged": "",
+      "id": "live-1793235248208-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ReCoPII Framework",
+      "summary": "ReCoPII proposes a relation-grounded framework for building contextual PII masking datasets without privacy restrictions.",
+      "url": "https://arxiv.org/abs/2610.35925",
+      "flagged": "",
+      "id": "live-1793235248208-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-10-28",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "FinLLM-KG Framework",
+      "summary": "FinLLM-KG introduces a model-agnostic framework combining causal LLMs with financial knowledge graphs for sentiment analysis in trading.",
+      "url": "https://arxiv.org/abs/2610.36083",
+      "flagged": "",
+      "id": "live-1793235248208-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-26",
       "source": "OpenAI",
       "tier": "Primary",
@@ -740,7 +828,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793050084161,
+  "checkedAt": 1793235248213,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

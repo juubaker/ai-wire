@@ -5,13 +5,22 @@
 # the deploy job publishes whatever is on main.
 name: pages
 
+# Manual only, on purpose.
+#
+# The check job needs a hosted model: Actions runners have no GPU, so it calls
+# Ollama Cloud, and the free tier does not carry an hourly schedule — it fails
+# on quota. The deploy job needs GitHub Pages enabled, which it is not, because
+# the site deploys from Vercel. With both triggers live this ran hourly and
+# failed twice per run.
+#
+# The real scheduler is local: scripts/install-cron.sh installs an hourly
+# launchd job that runs the same check against a local model and pushes the
+# feed. Re-enable the triggers below only if that stops being true.
 on:
-  push:
-    branches: [main]
-  schedule:
-    # Hourly. GitHub fires schedules on a best-effort basis and they can lag
-    # under load — fine for a changelog, where late is acceptable and wrong is not.
-    - cron: "17 * * * *"
+  # push:
+  #   branches: [main]
+  # schedule:
+  #   - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       model:

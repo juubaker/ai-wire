@@ -1,6 +1,94 @@
 {
   "items": [
     {
+      "date": "2026-11-02",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "LifeVal Benchmark",
+      "summary": "Introduces LifeVal, a benchmark measuring AI's ability to help with everyday tasks like managing finances and government paperwork.",
+      "url": "https://openai.com/index/lifeval",
+      "flagged": "",
+      "id": "live-1793655686788-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-02",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "MCP App Integration",
+      "summary": "Vercel MCP now shows deployments as interactive cards in ChatGPT and other clients, with live status and logs.",
+      "url": "https://vercel.com/changelog/monitor-vercel-deployments-in-chatgpt",
+      "flagged": "",
+      "id": "live-1793655686788-1",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-02",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Qistas Protocol",
+      "summary": "Qistas is a new protocol for evaluating how LLMs treat diverse social and regional constituencies, portable across countries.",
+      "url": "https://arxiv.org/abs/2610.40893",
+      "flagged": "",
+      "id": "live-1793655686788-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-02",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "CoFiBreak Reward",
+      "summary": "CoFiBreak is a coarse-to-fine diversity reward for effective multi-turn jailbreak in LLMs, addressing attack diversity and safety evaluation.",
+      "url": "https://arxiv.org/abs/2610.40926",
+      "flagged": "",
+      "id": "live-1793655686788-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-02",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "CLR-Bench Curriculum",
+      "summary": "CLR-Bench is a new benchmark for self-evolving agents, testing their ability to learn hidden rules in a curriculum of latent rules.",
+      "url": "https://arxiv.org/abs/2610.40758",
+      "flagged": "",
+      "id": "live-1793655686788-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-02",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "AutoHebb Neural Networks",
+      "summary": "AutoHebb introduces self-modifying neural networks capable of zero-shot inference and continual learning, mimicking human cognitive abilities.",
+      "url": "https://arxiv.org/abs/2610.40757",
+      "flagged": "",
+      "id": "live-1793655686788-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-10-28",
       "source": "OpenAI",
       "tier": "Primary",
@@ -828,7 +916,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793235248213,
+  "checkedAt": 1793655759145,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

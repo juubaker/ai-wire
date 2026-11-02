@@ -15,8 +15,15 @@
 
 set -uo pipefail
 
+# install-cron.sh substitutes these when it generates .check-cron.local.sh.
+# Left unsubstituted, this is the template being run straight out of the repo —
+# so resolve both from where we are. Without this the header's promise that it
+# behaves identically by hand is false, and it fails as "repo not found at
+# __REPO__", which reads like a corrupt install rather than a template.
 REPO="__REPO__"
 NODE="__NODE__"
+[ "$REPO" = "__""REPO__" ] && REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+[ "$NODE" = "__""NODE__" ] && NODE="$(command -v node || echo /usr/bin/false)"
 LOG="$HOME/Library/Logs/ai-wire-check.log"
 MAX_LOG_LINES=2000
 
@@ -39,10 +46,41 @@ fi
 
 # Ollama has to be up. Without this the failure surfaces as a confusing
 # "could not reach" deep in the check; here it is one line and obvious.
-if ! curl -sf -m 5 "${OLLAMA_BASE_URL:-http://localhost:11434}/api/tags" >/dev/null 2>&1; then
-  log "skipped: Ollama is not responding at ${OLLAMA_BASE_URL:-http://localhost:11434}"
+#
+# The first version stopped at that one line, and the wire went stale for four
+# days behind 19 consecutive skips — each one logged, none of them visible, and
+# every exit code saying the run was fine. So: try to fix it, then count it,
+# then say so somewhere that isn't a log file nobody tails.
+OLLAMA_URL="${OLLAMA_BASE_URL:-http://localhost:11434}"
+SKIPFILE="$HOME/Library/Logs/.ai-wire-skips"
+
+ollama_up() { curl -sf -m 5 "$OLLAMA_URL/api/tags" >/dev/null 2>&1; }
+
+# Only worth starting a local server; a remote endpoint being down is not ours
+# to fix.
+if ! ollama_up && [ "$OLLAMA_URL" = "http://localhost:11434" ] && [ -d /Applications/Ollama.app ]; then
+  log "Ollama not responding — starting it"
+  open -ga Ollama >/dev/null 2>&1 || true
+  for _ in 1 2 3 4 5 6 7 8 9 10; do
+    ollama_up && break
+    sleep 2
+  done
+  ollama_up && log "Ollama came up"
+fi
+
+if ! ollama_up; then
+  n=$(($(cat "$SKIPFILE" 2>/dev/null || echo 0) + 1))
+  printf '%s' "$n" >"$SKIPFILE"
+  log "skipped: Ollama is not responding at $OLLAMA_URL (consecutive skips: $n)"
+  # Loud on the third, then once a day, so a real outage reaches you but a
+  # closed lid overnight does not nag.
+  if [ "$n" = 3 ] || { [ "$n" -gt 3 ] && [ $((n % 24)) = 0 ]; }; then
+    osascript -e "display notification \"Ollama is down — $n checks skipped, the wire is going stale\" with title \"AI Wire\"" >/dev/null 2>&1 || true
+  fi
   exit 0
 fi
+
+rm -f "$SKIPFILE"
 
 log "--- check starting ---"
 out="$("$NODE" scripts/check.mjs 2>&1)"
@@ -74,4 +112,11 @@ if [ "${WIRE_PUSH:-0}" = "1" ] && [ "$added" -gt 0 ]; then
       log "push: FAILED — commit is local, push by hand"
     fi
   fi
+elif [ "$added" -gt 0 ]; then
+  # WIRE_PUSH comes from the plist, so it is set only when launchd starts the
+  # job. Run this wrapper by hand and the entries land in feed.json with no
+  # push — and because the wire's newest date has moved on, the next scheduled
+  # run finds nothing and has nothing to push either. That looked exactly like
+  # a broken scheduler. Say it instead.
+  log "push: $added new, but WIRE_PUSH is not set — feed.json is ahead of git, commit by hand"
 fi

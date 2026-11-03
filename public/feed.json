@@ -1,6 +1,92 @@
 {
   "items": [
     {
+      "date": "2026-11-03",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "v3.43.0",
+      "summary": "New API features for live responses and WebSocket progress tracking enhance developer tooling for OpenAI's models.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.43.0",
+      "flagged": "",
+      "id": "live-1793732917941-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Transformers Model Integration Contracts",
+      "summary": "New integration contracts simplify model deployment and interoperability across different platforms and frameworks.",
+      "url": "https://huggingface.co/blog/transformers-mic",
+      "flagged": "",
+      "id": "live-1793732917941-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MEMENTO: Context Management for Long Context Processing Agents",
+      "summary": "Introduces MEMENTO, a long-context agent trained to manage context through compaction, improving efficiency in long input processing.",
+      "url": "https://arxiv.org/abs/2611.00244",
+      "flagged": "",
+      "id": "live-1793732917941-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Cross-Prompt Reuse of Entity-Replacement Responses",
+      "summary": "Analyzes how entity-replacement responses transfer between questions, offering insights into model behavior and reuse potential.",
+      "url": "https://arxiv.org/abs/2611.00352",
+      "flagged": "",
+      "id": "live-1793732917941-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ResMem: Distilling Retrieved Knowledge into Parametric Memory",
+      "summary": "Introduces ResMem, a method to distill retrieved information into parametric memory for reuse without online retrieval.",
+      "url": "https://arxiv.org/abs/2611.00450",
+      "flagged": "",
+      "id": "live-1793732917941-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-03",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "How Mercor Ships Internal Apps and Billions of Production Tokens",
+      "summary": "Optimizes internal app deployment and token processing, reducing job times and improving scalability for AI workloads.",
+      "url": "https://vercel.com/blog/how-mercor-ships-internal-apps-and-billions-of-production-tokens-on-one-platform",
+      "flagged": "",
+      "id": "live-1793732917941-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-02",
       "source": "OpenAI",
       "tier": "Primary",
@@ -916,7 +1002,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793655759145,
+  "checkedAt": 1793732917952,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "date": "2026-11-04",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "v3.45.0 Release",
+      "summary": "Adds 12-hour response caching and project service tier settings for enhanced API efficiency.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.45.0",
+      "flagged": "",
+      "id": "live-1793763944684-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-03",
       "source": "OpenAI",
       "tier": "Primary",
@@ -1002,7 +1018,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793732917952,
+  "checkedAt": 1793763944689,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

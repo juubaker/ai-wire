@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "date": "2026-11-05",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "v3.46.0 Release",
+      "summary": "Adds GPT-6 Rosalind to the model catalog and expands agent turn errors and image/audio options.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.46.0",
+      "flagged": "",
+      "id": "live-1793841212278-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-04",
       "source": "OpenAI",
       "tier": "Primary",
@@ -1018,7 +1034,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793763944689,
+  "checkedAt": 1793841212292,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

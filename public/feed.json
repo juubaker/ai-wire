@@ -1,6 +1,20 @@
 {
   "items": [
     {
+      "date": "2026-11-06",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Token Pass Credit Auto-Apply",
+      "summary": "Token Pass credit now applies automatically across AI Gateway, simplifying usage for all authentication methods.",
+      "url": "https://vercel.com/changelog/token-pass-credit-now-applies-automatically-across-ai-gateway",
+      "flagged": "",
+      "id": "live-1793924833292-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-05",
       "source": "OpenAI",
       "tier": "Primary",
@@ -1034,7 +1048,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793841212292,
+  "checkedAt": 1793924833299,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

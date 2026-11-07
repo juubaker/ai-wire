@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "date": "2026-11-07",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "DeepSeek V4.1 Flash 1017 Ultrafast Available",
+      "summary": "Ultrafast model offers 1,000 tokens/sec generation, ideal for agentic workflows and codebases.",
+      "url": "https://vercel.com/changelog/deepseek-v4-1-flash-1017-ultrafast-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794074660825-0",
+      "type": "API & tooling",
+      "models": [
+        "deepseek"
+      ],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-06",
       "source": "Vercel",
       "tier": "Primary",
@@ -1048,7 +1064,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794010374282,
+  "checkedAt": 1794074660831,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

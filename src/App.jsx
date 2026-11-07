@@ -124,6 +124,9 @@ export default function Wire() {
 
   const [watching, setWatching] = useState(false);
   const [checking, setChecking] = useState(false);
+  // Gates the open-the-page read below: it must not run against the seed list
+  // before saved entries have come back, or every stored entry reads as new.
+  const [loaded, setLoaded] = useState(false);
   const [status, setStatus] = useState("Reading saved entries…");
   const [lastCheck, setLastCheck] = useState(null);
   const [newIds, setNewIds] = useState([]);
@@ -173,7 +176,10 @@ export default function Wire() {
       } catch {
         /* first visit — the default provider stands */
       }
-      if (!cancelled) setStatus("Idle. Nothing checked yet this session.");
+      if (!cancelled) {
+        setStatus(isFeedMode ? "Reading the shared feed…" : "Idle. Nothing checked yet this session.");
+        setLoaded(true);
+      }
     })();
     return () => {
       cancelled = true;
@@ -197,7 +203,7 @@ export default function Wire() {
   }, []);
 
   /* ---------- ask the model what's new, and let it type each item ---------- */
-  const check = useCallback(async () => {
+  const check = useCallback(async ({ silentNew = false } = {}) => {
     if (checking) return;
     setChecking(true);
     const active = byId(choiceRef.current.provider);
@@ -217,7 +223,9 @@ export default function Wire() {
       if (fresh.length) {
         const next = [...fresh, ...known];
         setItems(next);
-        setNewIds((p) => [...fresh.map((f) => f.id), ...p]);
+        // Suppressed on the page-open read: on a first visit everything in the
+        // feed is "new", and a wire highlighted end to end highlights nothing.
+        if (!silentNew) setNewIds((p) => [...fresh.map((f) => f.id), ...p]);
         const how =
           mode === "injected" ? ` via ${active.label}, from ${searched} search results.` : mode === "memory" ? ` via ${active.label}, from memory — no search.` : isFeedMode ? " from the feed." : ` via ${active.label}.`;
         setSearchMode(mode ?? null);
@@ -257,6 +265,24 @@ export default function Wire() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watching, choice.provider, choice.model]);
+
+  /* ---------- in feed mode, read the feed as soon as the page opens ---------- */
+  // Feed mode reads a static file: no key, no model call, nothing metered. So
+  // there is no reason to make a visitor ask for it, and every reason not to —
+  // the page used to open on localStorage merged with the seed list compiled
+  // into the bundle, which meant a first-time visitor saw months-old entries
+  // and had no idea the real feed existed.
+  //
+  // Direct mode is deliberately excluded: there a check costs a model call,
+  // and opening a page should not spend one.
+  useEffect(() => {
+    if (!isFeedMode || !loaded) return undefined;
+    // Deferred by a tick so itemsRef has been synced from the commit that set
+    // the saved entries; check() reads that ref, not this render's closure.
+    const id = setTimeout(() => check({ silentNew: true }), 0);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded]);
 
   // Date filtering happens first so the type counts describe what's actually
   // reachable in the current window, rather than the whole archive.
@@ -498,9 +524,15 @@ export default function Wire() {
             <button className="btn ghost" onClick={() => setWatching((w) => !w)}>
               {watching ? "Stop watching" : "Watch for updates"}
             </button>
-            <button className="btn" onClick={check} disabled={checking}>
-              {checking ? "Checking…" : "Check now"}
-            </button>
+            {/* Feed mode has no button: the page reads the feed on open, and
+                a "Check now" that only re-reads a static file reads as broken
+                when it correctly reports nothing new. In direct mode it stays,
+                because there it really does call a model. */}
+            {!isFeedMode && (
+              <button className="btn" onClick={() => check()} disabled={checking}>
+                {checking ? "Checking…" : "Check now"}
+              </button>
+            )}
           </span>
         </div>
         <div className="mono px-3 py-2" style={{ fontSize: ".7rem", color: "var(--ink-soft)" }}>

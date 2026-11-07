@@ -1048,7 +1048,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1793924833299,
+  "checkedAt": 1794010374282,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

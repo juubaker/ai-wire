@@ -15,10 +15,8 @@
   ],
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/ai-wire", "destination": "https://wire.dashboy.ai/ai-wire/" },
-    { "source": "/ai-wire/", "destination": "https://wire.dashboy.ai/ai-wire/" },
-    { "source": "/ai-wire/:path+", "destination": "https://wire.dashboy.ai/ai-wire/:path+" },
-    { "source": "/api/:path*", "destination": "https://wire.dashboy.ai/api/:path*" }
-
+{ "source": "/ai-wire", "destination": "https://wire.dashboy.ai/ai-wire/", "permanent": false },
+    { "source": "/ai-wire/", "destination": "https://wire.dashboy.ai/ai-wire/", "permanent": false },
+    { "source": "/ai-wire/:path+", "destination": "https://wire.dashboy.ai/ai-wire/:path+", "permanent": false }
   ]
 }

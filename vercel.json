@@ -13,5 +13,5 @@
       "schedule": "0 13 * * *"
     }
   ],
-  { "source": "/ai-wire/:path*", "destination": "https://ai-wire-gu8xbbk0v-surging.vercel.app/:path*" }
+   "source": "/ai-wire/:path*", "destination": "https://ai-wire-gu8xbbk0v-surging.vercel.app/:path*" 
 }

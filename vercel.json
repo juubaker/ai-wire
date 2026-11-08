@@ -13,7 +13,10 @@
       "schedule": "0 13 * * *"
     }
   ],
+  "cleanUrls": true,
   "rewrites": [
-      "source": "/ai-wire/:path*", "destination": "https://ai-wire-gu8xbbk0v-surging.vercel.app/:path*" 
-  ],
+    { "source": "/ai-wire", "destination": "https://YOUR-AI-WIRE.vercel.app/ai-wire/" },
+    { "source": "/ai-wire/:path*", "destination": "https://YOUR-AI-WIRE.vercel.app/ai-wire/:path*" },
+    { "source": "/api/:path*", "destination": "https://YOUR-AI-WIRE.vercel.app/api/:path*" }
+  ]
 }

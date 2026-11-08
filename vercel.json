@@ -13,11 +13,4 @@
       "schedule": "0 13 * * *"
     }
   ],
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/ai-wire/",
-      "permanent": false
-    }
-  ]
 }

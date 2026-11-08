@@ -15,5 +15,5 @@
   ],
   "rewrites": [
       "source": "/ai-wire/:path*", "destination": "https://ai-wire-gu8xbbk0v-surging.vercel.app/:path*" 
-  ]
+  ],
 }

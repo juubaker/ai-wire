@@ -160,6 +160,59 @@ describe("failure is tolerated but never silent", () => {
   });
 });
 
+describe("a bare version number is not a title", () => {
+  const release = (t) =>
+    `<feed><entry><title>${t}</title>` +
+    `<link rel="alternate" href="https://github.com/openai/openai-python/releases/tag/${t}"/>` +
+    `<updated>2026-11-09T12:00:00Z</updated><content type="html">notes</content></entry></feed>`;
+
+  const sdk = feed({ label: "OpenAI Python SDK" });
+
+  test("the feed's label is attached to a bare tag", async () => {
+    // The wire carried "v3.46.0 Release" and "v3.45.0 Release" as entries. The
+    // product name lives in the feed label, never in the item, so the model
+    // pads the tag instead of naming the product.
+    const out = await fetchFeeds({ feeds: [sdk], fetchImpl: serve(release("v3.46.0")) });
+    assert.equal(out[0].title, "OpenAI Python SDK v3.46.0");
+  });
+
+  test("a tag with no leading v is still a bare version", async () => {
+    const out = await fetchFeeds({ feeds: [sdk], fetchImpl: serve(release("3.46.0")) });
+    assert.equal(out[0].title, "OpenAI Python SDK 3.46.0");
+  });
+
+  test("scoped monorepo tags count too", async () => {
+    // The Anthropic SDK repo emits these, and a pattern anchored on a leading
+    // "v" let all three through unprefixed.
+    for (const tag of ["sdk-v1.7.0", "vertex-sdk-v1.1.2", "google-cloud-sdk-v1.1.3"]) {
+      const out = await fetchFeeds({ feeds: [sdk], fetchImpl: serve(release(tag)) });
+      assert.equal(out[0].title, `OpenAI Python SDK ${tag}`, tag);
+    }
+  });
+
+  test("a headline that merely contains a version is left alone", async () => {
+    // Has whitespace, so it is a sentence, not a tag.
+    const out = await fetchFeeds({
+      feeds: [sdk],
+      fetchImpl: serve(release("Claude Opus 4.5 is available in the SDK")),
+    });
+    assert.equal(out[0].title, "Claude Opus 4.5 is available in the SDK");
+  });
+
+  test("a title that already says something is left alone", async () => {
+    const out = await fetchFeeds({
+      feeds: [sdk],
+      fetchImpl: serve(release("Structured outputs for the Responses API")),
+    });
+    assert.equal(out[0].title, "Structured outputs for the Responses API");
+  });
+
+  test("prefixing does not smuggle a release candidate past PRERELEASE", async () => {
+    const out = await fetchFeeds({ feeds: [sdk], fetchImpl: serve(release("v3.46.0-rc1")) });
+    assert.deepEqual(out, [], "an rc is still dropped once the label is attached");
+  });
+});
+
 describe("the total ceiling, and that it reports itself", () => {
   const many = (n) =>
     `<rss><channel>${Array.from(
@@ -224,6 +277,13 @@ describe("the configured source list", () => {
   test("no duplicate urls or ids", () => {
     assert.equal(new Set(FEEDS.map((f) => f.url)).size, FEEDS.length, "duplicate feed url");
     assert.equal(new Set(FEEDS.map((f) => f.id)).size, FEEDS.length, "duplicate feed id");
+  });
+
+  test("no duplicate labels — they name the source in diagnostics and in titles", () => {
+    // Two feeds were both labelled "OpenAI", which made `feed failed OpenAI`
+    // ambiguous about which had died, and would have put the wrong product
+    // name on a bare-version title.
+    assert.equal(new Set(FEEDS.map((f) => f.label)).size, FEEDS.length, "duplicate feed label");
   });
 
   test("innovation is covered, so the beat can't silently empty", () => {

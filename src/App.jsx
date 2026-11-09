@@ -4,9 +4,16 @@ import { SEED } from "./data/seed.js";
 import { SECTIONS, sectionFor, modelsFor, familyLabel, MODEL_FAMILIES } from "./lib/check.js";
 import { storage } from "./lib/storage.js";
 import { fetchUpdates, isFeedMode } from "./lib/wire-api.js";
+import { FEEDS } from "./lib/feeds.js";
 import { PROVIDERS, byId, DEFAULT_PROVIDER } from "./lib/providers/index.js";
 
 const REPO = "https://github.com/juubaker/ai-wire";
+
+/**
+ * Where "Built by" points. Change or remove it freely — the masthead degrades
+ * to plain text if this is empty.
+ */
+const AUTHOR_URL = "https://dashboy.ai";
 
 /**
  * Where feedback goes.
@@ -446,11 +453,27 @@ export default function Wire() {
     <div className="wire-root">
       <div className="wire-shell">
         <header className="masthead">
-          <div className="eyebrow mono">Primary sources only · LLM systems desk</div>
+          <div className="eyebrow mono">Primary sources only · updated hourly</div>
           <h1>AI WIRE</h1>
-          {/* One line, not three: this is read once and then skipped forever. */}
+          {/* Read once and then skipped forever by a regular, but it is the
+              only thing a first-time visitor reads — and "LLM systems desk"
+              told them nothing. Say what the wire is before saying how it is
+              sourced: the rigour only means something once you know what it
+              is rigorous about. */}
           <p className="standfirst">
-            What shipped, from the announcement itself. Leave it open and new entries drop in.
+            What actually shipped in AI — model releases, API changes, research — taken from the
+            announcements and papers themselves, never from coverage of them.
+          </p>
+          <p className="mono" style={{ fontSize: ".7rem", color: "var(--ink-soft)", marginTop: ".5rem" }}>
+            A language model reads {FEEDS.length} publishers&rsquo; feeds every hour and keeps only
+            the few entries that change what an engineer can build. Built by{" "}
+            <a href={AUTHOR_URL} target="_blank" rel="noopener noreferrer">
+              John Baker
+            </a>
+            {" · "}
+            <a href={REPO} target="_blank" rel="noopener noreferrer">
+              how it works
+            </a>
           </p>
         </header>
 

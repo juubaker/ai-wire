@@ -276,7 +276,7 @@ ${JSON_ONLY} At most 6 objects. Only the six most consequential survive, so a we
     ", "
   )} — or a better short label you choose","models":["model FAMILIES this concerns, from: ${MODEL_FAMILIES.map(
     (f) => f.label
-  ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars","summary":"1-2 sentences on what it changes for someone building LLM systems, not marketing copy","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
+  ).join(", ")} — the family, never the version, so \\"Claude\\" not \\"Claude Opus 5\\"; several if it concerns several; [] for anything model-agnostic like a protocol change, a funding round, or a paper about no particular model"],"title":"under 70 chars","summary":"1-2 sentences. Say what the thing is, then what changed for someone building LLM systems. Plain words, no marketing copy, and no acronym or codename left unexplained","url":"direct link to the announcement or paper","flagged":"omit unless the claim rests only on a vendor's own benchmark, then say so in under 6 words"}
 
 Cover the whole list, not just the first few results. The results are
 interleaved across the three beats on purpose, so they appear throughout. Work
@@ -292,6 +292,8 @@ unlikely.
 
 Field notes, which are instructions and must never appear in a value:
 - title: name the subject. Who raised, who acquired whom, which model, which version. "$1.5B Series E Funding" and "Acquisition of Loops" are both useless — the reader cannot tell who. Write "Suki raises $1.5B Series E" and "Figma acquires Loops". Keep version numbers exactly: "Jev 1.14.0", not "Jev update".
+- title: a version or a codename is not a subject. Name the product it belongs to. These real entries all failed: "v3.46.0 Release" (whose?), "Control Room Safety", "Token Pass Credit Auto-Apply", "Muse Ember AI Gateway", "ReCoPII Framework" — each repeats a vendor's internal name without saying what the thing is. The source named above each item is the product when the item's own title is only a tag. Write "OpenAI Python SDK v3.46.0", and "ReCoPII: a framework for stripping personal data from prompts".
+- Write for a reader who is technical but does not already know this product. Expand an acronym the first time it appears, and say what an unfamiliar thing IS before saying what changed about it. A title nobody can parse without the vendor's launch post is a title that wasted its slot.
 - date: the publication date if the result itself states one, otherwise ${today}. Never guess a date and never copy this sentence into the field.
 - tier: "Primary" for the announcement, docs, changelog or paper itself; "Secondary" for reporting about it. It is never a section name.
 - section: exactly one of the ids listed above.

@@ -40,8 +40,12 @@ export const FEEDS = [
   // Anthropic publishes no feed — confirmed, not assumed: /news declares none
   // and both plausible paths 404. SDK releases track API changes closely
   // enough to stand in, and GitHub gives every repo a dated Atom feed free.
-  { id: "anthropic-sdk", label: "Anthropic", section: "product", url: "https://github.com/anthropics/anthropic-sdk-typescript/releases.atom" },
-  { id: "openai-sdk", label: "OpenAI", section: "product", url: "https://github.com/openai/openai-python/releases.atom" },
+  // Labels must be unique: they name the source in the prompt listing, in the
+  // "feed failed" diagnostics, and now in a bare-version title (see
+  // BARE_VERSION). Two feeds both labelled "OpenAI" made a failure line
+  // ambiguous about which one had died.
+  { id: "anthropic-sdk", label: "Anthropic SDK", section: "product", url: "https://github.com/anthropics/anthropic-sdk-typescript/releases.atom" },
+  { id: "openai-sdk", label: "OpenAI Python SDK", section: "product", url: "https://github.com/openai/openai-python/releases.atom" },
   { id: "mcp", label: "MCP", section: "product", url: "https://github.com/modelcontextprotocol/modelcontextprotocol/releases.atom" },
   { id: "ollama", label: "Ollama", section: "product", url: "https://github.com/ollama/ollama/releases.atom" },
 
@@ -76,6 +80,25 @@ const MAX_TOTAL_ITEMS = 60;
  * wants the release; the road to it is the vendor's business.
  */
 const PRERELEASE = /[-\s](rc\d*|alpha|beta|preview|nightly|canary|dev)\b|\brc\d+$/i;
+
+/**
+ * A title that is nothing but a version number.
+ *
+ * GitHub release feeds name an entry after its tag — "v3.46.0" — because that
+ * is what the release is called in the repo. On a wire mixing eleven sources
+ * it says nothing, and the wire carried "v3.46.0 Release" and "v3.45.0
+ * Release" as entries a reader could not possibly act on.
+ *
+ * The product name is in the feed's label, not the item, so the model never
+ * sees it attached and pads the bare tag instead. Attaching it here is the
+ * deterministic fix; the prompt cannot be relied on to infer it.
+ *
+ * The test is "a tag, not a sentence": no whitespace anywhere, and a version
+ * somewhere in it. That catches the scoped forms a monorepo emits —
+ * "sdk-v1.7.0", "vertex-sdk-v1.1.2", "google-cloud-sdk-v1.1.3" — which a
+ * narrower pattern anchored on a leading "v" let straight through.
+ */
+const BARE_VERSION = /^\S*\d+\.\d+\S*$/;
 const MAX_CHARS_PER_ITEM = 600;
 const REQUEST_TIMEOUT_MS = 15000;
 const CONCURRENCY = 4;
@@ -125,7 +148,10 @@ const tag = (xml, name) => {
  * dc:date depending on who generated the feed.
  */
 function parseItem(xml, feed) {
-  const title = stripTags(tag(xml, "title"));
+  const rawTitle = stripTags(tag(xml, "title"));
+  // Prefixed before PRERELEASE sees it; that pattern matches on the suffix, so
+  // "Ollama v0.40.11-rc0" is still recognised as a release candidate.
+  const title = BARE_VERSION.test(rawTitle) ? `${feed.label} ${rawTitle}` : rawTitle;
 
   let url = stripTags(tag(xml, "link"));
   if (!url) {

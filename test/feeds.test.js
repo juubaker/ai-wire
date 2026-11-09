@@ -86,9 +86,25 @@ describe("date filtering, which search results could never support", () => {
     assert.equal(out[0].date, "2026-10-24");
   });
 
-  test("the boundary is exclusive — the wire's newest entry isn't re-reported", async () => {
+  test("the boundary is INCLUSIVE — same-day items survive", async () => {
+    // The bug this pins: `since` is a day, not a moment. With `>` the filter
+    // read as "newer than the wire", but it meant "published on a later DAY
+    // than anything we have" — so the first entry to land on a given date made
+    // the rest of that date invisible. The wire ran at exactly one new entry a
+    // day for four days, and arXiv, which publishes one batch a day, lost
+    // every one of them. Dedupe removes what is already known; this filter
+    // must not pre-empt it.
     const out = await fetchFeeds({ feeds: [feed()], fetchImpl: serve(RSS), since: "2026-10-24" });
-    assert.equal(out.length, 0);
+    assert.equal(out.length, 1, "an item dated exactly `since` must come through");
+    assert.equal(out[0].date, "2026-10-24");
+  });
+
+  test("items from strictly earlier days are still dropped", async () => {
+    const out = await fetchFeeds({ feeds: [feed()], fetchImpl: serve(RSS), since: "2026-10-24" });
+    assert.ok(
+      out.every((i) => i.date >= "2026-10-24"),
+      "the September item must not come back"
+    );
   });
 
   test("without `since`, everything comes through", async () => {
@@ -141,6 +157,48 @@ describe("failure is tolerated but never silent", () => {
     });
     assert.deepEqual(out, []);
     assert.deepEqual(failures, [], "a quiet Sunday is not a broken feed");
+  });
+});
+
+describe("the total ceiling, and that it reports itself", () => {
+  const many = (n) =>
+    `<rss><channel>${Array.from(
+      { length: n },
+      (_, i) =>
+        `<item><title>Paper ${i}</title><link>https://arxiv.org/abs/${i}</link>` +
+        `<pubDate>Fri, 24 Oct 2026 10:00:00 GMT</pubDate><description>x</description></item>`
+    ).join("")}</channel></rss>`;
+
+  test("trims to maxItems, newest first", async () => {
+    const out = await fetchFeeds({ feeds: [feed()], fetchImpl: serve(many(30)), maxItems: 10 });
+    assert.equal(out.length, 10);
+  });
+
+  test("the trim is reported, never silent", async () => {
+    let seen = null;
+    await fetchFeeds({
+      feeds: [feed()],
+      fetchImpl: serve(many(30)),
+      maxItems: 10,
+      onTrim: (kept, total) => {
+        seen = { kept, total };
+      },
+    });
+    // MAX_ITEMS_PER_FEED caps one feed at 12 before this ever runs.
+    assert.deepEqual(seen, { kept: 10, total: 12 });
+  });
+
+  test("no callback when the ceiling doesn't bite", async () => {
+    let fired = false;
+    await fetchFeeds({
+      feeds: [feed()],
+      fetchImpl: serve(RSS),
+      maxItems: 50,
+      onTrim: () => {
+        fired = true;
+      },
+    });
+    assert.equal(fired, false);
   });
 });
 

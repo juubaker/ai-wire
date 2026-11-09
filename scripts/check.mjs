@@ -174,7 +174,7 @@ async function main() {
 
   const cache = await openCache({ fresh: flag("fresh") });
 
-  const { fresh, mode, searched, returned, duplicates, dropped, unusable, blocked, rawText, rawBody, searchFailures, feedFailures, overflow, skippedModel } = await runCheck({
+  const { fresh, mode, searched, returned, duplicates, dropped, unusable, blocked, rawText, rawBody, searchFailures, feedFailures, overflow, trimmed, skippedModel } = await runCheck({
     search: { onProgress, cache },
     feeds: { onProgress: onFeedProgress },
     useSearch: flag("search"),
@@ -191,6 +191,7 @@ async function main() {
   if (mode !== "memory") {
     const cached = cache.hits ? ` (${cache.hits} from cache)` : "";
     console.log(`  retrieved     ${searched} items via ${mode}${cached}`);
+    if (trimmed) console.log(`  over the item cap ${trimmed} oldest trimmed before the model saw them`);
     // A feed that dies every run makes its vendor look quiet rather than
     // unreachable. Name them.
     for (const f of feedFailures || []) {

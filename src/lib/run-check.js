@@ -73,6 +73,7 @@ export async function runCheck({
 }) {
   let results = null;
   let searchFailures = [];
+  let trimmed = 0;
   const feedFailures = [];
   let mode = provider.supportsSearch ? "native" : "memory";
 
@@ -86,11 +87,14 @@ export async function runCheck({
       results = await fetchFeeds({
         since,
         onFeedFail: (label, message) => feedFailures.push({ query: label, message }),
+        onTrim: (kept, total) => {
+          trimmed = total - kept;
+        },
         ...feeds,
       });
       mode = "feeds";
     } catch (err) {
-      throw new Error(`feeds failed: ${err.message}`);
+      throw new Error(`feeds failed: ${err.message}`, { cause: err });
     }
 
     // Business has no feed anywhere — funding rounds and acquisitions aren't
@@ -129,6 +133,7 @@ export async function runCheck({
       duplicates: 0,
       dropped: 0,
       overflow: 0,
+      trimmed,
       rawText: "",
       rawBody: null,
       searchFailures,
@@ -159,7 +164,9 @@ export async function runCheck({
     const hint = url.includes("localhost")
       ? " Is `ollama serve` running?"
       : "";
-    throw new Error(`could not reach ${provider.label} at ${url} — ${err.message}.${hint}`);
+    throw new Error(`could not reach ${provider.label} at ${url} — ${err.message}.${hint}`, {
+      cause: err,
+    });
   }
 
   const body = await res.json();
@@ -211,8 +218,15 @@ export async function runCheck({
     returned: raw.length,
     unusable: raw.length - usable.length,
     overflow,
+    trimmed,
     blocked: offPlatform.length,
     duplicates: usable.length - offPlatform.length - fresh.length,
-    dropped: fresh.length - kept.length,
+    // The url guard alone. This was `fresh.length - kept.length`, which is the
+    // guard's rejections PLUS the cap's overflow — and overflow is already
+    // reported on its own line, so a run with 10 clean entries and a cap of 6
+    // printed "over the cap 4" and "unlisted url 4": the same four counted
+    // twice, blamed on a guard that rejected none. A counting bug in the one
+    // subsystem whose whole job is honest counting.
+    dropped: fresh.length - withinGuard.length,
   };
 }

@@ -2,6 +2,102 @@
   "items": [
     {
       "date": "2026-11-09",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "ChatGPT Enterprise AWS",
+      "summary": "Available via AWS Marketplace, simplifying procurement for organizations.",
+      "url": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
+      "flagged": "",
+      "id": "live-1794262286770-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "CodeRabbit Ships 20x",
+      "summary": "Uses OpenAI models to scale agentic software development with Codex.",
+      "url": "https://openai.com/index/coderabbit-codex-daybreak",
+      "flagged": "",
+      "id": "live-1794262286770-1",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Control Room Safety",
+      "summary": "Tracks and stops model workloads across research infrastructure for safety.",
+      "url": "https://openai.com/index/control-room",
+      "flagged": "",
+      "id": "live-1794262286770-2",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "GLM 5.3 Flash Token Pass",
+      "summary": "Available in Token Pass with other models for coding agents.",
+      "url": "https://vercel.com/changelog/glm-5-3-flash-is-now-available-in-token-pass",
+      "flagged": "",
+      "id": "live-1794262286770-3",
+      "type": "API & tooling",
+      "models": [
+        "glm"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Claude Fable 5.2 AI Gateway",
+      "summary": "New model available for open-ended technical work with improved reasoning.",
+      "url": "https://vercel.com/changelog/claude-fable-5-2-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794262286770-4",
+      "type": "API & tooling",
+      "models": [
+        "claude"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Muse Ember AI Gateway",
+      "summary": "Lightweight reasoning model for agent sub-tasks with multimodal input.",
+      "url": "https://vercel.com/changelog/muse-ember-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794262286770-5",
+      "type": "API & tooling",
+      "models": [
+        "muse"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -1148,7 +1244,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794202788273,
+  "checkedAt": 1794262286777,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

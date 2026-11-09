@@ -60,6 +60,13 @@ export const FEEDS = [
 ];
 
 const MAX_ITEMS_PER_FEED = 12;
+/**
+ * Ceiling on everything handed to the model in one run, across all feeds.
+ *
+ * Needed once the date filter went inclusive: a busy weekday can put well over
+ * a hundred items in range, and the prompt has to fit in num_ctx.
+ */
+const MAX_TOTAL_ITEMS = 60;
 
 /**
  * Release candidates, alphas and betas are not news.
@@ -183,6 +190,9 @@ async function pool(items, limit, worker) {
  * @param {Function} [opts.onProgress]   (done, total, label)
  * @param {Function} [opts.onFeedFail]   (label, message) — partial failure is
  *                                       tolerated, but never silent
+ * @param {number}   [opts.maxItems]     ceiling on the total handed back
+ * @param {Function} [opts.onTrim]       (kept, total) — fired only when the
+ *                                       ceiling actually bites
  */
 export async function fetchFeeds({
   since = null,
@@ -192,6 +202,8 @@ export async function fetchFeeds({
   timeoutMs = REQUEST_TIMEOUT_MS,
   onProgress = null,
   onFeedFail = null,
+  maxItems = MAX_TOTAL_ITEMS,
+  onTrim = null,
 } = {}) {
   let done = 0;
 
@@ -230,14 +242,34 @@ export async function fetchFeeds({
   // results could never support: the old injected prompt had to ask a model to
   // judge recency from undated snippets, and a careful model answered by
   // returning nothing at all.
-  const fresh = since ? all.filter((i) => i.date && i.date > since) : all;
+  //
+  // INCLUSIVE, and that matters more than it looks. This was `> since`, which
+  // reads as "strictly newer than what we have" — but `since` is a DAY, not a
+  // moment. So the instant one entry dated today landed, every other item
+  // published today failed the test for the rest of the day. The wire ran at
+  // exactly one new entry a day for four days: the first run after UTC
+  // midnight took one item and the gate shut behind it. arXiv lost every one
+  // of those days, because it publishes in a single daily batch that almost
+  // always arrives after some vendor item has already claimed the date.
+  //
+  // Same-day items now come through, and dedupe drops the ones already on the
+  // wire — where they are counted, rather than vanishing here.
+  const fresh = since ? all.filter((i) => i.date && i.date >= since) : all;
 
   // Newest first, then deduped by url across feeds — the same release often
   // appears in a vendor blog and a changelog.
   const seen = new Set();
-  return fresh
+  const ranked = fresh
     .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
     .filter((i) => !seen.has(i.url) && seen.add(i.url));
+
+  // An inclusive filter keeps a whole day's publishing in play instead of
+  // collapsing to nothing, so the total now needs a ceiling of its own: 14
+  // feeds at 12 items each is 168, which is past what fits in the model's
+  // context. The old `>` hid this by starving the pipeline. Trimmed
+  // newest-first, and reported — a stage that drops things gets a number.
+  if (ranked.length > maxItems) onTrim?.(maxItems, ranked.length);
+  return ranked.slice(0, maxItems);
 }
 
 /** Rendered into the prompt. Dates included, because now we have them. */

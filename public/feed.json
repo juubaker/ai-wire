@@ -1,6 +1,90 @@
 {
   "items": [
     {
+      "date": "2026-11-09",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Decision Context",
+      "summary": "Introduces Forge Decision Context to capture behavioral signals from corrections and self-assessed failures, improving agent learning.",
+      "url": "https://arxiv.org/abs/2611.08644",
+      "flagged": "",
+      "id": "live-1794202788253-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ChainFlow",
+      "summary": "Proposes a new speculative decoding paradigm for faster LLM inference by matching latent flows.",
+      "url": "https://arxiv.org/abs/2611.08669",
+      "flagged": "",
+      "id": "live-1794202788253-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Memory-Aware Multi-Agent Architecture",
+      "summary": "Introduces a memory-aware multi-agent system for conversational recommendation using LLM orchestration.",
+      "url": "https://arxiv.org/abs/2611.08718",
+      "flagged": "",
+      "id": "live-1794202788253-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Adaptive Depth Aggregation",
+      "summary": "Enhances graph transformers for long-range reasoning by dynamically aggregating depth in graph processing.",
+      "url": "https://arxiv.org/abs/2611.08500",
+      "flagged": "",
+      "id": "live-1794202788253-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Emergent Low-Dimensional Topological Dynamics",
+      "summary": "Discovers low-dimensional submanifolds in neural networks that govern generalization and escape mechanics.",
+      "url": "https://arxiv.org/abs/2611.08502",
+      "flagged": "",
+      "id": "live-1794202788253-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Minimum-Sufficient Knowledge and Computation",
+      "summary": "Introduces MSKC for resource-aware computing in predictive analysis, optimizing knowledge and computation routes.",
+      "url": "https://arxiv.org/abs/2611.08558",
+      "flagged": "",
+      "id": "live-1794202788253-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-07",
       "source": "Vercel",
       "tier": "Primary",
@@ -1064,7 +1148,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794112564498,
+  "checkedAt": 1794202788273,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

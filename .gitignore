@@ -5,3 +5,4 @@ dist/
 .DS_Store
 *.log
 gkey
+scripts/.check-cron.local.sh

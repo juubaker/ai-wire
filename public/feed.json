@@ -2,6 +2,54 @@
   "items": [
     {
       "date": "2026-11-10",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini Intelligence Expands to More Devices",
+      "summary": "Gemini Intelligence is rolling out to more devices, enhancing user capabilities across various platforms with expanded features.",
+      "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices/",
+      "flagged": "",
+      "id": "live-1794353414562-0",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Google Cloud Launches Gemini for Healthcare",
+      "summary": "Google Cloud launches Gemini for healthcare to unify clinical data and automate workflows, reducing administrative burnout.",
+      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
+      "flagged": "",
+      "id": "live-1794353414562-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "Google DeepMind",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "AlphaProof Code Introduces Breakthrough in Software Verification",
+      "summary": "AlphaProof Code agents wrote three million lines of proofs in Lean to verify Signal’s core encryption, advancing software verification techniques.",
+      "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+      "flagged": "",
+      "id": "live-1794353414562-2",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
@@ -1444,7 +1492,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794329958744,
+  "checkedAt": 1794353414886,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

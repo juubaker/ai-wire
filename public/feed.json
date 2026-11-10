@@ -2,6 +2,36 @@
   "items": [
     {
       "date": "2026-11-10",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Carbon Now Available",
+      "summary": "Gemini 4 Carbon is now available on AI Gateway with 50% discount through November 30. It supports complex engineering tasks and cybersecurity defense with a 1M-token context window.",
+      "url": "https://vercel.com/changelog/gemini-4-carbon-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794329958729-0",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "DramaGrow for LLM Drama Evaluation",
+      "summary": "DramaGrow is a benchmark for auditing LLM judges of multi-episode dramas, addressing reliability and variability in human ratings.",
+      "url": "https://arxiv.org/abs/2611.09938",
+      "flagged": "",
+      "id": "live-1794329958729-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -1414,7 +1444,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794307422359,
+  "checkedAt": 1794329958744,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

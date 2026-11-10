@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-10",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "AlterNet Adaptive-Depth Mixture-of-Experts",
+      "summary": "AlterNet combines Mixture-of-Experts with dynamic-depth systems to allow models to adjust compute demands dynamically based on task requirements.",
+      "url": "https://arxiv.org/abs/2611.08741",
+      "flagged": "",
+      "id": "live-1794300324012-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
@@ -1316,7 +1330,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794294602488,
+  "checkedAt": 1794300324022,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

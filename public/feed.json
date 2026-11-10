@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-09",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "FinEvolveKG for Financial KG Construction",
+      "summary": "FinEvolveKG introduces a controlled method for evolving financial knowledge graphs, improving extraction without fragmenting shared rules.",
+      "url": "https://arxiv.org/abs/2611.08643",
+      "flagged": "",
+      "id": "live-1794269340328-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "RL-ATTACK for Adversarial LLMs",
+      "summary": "RL-ATTACK presents a reinforcement learning-based black-box adversarial attack framework for language models, improving attack precision.",
+      "url": "https://arxiv.org/abs/2611.08711",
+      "flagged": "",
+      "id": "live-1794269340328-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-09",
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
@@ -1244,7 +1272,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794262286777,
+  "checkedAt": 1794269340818,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

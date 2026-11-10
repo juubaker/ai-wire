@@ -2,6 +2,90 @@
   "items": [
     {
       "date": "2026-11-10",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "BIBIMBAP: A Benchmark for Instructional BIM-Based Automated Programming",
+      "summary": "Introduces BIBIMBAP, a Text-to-BIM benchmark for evaluating LLMs' ability to edit IFC models. Crucial for developers building BIM automation tools.",
+      "url": "https://arxiv.org/abs/2611.09933",
+      "flagged": "",
+      "id": "live-1794307422330-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM",
+      "summary": "Proposes META-IR, a framework for adaptive safety alignment in LLMs, enhancing resistance to jailbreak attacks and harmful prompts through meta-learning.",
+      "url": "https://arxiv.org/abs/2611.10089",
+      "flagged": "",
+      "id": "live-1794307422330-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "AutoEMatic: Runtime-Adaptive Mixed-Precision LLM Inference",
+      "summary": "AutoEMatic enables dynamic precision adjustments for LLM inference, optimizing performance and resource usage during runtime.",
+      "url": "https://arxiv.org/abs/2611.10165",
+      "flagged": "",
+      "id": "live-1794307422330-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MedToolFault and MedGuard: Evaluating Clinical Agent Reliability",
+      "summary": "Introduces MedToolFault and MedGuard to improve clinical agent reliability by detecting and mitigating tool failures in medical tasks.",
+      "url": "https://arxiv.org/abs/2611.09942",
+      "flagged": "",
+      "id": "live-1794307422330-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LoRazor: Trimming Adapter Execution for Efficient Multi-LoRA Serving",
+      "summary": "LoRazor reduces computation and memory overhead in multi-LoRA serving by trimming adapter execution, improving efficiency for concurrent requests.",
+      "url": "https://arxiv.org/abs/2611.10049",
+      "flagged": "",
+      "id": "live-1794307422330-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "DeepResearch RewardBench: Evaluating Reward Models for Deep Research Reports",
+      "summary": "DeepResearch RewardBench provides a framework to evaluate reward models for assessing the quality of AI-generated research reports.",
+      "url": "https://arxiv.org/abs/2611.10156",
+      "flagged": "",
+      "id": "live-1794307422330-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -1330,7 +1414,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794300324022,
+  "checkedAt": 1794307422359,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

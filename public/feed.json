@@ -1,6 +1,50 @@
 {
   "items": [
     {
+      "date": "2026-11-10",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Python SDK v3.49.0",
+      "summary": "OpenAI released a new version of its Python SDK with improved async function tools and bug fixes for audio encoding. This update enhances developer productivity and reliability when integrating with OpenAI's APIs.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.49.0",
+      "flagged": "",
+      "id": "live-1794294602475-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "NormGym Benchmark",
+      "summary": "NormGym introduces an interactive benchmark for testing normative competence in AI agents, enabling them to infer and adapt to new social norms through interaction. This could improve how agents operate in human-centric environments.",
+      "url": "https://arxiv.org/abs/2611.08613",
+      "flagged": "",
+      "id": "live-1794294602475-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-10",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "IWIBench Evaluation Framework",
+      "summary": "IWIBench evaluates how well models can modify the weights of other models through gradient-free intra-weight injection, providing a benchmark for assessing the effectiveness of such techniques in altering model behavior.",
+      "url": "https://arxiv.org/abs/2611.08647",
+      "flagged": "",
+      "id": "live-1794294602475-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-09",
       "source": "arXiv",
       "tier": "Primary",
@@ -1272,7 +1316,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794269340818,
+  "checkedAt": 1794294602488,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

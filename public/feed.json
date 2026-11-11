@@ -1,6 +1,62 @@
 {
   "items": [
     {
+      "date": "2026-11-11",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "TimeOmni-o1: Bidirectional Coupling for Multimodal Reasoning",
+      "summary": "A new model couples time series and LLMs for forecasting and reasoning, enabling joint generation and analysis of text and time series data.",
+      "url": "https://arxiv.org/abs/2611.12902",
+      "flagged": "",
+      "id": "live-1794411301043-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "EarthRecord Benchmark for Satellite Analysis",
+      "summary": "Introduces EarthRecord, a benchmark for analyzing decades of satellite imagery using multimodal agents, enabling land change detection and Earth observation science.",
+      "url": "https://arxiv.org/abs/2611.12934",
+      "flagged": "",
+      "id": "live-1794411301043-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SEL-D: Detecting Silent Evidence Loss",
+      "summary": "SEL-D identifies when key evidence is removed from compressed contexts, ensuring reliable model outputs for downstream tasks.",
+      "url": "https://arxiv.org/abs/2611.12903",
+      "flagged": "",
+      "id": "live-1794411301043-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ADIndex for Sparse Attention Indexing",
+      "summary": "ADIndex improves sparse attention indexing by reducing latency in long-context inference, enhancing efficiency for large models.",
+      "url": "https://arxiv.org/abs/2611.12956",
+      "flagged": "",
+      "id": "live-1794411301043-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-10",
       "source": "Google AI",
       "tier": "Primary",
@@ -1492,7 +1548,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794353414886,
+  "checkedAt": 1794411301065,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -2,6 +2,52 @@
   "items": [
     {
       "date": "2026-11-11",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini Decisions API",
+      "summary": "Google introduces the Gemini Decisions API, which provides fast, calibrated multimodal decisions using the Gemini Decision model. This tool enables developers to route requests, check policies, and filter agent tools without generating output tokens.",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+      "flagged": "",
+      "id": "live-1794422643834-0",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini Decision 1 on AI Gateway",
+      "summary": "Vercel now offers Gemini Decision 1 via AI Gateway, allowing developers to use the model with text, images, audio, video, and PDF inputs for decision-making tasks without generating output tokens.",
+      "url": "https://vercel.com/changelog/gemini-decision-1-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794422643834-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "One Table Benchmark for Tabular Models",
+      "summary": "The One Table Benchmark evaluates generalist tabular models across generation, imputation, and prediction tasks, providing a comprehensive framework to assess their capabilities and training objectives.",
+      "url": "https://arxiv.org/abs/2611.13001",
+      "flagged": "",
+      "id": "live-1794422643834-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -1590,7 +1636,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794415891884,
+  "checkedAt": 1794422643880,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

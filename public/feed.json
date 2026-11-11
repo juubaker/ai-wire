@@ -2,6 +2,48 @@
   "items": [
     {
       "date": "2026-11-11",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Auditable Human-Agent Teams for Autonomous X-ray Experimentation",
+      "summary": "Researchers demonstrate autonomous synchrotron X-ray experiments using human-agent teams, enabling auditability of decisions. This advances safe, transparent scientific automation.",
+      "url": "https://arxiv.org/abs/2611.12933",
+      "flagged": "",
+      "id": "live-1794415891863-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "BotPsy: On-Device Personal Assistant",
+      "summary": "BotPsy introduces a sub-billion-parameter agentic language model for on-device personal assistants, enabling privacy-preserving, low-latency interactions without cloud dependency.",
+      "url": "https://huggingface.co/blog/qvac/botpsy",
+      "flagged": "",
+      "id": "live-1794415891863-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "StatPrompt-LLM: Lightweight Statistical Refinement",
+      "summary": "StatPrompt-LLM enhances time-series forecasting by incorporating statistical refinement into foundation-style models, improving accuracy and interpretability for limited observation scenarios.",
+      "url": "https://arxiv.org/abs/2611.12974",
+      "flagged": "",
+      "id": "live-1794415891863-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-11",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -1548,7 +1590,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794411301065,
+  "checkedAt": 1794415891884,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

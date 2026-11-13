@@ -1,6 +1,84 @@
 {
   "items": [
     {
+      "date": "2026-11-12",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Amplitude Uses OpenAI for Faster Product Development",
+      "summary": "Amplitude uses OpenAI models to build a proactive product agent that ships changes in 1–2 days. This improves development speed and impact measurement for product teams.",
+      "url": "https://openai.com/business/customer-stories/amplitude",
+      "flagged": "",
+      "id": "live-1794530168992-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gondola Boosts Output with Codex",
+      "summary": "Gondola uses Codex to increase lead engineer output by 50%, simplifying daily work and improving productivity for creative teams.",
+      "url": "https://openai.com/business/customer-stories/gondola",
+      "flagged": "",
+      "id": "live-1794530168992-1",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Hydrogen Enhances Search and Multimodal Workflows",
+      "summary": "Gemini 4 Hydrogen improves agentic coding, knowledge work, and tool use while maintaining low latency. It supports longer tasks and better document generation for developers and analysts.",
+      "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
+      "flagged": "",
+      "id": "live-1794530168992-2",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "Google DeepMind",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Hydrogen Launched for Developers",
+      "summary": "Gemini 4 Hydrogen is now available on AI Gateway, offering improved multimodal capabilities and reliable tool orchestration for complex workflows.",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen/",
+      "flagged": "",
+      "id": "live-1794530168992-3",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LLMON: LLM-Native Markup Language in Granite",
+      "summary": "LLMON, an LLM-native markup language, is now available in Granite 4.1, enabling more efficient and structured interaction with large language models.",
+      "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
+      "flagged": "",
+      "id": "live-1794530168992-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-11",
       "source": "Google AI",
       "tier": "Primary",
@@ -1636,7 +1714,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794422643880,
+  "checkedAt": 1794530169055,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -5,6 +5,36 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "OpenAI Python SDK v3.50.0",
+      "summary": "The OpenAI Python SDK now exposes reasoning input transformations on responses, improving tool integration for developers building LLM systems.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.50.0",
+      "flagged": "",
+      "id": "live-1794553930758-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Inkling 2 Small Now Available on AI Gateway",
+      "summary": "Inkling 2 Small supports coding agents and visual understanding, enabling developers to build more sophisticated LLM applications with multimodal capabilities.",
+      "url": "https://vercel.com/changelog/inkling-2-small-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794553930758-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-12",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "Amplitude Uses OpenAI for Faster Product Development",
       "summary": "Amplitude uses OpenAI models to build a proactive product agent that ships changes in 1–2 days. This improves development speed and impact measurement for product teams.",
       "url": "https://openai.com/business/customer-stories/amplitude",
@@ -1714,7 +1744,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794530169055,
+  "checkedAt": 1794553930774,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

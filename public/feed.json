@@ -1,6 +1,90 @@
 {
   "items": [
     {
+      "date": "2026-11-13",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Abstention Is Not Threshold Compliance",
+      "summary": "Researchers show how explicit scoring rules in prompts can improve model reliability by increasing abstention rates. This affects how systems handle uncertainty in real-world applications.",
+      "url": "https://arxiv.org/abs/2611.14661",
+      "flagged": "",
+      "id": "live-1794558975317-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MITRA-Swarm for Classical Machine Translation",
+      "summary": "A new multi-agent architecture improves translation of classical Sanskrit by injecting linguistic structure, enabling better handling of complex grammatical features.",
+      "url": "https://arxiv.org/abs/2611.14675",
+      "flagged": "",
+      "id": "live-1794558975317-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Benchmarking Multilingual Document Understanding",
+      "summary": "A new benchmark evaluates how well VLMs handle multilingual document understanding across different languages and tasks, highlighting gaps in current models.",
+      "url": "https://arxiv.org/abs/2611.14758",
+      "flagged": "",
+      "id": "live-1794558975317-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LLM-Based Spoken Dialogue System",
+      "summary": "A system adapts a frozen LLM to full-duplex spoken dialogue with minimal data, enabling more natural and responsive conversational agents.",
+      "url": "https://arxiv.org/abs/2611.14774",
+      "flagged": "",
+      "id": "live-1794558975317-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ToolTurns Benchmark for LLM Agents",
+      "summary": "A new benchmark tests multi-turn dialogue capabilities of tool-using LLMs, highlighting the need for better context retention and clarification in conversational systems.",
+      "url": "https://arxiv.org/abs/2611.14925",
+      "flagged": "",
+      "id": "live-1794558975317-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SynthCorp for Data Agent Benchmarks",
+      "summary": "A platform for creating customizable data estates and benchmarks enables more targeted evaluation of data agent capabilities, improving their real-world applicability.",
+      "url": "https://arxiv.org/abs/2611.14765",
+      "flagged": "",
+      "id": "live-1794558975317-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-12",
       "source": "OpenAI",
       "tier": "Primary",
@@ -1744,7 +1828,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794553930774,
+  "checkedAt": 1794558975330,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

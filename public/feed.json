@@ -2,6 +2,22 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "ChatGPT Wallet",
+      "summary": "OpenAI introduces ChatGPT Wallet, a secure payment method for agents in ChatGPT Work, Codex, and other platforms, allowing user-approved purchases with existing card protections.",
+      "url": "https://openai.com/index/introducing-chatgpt-wallet",
+      "flagged": "",
+      "id": "live-1794597464014-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "arXiv cs.LG",
       "tier": "Primary",
       "section": "innovation",
@@ -1856,7 +1872,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794569232779,
+  "checkedAt": 1794597464046,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

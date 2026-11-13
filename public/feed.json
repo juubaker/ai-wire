@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "Cloudflare",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Kitesurf Open Source",
+      "summary": "Kitesurf, an experimental browser engine for AI agents, is now open source, allowing inspection, local running, and deployment on Cloudflare Workers.",
+      "url": "https://blog.cloudflare.com/kitesurf-open-source/",
+      "flagged": "",
+      "id": "live-1794601624418-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
@@ -1872,7 +1886,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794597464046,
+  "checkedAt": 1794601624442,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

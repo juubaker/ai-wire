@@ -5,6 +5,20 @@
       "source": "Cloudflare",
       "tier": "Primary",
       "section": "product",
+      "title": "Spend Management",
+      "summary": "Spend Management adds opt-in spending caps for Cloudflare Workers and Durable Objects, improving cost control for developers using Cloudflare's services.",
+      "url": "https://blog.cloudflare.com/spend-management/",
+      "flagged": "",
+      "id": "live-1794608358391-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "Cloudflare",
+      "tier": "Primary",
+      "section": "product",
       "title": "Kitesurf Open Source",
       "summary": "Kitesurf, an experimental browser engine for AI agents, is now open source, allowing inspection, local running, and deployment on Cloudflare Workers.",
       "url": "https://blog.cloudflare.com/kitesurf-open-source/",
@@ -1886,7 +1900,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794601624442,
+  "checkedAt": 1794608360498,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "KernelMosaic Dataset for CUDA Kernel Generation",
+      "summary": "An open dataset pairs diverse CUDA tasks with verified solutions, enabling training of LLMs to generate efficient GPU code for engineering applications.",
+      "url": "https://arxiv.org/abs/2611.14604",
+      "flagged": "",
+      "id": "live-1794563386726-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -1828,7 +1842,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794558975330,
+  "checkedAt": 1794563386734,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

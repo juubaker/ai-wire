@@ -5,6 +5,20 @@
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
+      "title": "Vercel Security Review",
+      "summary": "Vercel Security Review now scans code changes in unlinked GitHub repositories for vulnerabilities, enhancing security without requiring a linked Vercel project.",
+      "url": "https://vercel.com/changelog/vercel-security-review-no-longer-requires-a-linked-vercel-project",
+      "flagged": "",
+      "id": "live-1794649104708-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
       "title": "Parallel Decisions Free on AI Gateway",
       "summary": "Parallel Decisions Fast is now free on AI Gateway, offering real-time web searches with probabilities and evidence for CRM and verification tasks.",
       "url": "https://vercel.com/changelog/parallel-decisions-now-available-on-ai-gateway-for-free",
@@ -1972,7 +1986,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794641810604,
+  "checkedAt": 1794649104716,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

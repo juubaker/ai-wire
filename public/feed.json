@@ -2,6 +2,22 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "llama.cpp v1.0.0",
+      "summary": "Hugging Face announces llama.cpp v1.0.0, a stronger foundation for the local AI ecosystem, enhancing performance and usability for local model deployment.",
+      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "flagged": "",
+      "id": "live-1794628357569-0",
+      "type": "API & tooling",
+      "models": [
+        "llama"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
@@ -1928,7 +1944,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794620793825,
+  "checkedAt": 1794628357589,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

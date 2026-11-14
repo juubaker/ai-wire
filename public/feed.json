@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Token Pass Enhancements",
+      "summary": "Vercel Token Pass now includes $150 in monthly tokens for $30/month, expanding supported models and improving token credit management.",
+      "url": "https://vercel.com/changelog/vercel-token-pass-now-includes-one-hundred-fifty-dollars-of-monthly-tokens",
+      "flagged": "",
+      "id": "live-1794620793811-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "Hugging Face",
       "tier": "Primary",
       "section": "innovation",
@@ -1914,7 +1928,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794617105725,
+  "checkedAt": 1794620793825,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

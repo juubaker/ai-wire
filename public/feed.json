@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "XYBench: Helping with the problem behind the question",
+      "summary": "XYBench introduces a benchmark that evaluates models on their ability to understand and address the underlying issues in questions.",
+      "url": "https://huggingface.co/blog/allenai/xybench",
+      "flagged": "",
+      "id": "live-1794617105719-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "Cloudflare",
       "tier": "Primary",
       "section": "product",
@@ -1900,7 +1914,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794608360498,
+  "checkedAt": 1794617105725,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

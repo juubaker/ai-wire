@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-13",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Parallel Decisions Free on AI Gateway",
+      "summary": "Parallel Decisions Fast is now free on AI Gateway, offering real-time web searches with probabilities and evidence for CRM and verification tasks.",
+      "url": "https://vercel.com/changelog/parallel-decisions-now-available-on-ai-gateway-for-free",
+      "flagged": "",
+      "id": "live-1794641810593-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Vercel Sandbox Startup Speed Improved",
+      "summary": "Vercel Sandbox initializes up to 4x faster in regions with regional caching, reducing startup time for AI agents and workloads.",
+      "url": "https://vercel.com/changelog/vercel-sandbox-starts-up-to-four-times-faster",
+      "flagged": "",
+      "id": "live-1794641810593-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
       "source": "Hugging Face",
       "tier": "Primary",
       "section": "product",
@@ -1944,7 +1972,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794628357589,
+  "checkedAt": 1794641810604,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

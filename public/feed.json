@@ -2,6 +2,50 @@
   "items": [
     {
       "date": "2026-11-16",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Embedded Assessments",
+      "summary": "OpenAI begins embedded assessments with Apollo Research, METR, and Transluce, and Goodfire to independently evaluate model alignment, safeguards, and monitoring systems.",
+      "url": "https://openai.com/index/our-first-phase-of-embedded-assessments",
+      "flagged": "",
+      "id": "live-1794869164164-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Private Inference",
+      "summary": "Private Inference connects your own model endpoints to AI Gateway, allowing enterprises to manage private and catalog models in one place.",
+      "url": "https://vercel.com/changelog/ai-gateway-now-supports-private-inference",
+      "flagged": "",
+      "id": "live-1794869164164-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Hy4 Flash",
+      "summary": "Hy4 Flash from Tencent is now available on AI Gateway with a 50% discount, offering lower-cost, high-performance model capabilities.",
+      "url": "https://vercel.com/changelog/hy4-flash-now-available-on-ai-gateway-for-50-off",
+      "flagged": "",
+      "id": "live-1794869164164-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2098,7 +2142,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794812892814,
+  "checkedAt": 1794869164173,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

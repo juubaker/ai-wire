@@ -2,6 +2,48 @@
   "items": [
     {
       "date": "2026-11-16",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LoRAWeaver: Adapter Routing",
+      "summary": "A model-agnostic method for routing LoRA adapters without retraining, improving inference efficiency.",
+      "url": "https://arxiv.org/abs/2611.17340",
+      "flagged": "",
+      "id": "live-1794812892801-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Model Annealing: Data-Efficient Learning",
+      "summary": "A training method that uses review and consolidation to improve model performance with limited data.",
+      "url": "https://arxiv.org/abs/2611.17524",
+      "flagged": "",
+      "id": "live-1794812892801-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Unfinished-Bench: Rule Violations in Agents",
+      "summary": "A benchmark that evaluates AI agents' ability to persist and act autonomously in real-world work environments.",
+      "url": "https://arxiv.org/abs/2611.17460",
+      "flagged": "",
+      "id": "live-1794812892801-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2056,7 +2098,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794807727718,
+  "checkedAt": 1794812892814,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

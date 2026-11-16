@@ -395,15 +395,38 @@ export default function Wire() {
    *
    * Measured from the newest entry rather than the last check: a check that
    * runs hourly and finds nothing is fine, but a wire whose newest item is a
-   * week old means retrieval has quietly stopped working.
+   * week old means something has quietly stopped working.
+   *
+   * Counted in WORKING days, not calendar days. arXiv — the only source the
+   * innovation beat has — rebuilds on weekdays and is empty at weekends, and
+   * the vendor blogs slow down too, so a silent Saturday and Sunday is the
+   * normal shape of this data. Measured in calendar days this banner fired on
+   * two consecutive quiet weekends and announced that retrieval had broken,
+   * which both times it had not. A warning that cries wolf trains its reader
+   * to ignore it, which is worse than having no warning at all.
    */
   const staleness = useMemo(() => {
     const newest = items.map((i) => i.date).sort().slice(-1)[0];
     if (!newest) return null;
-    const days = Math.floor((now - new Date(`${newest}T00:00:00`)) / 86400000);
+    const from = new Date(`${newest}T00:00:00`);
+    const days = Math.floor((now - from) / 86400000);
     if (days < 2) return null;
+
+    // setDate rather than adding milliseconds: across a DST boundary an
+    // 86400000 step lands an hour off and can report the wrong weekday.
+    let weekdays = 0;
+    for (let d = 1; d <= days; d++) {
+      const probe = new Date(from);
+      probe.setDate(probe.getDate() + d);
+      const dow = probe.getDay();
+      if (dow !== 0 && dow !== 6) weekdays++;
+    }
+    // A gap made entirely of weekend is not a gap worth reporting.
+    if (weekdays === 0) return null;
+
     return {
       days,
+      weekdays,
       everChecked: Boolean(lastCheck),
     };
   }, [items, lastCheck, now]);
@@ -565,9 +588,14 @@ export default function Wire() {
         {staleness && (
           <div className="stale mono" role="status">
             <strong>Nothing new in {staleness.days} days.</strong>{" "}
-            {staleness.everChecked
-              ? "Checks are running but finding nothing, which usually means retrieval has broken rather than that the industry went quiet."
-              : "No check has succeeded yet — everything here is seed content."}
+            {/* States the observation and stops. The old copy asserted that
+                retrieval had broken — a cause the page has no way to observe,
+                and wrong on both occasions it claimed it. */}
+            {!staleness.everChecked
+              ? "No check has succeeded yet — everything here is seed content."
+              : staleness.weekdays >= 3
+                ? `That covers ${staleness.weekdays} working days, which is longer than a quiet stretch usually runs here, so the feed may not be updating correctly.`
+                : "Quiet stretches are normal — research feeds pause at weekends and company blogs slow down."}
           </div>
         )}
 

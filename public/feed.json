@@ -1,6 +1,62 @@
 {
   "items": [
     {
+      "date": "2026-11-16",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Tracing Knowledge and Reasoning in LLM",
+      "summary": "A new framework characterizes model-internal processing during benchmark tasks, offering insights into how LLMs handle retrieval and reasoning tasks.",
+      "url": "https://arxiv.org/abs/2611.17461",
+      "flagged": "",
+      "id": "live-1794807727682-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LuthorSQL: Fast Text-to-SQL Model",
+      "summary": "A non-autoregressive 7B text-to-SQL model enables faster, local execution for database queries, reducing reliance on hosted models and API costs.",
+      "url": "https://arxiv.org/abs/2611.17780",
+      "flagged": "",
+      "id": "live-1794807727682-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "RAG-FGO: Dynamic Query Rewriting",
+      "summary": "Improves generative RAG systems by optimizing query rewriting for complex scenarios, enhancing retrieval accuracy and system performance.",
+      "url": "https://arxiv.org/abs/2611.17788",
+      "flagged": "",
+      "id": "live-1794807727682-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "GDP.xlsx: Benchmarking Frontier Models",
+      "summary": "Introduces GDP_xlsx, a benchmark of 70 realistic workplace requests with expert rubrics, testing models on professional workbooks and CSV files.",
+      "url": "https://arxiv.org/abs/2611.17766",
+      "flagged": "",
+      "id": "live-1794807727682-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-13",
       "source": "Vercel",
       "tier": "Primary",
@@ -2000,7 +2056,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794801991518,
+  "checkedAt": 1794807727718,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

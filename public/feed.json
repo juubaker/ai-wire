@@ -5,6 +5,20 @@
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
+      "title": "Qwen4-Max on AI Gateway",
+      "summary": "Qwen4-Max, a reasoning model with vision and a 1M-token context window, is now available on AI Gateway for coding and agent tasks, enhancing professional tool integration.",
+      "url": "https://vercel.com/changelog/qwen4-max-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794801991503-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-13",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
       "title": "Vercel Security Review",
       "summary": "Vercel Security Review now scans code changes in unlinked GitHub repositories for vulnerabilities, enhancing security without requiring a linked Vercel project.",
       "url": "https://vercel.com/changelog/vercel-security-review-no-longer-requires-a-linked-vercel-project",
@@ -1986,7 +2000,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794649104716,
+  "checkedAt": 1794801991518,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

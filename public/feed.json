@@ -2,6 +2,90 @@
   "items": [
     {
       "date": "2026-11-17",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Read, Route, Patch: Robust Test-Time Evolution for LLM Agents",
+      "summary": "LLM agents can improve decision-making through test-time evolution. Trident enhances memory reading, behavioral exploration, and harness evolution for better performance.",
+      "url": "https://arxiv.org/abs/2611.18585",
+      "flagged": "",
+      "id": "live-1794905844737-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Quantize, Qualify, Rerank: A Recipe for Compressing LLMs Without Losing Quality",
+      "summary": "A method to compress large language models without quality loss. Uses metric analysis and model adjustments to maintain performance.",
+      "url": "https://arxiv.org/abs/2611.18587",
+      "flagged": "",
+      "id": "live-1794905844737-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SpecRelay: Amortize or Avoid the Round Trip in Edge-Cloud Speculative Decoding",
+      "summary": "Improves edge-cloud speculative decoding by reducing latency through optimized round-trip handling in distributed inference.",
+      "url": "https://arxiv.org/abs/2611.18963",
+      "flagged": "",
+      "id": "live-1794905844737-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ScopeBench: Evaluating Cultural Norm Scope Awareness in LLMs",
+      "summary": "A benchmark to assess how well LLMs understand and apply cultural norms, crucial for safety and ethical AI deployment.",
+      "url": "https://arxiv.org/abs/2611.18600",
+      "flagged": "",
+      "id": "live-1794905844737-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Check Token: Real-Time Self-Verification and Precise Truncation in LLM Reasoning",
+      "summary": "Introduces a check token for real-time error detection and truncation in LLM reasoning chains, improving reliability and accuracy.",
+      "url": "https://arxiv.org/abs/2611.18564",
+      "flagged": "",
+      "id": "live-1794905844737-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MemeEconomy: Do LLM Agents Trade Ethics for Survival?",
+      "summary": "Explores how LLM agents balance ethical compliance with task success under simulated economic pressure in multi-round settings.",
+      "url": "https://arxiv.org/abs/2611.18908",
+      "flagged": "",
+      "id": "live-1794905844737-5",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2113,79 +2197,9 @@
       "title": "Gemini 4 Argon GA",
       "summary": "First of the Gemini 4 line to reach general availability, aimed at complex coding, agentic work, maths and science.",
       "url": "https://ai.google.dev/gemini-api/docs/changelog"
-    },
-    {
-      "id": "typesafe-jev-launch",
-      "date": "2026-09-15",
-      "source": "TypeSafe AI",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "jev"
-      ],
-      "title": "Jev: a model that decides instead of writing",
-      "summary": "TypeSafe AI's first 'System One' model returns a typed choice, score or boolean with a calibrated confidence, never text. Constrained output means it can't break your schema — but it can be confident and still pick the wrong valid option.",
-      "url": "https://docs.typesafe.ai",
-      "flagged": "Vendor benchmark only"
-    },
-    {
-      "id": "anthropic-browser-use",
-      "date": "2026-08-19",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "title": "Computer use leaves beta; browser use ships",
-      "summary": "computer_toolset_20260801 adds batch actions and default zoom. The new browser_toolset_20260801 drives a browser your app hosts, reading the accessibility tree instead of screenshots alone.",
-      "url": "https://docs.claude.com/en/release-notes/overview.md"
-    },
-    {
-      "id": "openai-sol-price-cut",
-      "date": "2026-08-21",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "Pricing",
-      "section": "product",
-      "title": "GPT-5.6 Sol cut over 20% for three months",
-      "summary": "API and credit pricing only, and explicitly temporary. Worth testing against, not worth rebuilding routing economics around.",
-      "url": "https://openai.com/index/gpt-5-6/"
-    },
-    {
-      "id": "openai-assistants-removed",
-      "date": "2026-08-26",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "type": "Deprecation",
-      "section": "product",
-      "title": "Assistants API removed",
-      "summary": "One year after notice, the endpoint is gone; Responses plus Conversations is the path. Older GPT-5 and o3 snapshots follow on December 11.",
-      "url": "https://developers.openai.com/api/docs/deprecations"
-    },
-    {
-      "id": "mcp-stateless",
-      "date": "2026-07-28",
-      "source": "MCP",
-      "tier": "Primary",
-      "type": "Protocol",
-      "section": "product",
-      "title": "MCP 2026-07-28 final: the protocol goes stateless",
-      "summary": "No Mcp-Session-Id, no initialize handshake, tools/list cacheable via ttlMs, cross-call state as server-minted handles. Roots, Sampling and Logging deprecated on a 12-month floor.",
-      "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog"
-    },
-    {
-      "id": "arxiv-vista",
-      "date": "2026-07-23",
-      "source": "arXiv 2606.30005",
-      "tier": "Primary",
-      "type": "Research",
-      "section": "innovation",
-      "title": "VISTA: agents as their own context managers",
-      "summary": "Training-free, model-agnostic layer giving typed, addressable context blocks with archival and recovery. Drops over an existing agent loop.",
-      "url": "https://arxiv.org/abs/2606.30005"
     }
   ],
-  "checkedAt": 1794900458231,
+  "checkedAt": 1794905844763,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -2,6 +2,36 @@
   "items": [
     {
       "date": "2026-11-17",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "NATO Cyber Defense Collaboration",
+      "summary": "OpenAI is collaborating with NATO and allied cyber agencies to enhance vulnerability detection and system protection using AI. This partnership could influence how security tools are integrated into LLM systems.",
+      "url": "https://openai.com/index/strengthening-nato-allied-cyber-defences-ai",
+      "flagged": "",
+      "id": "live-1794910809001-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Epistemic Infantilization in LLMs",
+      "summary": "A new paper quantifies how LLMs reduce technical depth when disability is disclosed before expert queries. This could impact how systems handle identity-based bias in tutoring and knowledge retrieval.",
+      "url": "https://arxiv.org/abs/2611.18583",
+      "flagged": "",
+      "id": "live-1794910809001-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2169,37 +2199,9 @@
       "title": "AMD to buy World Labs for about $8.2B in stock",
       "summary": "Fei-Fei Li's spatial-intelligence startup, in an all-stock deal expected to close by end of 2026 subject to regulatory approval. Reported figure, not a filing.",
       "url": "https://aifundingtracker.com/weekly-ai-funding-2-6b-raised-amd-buys-world-labs/"
-    },
-    {
-      "id": "anthropic-otel",
-      "date": "2026-10-14",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "type": "API & tooling",
-      "section": "product",
-      "models": [
-        "claude"
-      ],
-      "title": "OpenTelemetry export for Messages and Managed Agents",
-      "summary": "Beta. The Python, TypeScript, C#, Go, Java, PHP and Ruby SDKs emit spans for Messages API requests and Managed Agents sessions, so traces land in whatever collector you already run instead of a vendor console.",
-      "url": "https://platform.claude.com/docs/en/release-notes/overview"
-    },
-    {
-      "id": "google-gemini-4-argon",
-      "date": "2026-10-13",
-      "source": "Google",
-      "tier": "Primary",
-      "type": "Model release",
-      "section": "product",
-      "models": [
-        "gemini"
-      ],
-      "title": "Gemini 4 Argon GA",
-      "summary": "First of the Gemini 4 line to reach general availability, aimed at complex coding, agentic work, maths and science.",
-      "url": "https://ai.google.dev/gemini-api/docs/changelog"
     }
   ],
-  "checkedAt": 1794905844763,
+  "checkedAt": 1794910809013,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

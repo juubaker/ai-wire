@@ -5,6 +5,22 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "ChatGPT for Healthcare",
+      "summary": "OpenAI introduces computer-use agents, improved clinical answers, and new healthcare plugins that work across healthcare software to get real work done.",
+      "url": "https://openai.com/index/more-ways-to-move-care-forward-with-chatgpt-for-healthcare",
+      "flagged": "",
+      "id": "live-1794875783572-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-16",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "Embedded Assessments",
       "summary": "OpenAI begins embedded assessments with Apollo Research, METR, and Transluce, and Goodfire to independently evaluate model alignment, safeguards, and monitoring systems.",
       "url": "https://openai.com/index/our-first-phase-of-embedded-assessments",
@@ -2142,7 +2158,7 @@
       "flagged": "Vendor benchmark only"
     }
   ],
-  "checkedAt": 1794869164173,
+  "checkedAt": 1794875783583,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

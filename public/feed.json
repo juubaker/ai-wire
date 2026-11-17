@@ -5,6 +5,22 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "GPT-6.2 Astra and Sol API Availability",
+      "summary": "OpenAI makes GPT-6.2 Astra and Sol available on AI Gateway, enabling developers to access advanced coding and professional output capabilities with lower latency and cost.",
+      "url": "https://vercel.com/changelog/gpt-6-2-astra-and-sol-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1794947348416-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-17",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "GPT-6.2 Astra and Sol",
       "summary": "OpenAI released GPT-6.2 Astra and Sol, improving coding, computer use, and efficiency at lower cost across ChatGPT Work, Codex, and the API.",
       "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
@@ -2192,23 +2208,9 @@
         "claude"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-15",
-      "source": "MCP",
-      "tier": "Primary",
-      "section": "product",
-      "title": "MCP Specification Update",
-      "summary": "The MCP specification was updated to remove protocol-level sessions and introduce cacheable list results.",
-      "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/changelog.mdx",
-      "flagged": "None",
-      "id": "live-1792296803963-6",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1794942565053,
+  "checkedAt": 1794947348425,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

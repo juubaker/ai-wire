@@ -2,6 +2,22 @@
   "items": [
     {
       "date": "2026-11-18",
+      "source": "Google DeepMind",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini 4 Neon",
+      "summary": "Google DeepMind launches Gemini 4 Neon, a new variant of the Gemini model optimized for specific use cases.",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-neon/",
+      "flagged": "",
+      "id": "live-1795038019112-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-18",
       "source": "Google AI",
       "tier": "Primary",
       "section": "product",
@@ -2186,25 +2202,9 @@
         "claude"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-16",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Prompt-to-Voice Feature",
-      "summary": "Prompt-to-voice feature released for all API customers, allowing creation of custom voices through the API or voice Playground.",
-      "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
-      "flagged": "",
-      "id": "live-1792297185622-3",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795033033665,
+  "checkedAt": 1795038019154,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

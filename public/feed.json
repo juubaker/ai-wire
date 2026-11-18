@@ -2,6 +2,36 @@
   "items": [
     {
       "date": "2026-11-18",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "GPT-6 Astra Optimizes Chip Design",
+      "summary": "OpenAI models optimized circuits used in Jalapeño silicon and improved RISC‑V core designs, showing progress in AI-assisted chip design.",
+      "url": "https://openai.com/index/advancing-chip-design-with-our-models",
+      "flagged": "",
+      "id": "live-1795043298078-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-18",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "DaisyRose-27B Advances Post-Training Efficiency",
+      "summary": "DaisyRose-27B pushes the frontier of post-training efficiency, offering significant improvements in model performance and resource utilization.",
+      "url": "https://huggingface.co/blog/RadixArk/daisyrose-27b-pushing-the-frontier-of-post-trainin",
+      "flagged": "",
+      "id": "live-1795043298078-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-18",
       "source": "Google DeepMind",
       "tier": "Primary",
       "section": "product",
@@ -2170,41 +2200,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-14",
-      "source": "TypeSafe AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Jev 1.14.0 Release",
-      "summary": "Jev 1.14.0 is now available, with experimental features like images, a Box type, and 262k context, accessible via danger-zone headers.",
-      "url": "https://jevainews.com/jev-day-2026/",
-      "flagged": "",
-      "id": "live-1792297185622-1",
-      "type": "API & tooling",
-      "models": [
-        "jev"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-15",
-      "source": "Anthropic",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Claude Haiku 5.5 Availability",
-      "summary": "Claude Haiku 5.5 is now available, designed for high-volume, cost-sensitive tasks and pairs well with Opus 5.5 and Sonnet 5.5 as a subagent.",
-      "url": "https://www.anthropic.com/claude-haiku-5-5",
-      "flagged": "",
-      "id": "live-1792297185622-2",
-      "type": "API & tooling",
-      "models": [
-        "claude"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795038019154,
+  "checkedAt": 1795043298094,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

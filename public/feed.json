@@ -1,6 +1,62 @@
 {
   "items": [
     {
+      "date": "2026-11-19",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LUCID: Evaluating Latent Causal Structure Inference",
+      "summary": "A new benchmark assesses whether models can infer market structures from financial data, crucial for understanding model behavior in complex systems.",
+      "url": "https://arxiv.org/abs/2611.23533",
+      "flagged": "",
+      "id": "live-1795068976862-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "FutureBench: Evaluating Knowledge-Context Conflict",
+      "summary": "A renewable framework for assessing how models handle conflicting information, improving reliability in real-world applications.",
+      "url": "https://arxiv.org/abs/2611.23601",
+      "flagged": "",
+      "id": "live-1795068976862-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SpecLook: Fast Agentic MLLMs",
+      "summary": "A method to speculate where models should look for efficient and reliable reasoning, reducing latency in multi-step tasks.",
+      "url": "https://arxiv.org/abs/2611.23483",
+      "flagged": "",
+      "id": "live-1795068976862-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "180B Parameters, 32GB RAM MoE Inference",
+      "summary": "A breakthrough in large-scale model inference, pushing the limits of MoE with high parameter counts and memory efficiency for complex tasks.",
+      "url": "https://huggingface.co/blog/moe-expert-streaming",
+      "flagged": "",
+      "id": "live-1795068976862-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-18",
       "source": "OpenAI",
       "tier": "Primary",
@@ -2138,71 +2194,9 @@
         "claude"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-17",
-      "source": "DeepSeek",
-      "tier": "Primary",
-      "section": "product",
-      "title": "DeepSeek V4.1 Flash 1017 Release",
-      "summary": "DeepSeek V4.1 Flash 1017 is now available on AI Gateway, with improvements in reasoning, coding, and image understanding.",
-      "url": "https://vercel.com/changelog/deepseek-v4-1-flash-1017-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1792305600604-1",
-      "type": "API & tooling",
-      "models": [
-        "deepseek"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-17",
-      "source": "MCP",
-      "tier": "Primary",
-      "section": "product",
-      "title": "MCP Spec TPM Updates",
-      "summary": "New SEPs are being proposed for the MCP specification, including the formation of the Tasks and Events Working Group.",
-      "url": "https://plan.modelcontextprotocol.io/seps",
-      "flagged": "",
-      "id": "live-1792305600604-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-13",
-      "source": "Google",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Argon Release",
-      "summary": "Gemini 4 Argon is now available for developers, built for long-horizon workflows requiring deep reasoning and structural precision.",
-      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
-      "flagged": "",
-      "id": "live-1792297529606-0",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-14",
-      "source": "TypeSafe AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Jev 1.14.0 Release",
-      "summary": "Jev 1.14.0 introduces experimental features like images, a new type, and longer context, available via the AI Gateway.",
-      "url": "https://vercel.com/changelog/typesafe-ais-jev-1-14-is-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1792297529606-1",
-      "type": "API & tooling",
-      "models": [
-        "jev"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795053593224,
+  "checkedAt": 1795068976876,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

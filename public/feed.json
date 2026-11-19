@@ -5,6 +5,22 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "Managing Frontier AI Risk",
+      "summary": "OpenAI outlines its approach to managing risk from training to deployment, including model alignment, sandboxing, and monitoring. This provides a framework for safer AI development.",
+      "url": "https://openai.com/index/managing-frontier-ai-risk",
+      "flagged": "",
+      "id": "live-1795053593196-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-18",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "GPT-6 Astra Optimizes Chip Design",
       "summary": "OpenAI models optimized circuits used in Jalapeño silicon and improved RISC‑V core designs, showing progress in AI-assisted chip design.",
       "url": "https://openai.com/index/advancing-chip-design-with-our-models",
@@ -2184,25 +2200,9 @@
         "jev"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-16",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "GPT-Live Voices",
-      "summary": "Nine new natural voices for GPT-Live were added, including Nuri, Juni, and Flitz (German), Brise and Sillage (French), and others.",
-      "url": "https://openai.com/products/release-notes/",
-      "flagged": "",
-      "id": "live-1792297529606-2",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795043298094,
+  "checkedAt": 1795053593224,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

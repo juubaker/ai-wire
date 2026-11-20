@@ -1,6 +1,62 @@
 {
   "items": [
     {
+      "date": "2026-11-20",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "LLM Complexity",
+      "summary": "A paper explores computational complexity in LLM inference, challenging the analogy between token length and classical time complexity. This could reshape how efficiency is measured and optimized in LLM systems.",
+      "url": "https://arxiv.org/abs/2611.24943",
+      "flagged": "",
+      "id": "live-1795150912949-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-20",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "FinVeriQA",
+      "summary": "FinVeriQA introduces a multi-agent framework for financial QA, integrating routing, retrieval, and evidence verification. It addresses key challenges in financial LLM accuracy and reliability.",
+      "url": "https://arxiv.org/abs/2611.25071",
+      "flagged": "",
+      "id": "live-1795150912949-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-20",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "CANDID",
+      "summary": "CANDID is an execution-control framework for local computer-use agents, enhancing reliability in resource-constrained settings by managing action loops and premature termination.",
+      "url": "https://arxiv.org/abs/2611.24977",
+      "flagged": "",
+      "id": "live-1795150912949-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-20",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "HapBO",
+      "summary": "HapBO introduces a Bayesian optimization method using natural language priors, improving sample efficiency by leveraging expert knowledge in a more flexible and interpretable way.",
+      "url": "https://arxiv.org/abs/2611.25100",
+      "flagged": "",
+      "id": "live-1795150912949-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-19",
       "source": "arXiv cs.CL",
       "tier": "Primary",
@@ -2138,69 +2194,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-19",
-      "source": "Salesforce",
-      "tier": "Primary",
-      "section": "business",
-      "title": "Acquisition of Loops",
-      "summary": "Salesforce acquires Loops, an AI-powered analytics platform, to enhance its AI CRM capabilities.",
-      "url": "https://www.salesforce.com/in/news/stories/salesforce-signs-definitive-agreement-to-acquire-loops/",
-      "flagged": "",
-      "id": "live-1792448385649-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-19",
-      "source": "Algorithmine",
-      "tier": "Secondary",
-      "section": "business",
-      "title": "AI Funding Roundup",
-      "summary": "AI funding reached $2.42B in October 12-18, 2026, with Modal's $750M Series D being the largest round.",
-      "url": "https://aifundingtracker.com/ai-funding-hits-2-42b-as-modal-lands-750m-at-15-75b-oct-12-oct-18-2026/",
-      "flagged": "",
-      "id": "live-1792448385649-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-13",
-      "source": "Google",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Argon Release",
-      "summary": "Gemini 4 Argon is now available for developers, designed for complex coding, agentic, math, and science tasks.",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/",
-      "flagged": "",
-      "id": "live-1792448057675-0",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-13",
-      "source": "Google",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Argon App Availability",
-      "summary": "Gemini 4 Argon is now available in the Gemini app, delivering improved performance across complex tasks.",
-      "url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-argon-availability/",
-      "flagged": "",
-      "id": "live-1792448057675-1",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795147147482,
+  "checkedAt": 1795150912955,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

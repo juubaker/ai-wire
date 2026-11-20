@@ -5,6 +5,38 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "GPT-Live 1.1 on AI Gateway",
+      "summary": "GPT-Live 1.1 now available on AI Gateway. It improves speech transcription accuracy and maintains consistent accent across languages.",
+      "url": "https://vercel.com/changelog/gpt-live-1-1-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1795133621044-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini API Tool Retrieval",
+      "summary": "Gemini API now supports Tool Retrieval, allowing agents to use hundreds of tools with fewer tokens.",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
+      "flagged": "",
+      "id": "live-1795133621044-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "Performance Factory for ChatGPT",
       "summary": "OpenAI introduces the Performance Factory, a system that uses Codex-powered workflows to identify and resolve performance issues, ensuring ChatGPT remains fast and efficient.",
       "url": "https://openai.com/index/how-openai-performance-factory-keeps-chatgpt-fast",
@@ -2166,37 +2198,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-19",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Mercury 3 Availability",
-      "summary": "Mercury 3 is now available on AI Gateway with 50% off launch pricing and improved reasoning for latency-sensitive workloads.",
-      "url": "https://vercel.com/changelog/mercury-3-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1792448057675-5",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-16",
-      "source": "Secondary",
-      "tier": "Secondary",
-      "section": "business",
-      "title": "Suki Raises $90M Series E",
-      "summary": "Suki has raised $90M Series E to scale healthcare AI agents for health systems and health tech companies.",
-      "url": "https://www.suki.ai/press-releases/suki-secures-90-million-to-build-and-scale-ai-agents-for-health-systems-and-health-tech-companies/",
-      "models": [],
-      "flagged": "",
-      "id": "live-1792308327269-0",
-      "type": "API & tooling",
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795112748059,
+  "checkedAt": 1795133621055,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

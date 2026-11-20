@@ -2,6 +2,22 @@
   "items": [
     {
       "date": "2026-11-20",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "MedChemBench for Drug Discovery",
+      "summary": "OpenAI introduces MedChemBench, a benchmark evaluating AI models' ability to interpret molecular structures and select compounds in early drug discovery. This improves the practical application of AI in pharmaceutical research.",
+      "url": "https://openai.com/index/introducing-medchembench",
+      "flagged": "",
+      "id": "live-1795205241393-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-20",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2176,23 +2192,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-26",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Graph-Based Reasoning in Structured Generation",
-      "summary": "A paper rethinking structured generation as an ambiguity-aware inference problem using graph-based reasoning.",
-      "url": "https://arxiv.org/abs/2610.31681",
-      "flagged": "",
-      "id": "live-1793050084156-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795157288939,
+  "checkedAt": 1795205241405,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

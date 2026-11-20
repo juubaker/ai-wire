@@ -5,6 +5,22 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "Deploying Daybreak Red",
+      "summary": "OpenAI explores a reference architecture for supervised security investigations using Daybreak Red, including safety controls and monitoring setups.",
+      "url": "https://openai.com/business/learn/deploying-daybreak-red",
+      "flagged": "",
+      "id": "live-1795142957093-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "GPT-Live 1.1 on AI Gateway",
       "summary": "GPT-Live 1.1 now available on AI Gateway. It improves speech transcription accuracy and maintains consistent accent across languages.",
       "url": "https://vercel.com/changelog/gpt-live-1-1-now-available-on-ai-gateway",
@@ -2184,23 +2200,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-16",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Latent Abstraction for RAG",
-      "summary": "A paper proposes Latent Abstraction for Retrieval-Augmented Generation, aiming to improve RAG systems with better query generation.",
-      "url": "https://arxiv.org/abs/2604.17866",
-      "flagged": "",
-      "id": "live-1792448057675-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795133621055,
+  "checkedAt": 1795142957100,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

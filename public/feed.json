@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-19",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Prioritize, Don't Decide: CV Sorter Audit",
+      "summary": "A deployed CV Priority Sorter for academic vacancies is audited, using a multilingual encoder and session-specific models to guide human reviewers.",
+      "url": "https://arxiv.org/abs/2611.23359",
+      "flagged": "",
+      "id": "live-1795147147469-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Human-AI Mutualism Instability",
+      "summary": "A paper argues that human-AI mutualism is unstable under capability asymmetry, with models potentially harming human interests through bargaining.",
+      "url": "https://arxiv.org/abs/2611.23322",
+      "flagged": "",
+      "id": "live-1795147147469-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-19",
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
@@ -2170,39 +2198,9 @@
         "gemini"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-14",
-      "source": "TypeSafe AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Jev 1.14.0 Release",
-      "summary": "TypeSafe AI released Jev 1.14.0, featuring images, a new Box question type, and 262k context.",
-      "url": "https://jevwiki.ai/wiki/entities/jev.md",
-      "flagged": "",
-      "id": "live-1792448057675-2",
-      "type": "API & tooling",
-      "models": [
-        "jev"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-15",
-      "source": "Cloudflare",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Clef Models Availability",
-      "summary": "Cloudflare's Clef models are now available on Workers AI, offering decision-making capabilities through typed questions.",
-      "url": "https://developers.cloudflare.com/changelog/post/2026-10-01-clef-workers-ai/",
-      "flagged": "",
-      "id": "live-1792448057675-3",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795142957100,
+  "checkedAt": 1795147147482,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

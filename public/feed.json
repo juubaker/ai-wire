@@ -1,6 +1,64 @@
 {
   "items": [
     {
+      "date": "2026-11-21",
+      "source": "Ollama",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Ollama v0.40.17",
+      "summary": "Ollama released inkling-2-mini, a 26B parameter model with 5.4B active parameters, supporting Apple silicon only. It handles text, images, and tool calls, scoring 79.2% on SWE-Bench.",
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.40.17",
+      "flagged": "no",
+      "id": "live-1795294231120-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-21",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "PsyWorld: Profile-Conditioned World Modeling",
+      "summary": "A new method for human behavior prediction using profile-conditioned state world models that leverage observed environment-behavior transitions for better behavioral prediction.",
+      "url": "https://arxiv.org/abs/2611.24999",
+      "flagged": "no",
+      "id": "live-1795294231120-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-21",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Combatting adversarial distillation",
+      "summary": "OpenAI introduced a layered approach to protect against capability extraction through adversarial distillation, combining model training, detection, and enforcement.",
+      "url": "https://openai.com/index/combatting-adversarial-distillation",
+      "flagged": "no",
+      "id": "live-1795294231120-2",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-20",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Welcome Inkling 2 Mini",
+      "summary": "Hugging Face announced Inkling 2 Mini, a cutting-edge model for local setups with improved performance and efficiency.",
+      "url": "https://huggingface.co/blog/inkling2mini",
+      "flagged": "no",
+      "id": "live-1795294231120-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-20",
       "source": "OpenAI",
       "tier": "Primary",
@@ -2134,67 +2192,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-10-26",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "GPT-6.1 Terra",
-      "summary": "GPT-6.1 Terra is now available on AI Gateway, offering fast visual reasoning and computer use capabilities for high-volume work.",
-      "url": "https://vercel.com/changelog/gpt-6-1-terra-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1793050084156-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-26",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Vercel Agent Validation",
-      "summary": "Vercel Agent can now validate alerts before paging, filtering critical alerts based on logs and metrics.",
-      "url": "https://vercel.com/changelog/vercel-agent-can-now-validate-alerts-before-paging-you",
-      "flagged": "",
-      "id": "live-1793050084156-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-26",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Validating Comparison in LLM Evaluation",
-      "summary": "A paper challenges the use of overall accuracy in LLM evaluation, highlighting prompt-specific scorer errors.",
-      "url": "https://arxiv.org/abs/2610.31678",
-      "flagged": "",
-      "id": "live-1793050084156-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-26",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "MisconceptDialogue for LLM Tutoring",
-      "summary": "A new framework for evaluating math tutoring LLMs that focuses on detecting misconceptions and remediation through dialogue.",
-      "url": "https://arxiv.org/abs/2610.31679",
-      "flagged": "",
-      "id": "live-1793050084156-3",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795205241405,
+  "checkedAt": 1795294231134,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

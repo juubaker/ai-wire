@@ -5,6 +5,48 @@
       "source": "arXiv cs.LG",
       "tier": "Primary",
       "section": "innovation",
+      "title": "Long-Range Video Presentation Attack Detection",
+      "summary": "A new benchmark for video-based PAD systems across multiple distances and sensor types, improving real-world readiness for face recognition systems.",
+      "url": "https://arxiv.org/abs/2611.25108",
+      "flagged": "",
+      "id": "live-1795312941740-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-21",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Auditing Learned Dynamics in Weather Models",
+      "summary": "Research explores whether AI weather models rely on physical semantics for reliable forecasts, with implications for high-assurance systems.",
+      "url": "https://arxiv.org/abs/2611.25119",
+      "flagged": "",
+      "id": "live-1795312941740-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-21",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Temporal Extrapolation of Seismic Wave Propagation",
+      "summary": "A neural operator framework for predicting seismic velocity fields beyond training data, enhancing temporal prediction in layered media.",
+      "url": "https://arxiv.org/abs/2611.25130",
+      "flagged": "",
+      "id": "live-1795312941740-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-21",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
       "title": "Watch Where You Linearize",
       "summary": "New method predicts model-merging interference using directional derivatives for efficient coefficient search.",
       "url": "https://arxiv.org/abs/2611.25000",
@@ -2146,55 +2188,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "arXiv cs.LG",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "AutoHebb Neural Networks",
-      "summary": "AutoHebb introduces self-modifying neural networks capable of zero-shot inference and continual learning, mimicking human cognitive abilities.",
-      "url": "https://arxiv.org/abs/2610.40757",
-      "flagged": "",
-      "id": "live-1793655686788-5",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-28",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "OpenAI and ServiceNow Partnership",
-      "summary": "OpenAI and ServiceNow expand their partnership to integrate OpenAI models and agents into ServiceNow workflows and ChatGPT.",
-      "url": "https://openai.com/index/openai-servicenow-partnership-expansion",
-      "flagged": "",
-      "id": "live-1793235248208-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-10-28",
-      "source": "Google DeepMind",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Carbon",
-      "summary": "Google DeepMind introduces Gemini 4 Carbon, a next-generation model for advanced AI tasks.",
-      "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/",
-      "flagged": "",
-      "id": "live-1793235248208-1",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795299707346,
+  "checkedAt": 1795312941747,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

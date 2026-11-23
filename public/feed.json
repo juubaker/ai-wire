@@ -2,6 +2,52 @@
   "items": [
     {
       "date": "2026-11-23",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Audited ZDR on AI Gateway",
+      "summary": "Vercel introduces Audited ZDR to ensure zero data retention for AI Gateway providers, offering external verification for sensitive data processing. This enhances trust and compliance for businesses using inference providers.",
+      "url": "https://vercel.com/blog/introducing-audited-zdr-on-ai-gateway",
+      "flagged": "no",
+      "id": "live-1795462267586-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "Anthropic SDK",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Anthropic SDK v1.13.0",
+      "summary": "The Anthropic SDK now includes error codes for Message Batches, External Storage, and webhook events for storage failures. It also deprecates Claude Opus 4.5, affecting model usage and deployment.",
+      "url": "https://github.com/anthropics/anthropic-sdk-typescript/releases/tag/sdk-v1.13.0",
+      "flagged": "no",
+      "id": "live-1795462267586-1",
+      "type": "API & tooling",
+      "models": [
+        "claude"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "OpenAI Python SDK",
+      "tier": "Primary",
+      "section": "product",
+      "title": "OpenAI Python SDK v3.58.0",
+      "summary": "The OpenAI Python SDK now allows setting and reading agent session spending limits, improving control over resource usage in AI applications.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.58.0",
+      "flagged": "no",
+      "id": "live-1795462267586-2",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
       "source": "arXiv cs.LG",
       "tier": "Primary",
       "section": "innovation",
@@ -2144,51 +2190,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "Hugging Face",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Transformers Model Integration Contracts",
-      "summary": "New integration contracts simplify model deployment and interoperability across different platforms and frameworks.",
-      "url": "https://huggingface.co/blog/transformers-mic",
-      "flagged": "",
-      "id": "live-1793732917941-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "MEMENTO: Context Management for Long Context Processing Agents",
-      "summary": "Introduces MEMENTO, a long-context agent trained to manage context through compaction, improving efficiency in long input processing.",
-      "url": "https://arxiv.org/abs/2611.00244",
-      "flagged": "",
-      "id": "live-1793732917941-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Cross-Prompt Reuse of Entity-Replacement Responses",
-      "summary": "Analyzes how entity-replacement responses transfer between questions, offering insights into model behavior and reuse potential.",
-      "url": "https://arxiv.org/abs/2611.00352",
-      "flagged": "",
-      "id": "live-1793732917941-3",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795419685941,
+  "checkedAt": 1795462267595,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

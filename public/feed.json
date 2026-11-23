@@ -1,6 +1,76 @@
 {
   "items": [
     {
+      "date": "2026-11-23",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SkillPrivus: Privacy Audit for Agent Skills",
+      "summary": "SkillPrivus offers a static audit framework for agent skills, analyzing code and instructions without execution. This helps developers identify privacy risks before deployment, improving security in LLM systems.",
+      "url": "https://arxiv.org/abs/2611.26747",
+      "flagged": "",
+      "id": "live-1795413419010-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Search-Native Pretraining for LLMs",
+      "summary": "This paper introduces Search-Native Pretraining, enabling models to learn search capabilities during pretraining. This could reduce reliance on post-training search integration, improving efficiency in LLM development.",
+      "url": "https://arxiv.org/abs/2611.26809",
+      "flagged": "",
+      "id": "live-1795413419010-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "TOUMAII: Tool-Calling Preference Dataset",
+      "summary": "TOUMAII provides a dataset and generator for tool-calling preferences, aiding in training models to interact effectively with external tools. This supports better agent systems for complex tasks.",
+      "url": "https://arxiv.org/abs/2611.26722",
+      "flagged": "",
+      "id": "live-1795413419010-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "ChatAtom: Multi-Agent LLM for MD Simulation",
+      "summary": "ChatAtom automates molecular dynamics simulations and visualization through a multi-agent system, enabling users to request complex workflows without scripting. This streamlines materials science research.",
+      "url": "https://arxiv.org/abs/2611.26782",
+      "flagged": "",
+      "id": "live-1795413419010-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "FedTether: Robust Federated Learning",
+      "summary": "FedTether improves federated learning by reweighting client updates based on deviation from a coordinatewise mean, enhancing robustness against poisoned data without sacrificing accuracy.",
+      "url": "https://arxiv.org/abs/2611.26731",
+      "flagged": "",
+      "id": "live-1795413419010-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-22",
       "source": "OpenAI",
       "tier": "Primary",
@@ -2116,83 +2186,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "How Mercor Ships Internal Apps and Billions of Production Tokens",
-      "summary": "Optimizes internal app deployment and token processing, reducing job times and improving scalability for AI workloads.",
-      "url": "https://vercel.com/blog/how-mercor-ships-internal-apps-and-billions-of-production-tokens-on-one-platform",
-      "flagged": "",
-      "id": "live-1793732917941-5",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "LifeVal Benchmark",
-      "summary": "Introduces LifeVal, a benchmark measuring AI's ability to help with everyday tasks like managing finances and government paperwork.",
-      "url": "https://openai.com/index/lifeval",
-      "flagged": "",
-      "id": "live-1793655686788-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "MCP App Integration",
-      "summary": "Vercel MCP now shows deployments as interactive cards in ChatGPT and other clients, with live status and logs.",
-      "url": "https://vercel.com/changelog/monitor-vercel-deployments-in-chatgpt",
-      "flagged": "",
-      "id": "live-1793655686788-1",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "arXiv cs.CL",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Qistas Protocol",
-      "summary": "Qistas is a new protocol for evaluating how LLMs treat diverse social and regional constituencies, portable across countries.",
-      "url": "https://arxiv.org/abs/2610.40893",
-      "flagged": "",
-      "id": "live-1793655686788-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "arXiv cs.CL",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "CoFiBreak Reward",
-      "summary": "CoFiBreak is a coarse-to-fine diversity reward for effective multi-turn jailbreak in LLMs, addressing attack diversity and safety evaluation.",
-      "url": "https://arxiv.org/abs/2610.40926",
-      "flagged": "",
-      "id": "live-1793655686788-3",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795409643870,
+  "checkedAt": 1795413419149,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

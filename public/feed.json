@@ -1,6 +1,22 @@
 {
   "items": [
     {
+      "date": "2026-11-22",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Perplexity and Intelligence",
+      "summary": "OpenAI explores perplexity as a metric for evaluating AI model progress, offering developers a potential shared approach to assessing emerging capabilities.",
+      "url": "https://openai.com/index/perplexity-and-intelligence",
+      "flagged": "",
+      "id": "live-1795409643864-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-21",
       "source": "arXiv cs.LG",
       "tier": "Primary",
@@ -2174,23 +2190,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-02",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "CLR-Bench Curriculum",
-      "summary": "CLR-Bench is a new benchmark for self-evolving agents, testing their ability to learn hidden rules in a curriculum of latent rules.",
-      "url": "https://arxiv.org/abs/2610.40758",
-      "flagged": "",
-      "id": "live-1793655686788-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795312941747,
+  "checkedAt": 1795409643870,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

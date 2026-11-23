@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-23",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Depth-Linked Residual Tokens for Multimodal Retrieval",
+      "summary": "Depth-Linked Residual Tokens (DepThink) enable efficient multimodal retrieval and generation by linking token depth with residual information, reducing latency in parallel processing.",
+      "url": "https://arxiv.org/abs/2611.26752",
+      "flagged": "",
+      "id": "live-1795419685441-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2172,23 +2186,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "ResMem: Distilling Retrieved Knowledge into Parametric Memory",
-      "summary": "Introduces ResMem, a method to distill retrieved information into parametric memory for reuse without online retrieval.",
-      "url": "https://arxiv.org/abs/2611.00450",
-      "flagged": "",
-      "id": "live-1793732917941-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795413419149,
+  "checkedAt": 1795419685941,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

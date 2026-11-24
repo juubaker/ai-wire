@@ -5,6 +5,34 @@
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
+      "title": "AI Gateway Supports Extraction Models",
+      "summary": "Vercel now supports extraction models on AI Gateway, which can pull specific details from text, images, and PDFs. This improves data processing efficiency for tasks like invoice and contract handling.",
+      "url": "https://vercel.com/changelog/ai-gateway-now-supports-extraction-models",
+      "flagged": "",
+      "id": "live-1795485790278-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Choose AI Gateway Providers by Headquarters Country",
+      "summary": "Vercel allows users to select AI Gateway providers based on their headquarters location, enabling compliance with regional data regulations and procurement rules.",
+      "url": "https://vercel.com/changelog/choose-ai-gateway-providers-by-headquarters-country",
+      "flagged": "",
+      "id": "live-1795485790278-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-23",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
       "title": "Audited ZDR on AI Gateway",
       "summary": "Vercel introduces Audited ZDR to ensure zero data retention for AI Gateway providers, offering external verification for sensitive data processing. This enhances trust and compliance for businesses using inference providers.",
       "url": "https://vercel.com/blog/introducing-audited-zdr-on-ai-gateway",
@@ -2158,41 +2186,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-04",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "v3.45.0 Release",
-      "summary": "Adds 12-hour response caching and project service tier settings for enhanced API efficiency.",
-      "url": "https://github.com/openai/openai-python/releases/tag/v3.45.0",
-      "flagged": "",
-      "id": "live-1793763944684-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-03",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "v3.43.0",
-      "summary": "New API features for live responses and WebSocket progress tracking enhance developer tooling for OpenAI's models.",
-      "url": "https://github.com/openai/openai-python/releases/tag/v3.43.0",
-      "flagged": "",
-      "id": "live-1793732917941-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795462267595,
+  "checkedAt": 1795485790287,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

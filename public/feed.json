@@ -5,6 +5,20 @@
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
+      "title": "FinEvo: Recursive Self-Improvement for Financial Modeling",
+      "summary": "FinEvo introduces a self-evolution framework that integrates autonomous experience construction with financial modeling capabilities, enabling models to improve their own performance over time.",
+      "url": "https://arxiv.org/abs/2611.28239",
+      "flagged": "",
+      "id": "live-1795533898453-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
       "title": "AutoPILOT: Visual Agent Harness",
       "summary": "Enables real-time gameplay by allowing models to send primitive actions and start operations during each call, improving agent responsiveness.",
       "url": "https://arxiv.org/abs/2611.28202",
@@ -2162,25 +2176,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "GLM 5.3 Flash Token Pass",
-      "summary": "Available in Token Pass with other models for coding agents.",
-      "url": "https://vercel.com/changelog/glm-5-3-flash-is-now-available-in-token-pass",
-      "flagged": "",
-      "id": "live-1794262286770-3",
-      "type": "API & tooling",
-      "models": [
-        "glm"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795517674964,
+  "checkedAt": 1795533898462,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -5,6 +5,36 @@
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
+      "title": "GPT-6 Models Demonstrate Protein-Design Capabilities",
+      "summary": "OpenAI's GPT-6 models now design protein structures and sequences using reasoning and code, with lab tests showing binding across five targets. This expands their utility in biotech and drug discovery applications.",
+      "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+      "flagged": "",
+      "id": "live-1795563586074-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Agents Can Manage AI Gateway via Vercel MCP",
+      "summary": "Vercel now allows agents to manage AI Gateway through Vercel MCP, enabling features like virtual model creation, routing rules, and budget setting. This enhances agent orchestration and control over AI resources.",
+      "url": "https://vercel.com/changelog/agents-can-now-manage-ai-gateway-through-vercel-mcp",
+      "flagged": "",
+      "id": "live-1795563586074-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
       "title": "iFood scales coding agents",
       "summary": "OpenAI shares how iFood scales coding agents across 15,000 repositories, offering insights into large-scale agent deployment.",
       "url": "https://openai.com/index/ifood",
@@ -2146,37 +2176,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "IWIBench Evaluation Framework",
-      "summary": "IWIBench evaluates how well models can modify the weights of other models through gradient-free intra-weight injection, providing a benchmark for assessing the effectiveness of such techniques in altering model behavior.",
-      "url": "https://arxiv.org/abs/2611.08647",
-      "flagged": "",
-      "id": "live-1794294602475-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "FinEvolveKG for Financial KG Construction",
-      "summary": "FinEvolveKG introduces a controlled method for evolving financial knowledge graphs, improving extraction without fragmenting shared rules.",
-      "url": "https://arxiv.org/abs/2611.08643",
-      "flagged": "",
-      "id": "live-1794269340328-0",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795547922207,
+  "checkedAt": 1795563586084,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

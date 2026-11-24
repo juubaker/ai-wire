@@ -2,6 +2,38 @@
   "items": [
     {
       "date": "2026-11-24",
+      "source": "OpenAI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "iFood scales coding agents",
+      "summary": "OpenAI shares how iFood scales coding agents across 15,000 repositories, offering insights into large-scale agent deployment.",
+      "url": "https://openai.com/index/ifood",
+      "flagged": "",
+      "id": "live-1795547922196-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "Google AI",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Gemini powers Golden State operations",
+      "summary": "Google Gemini partners with Golden State to enhance fan experiences and business operations for the Warriors, Valkyries, and Chase Center.",
+      "url": "https://blog.google/products-and-platforms/products/gemini/gemini-golden-state/",
+      "flagged": "",
+      "id": "live-1795547922196-1",
+      "type": "API & tooling",
+      "models": [
+        "gemini"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
       "source": "Vercel",
       "tier": "Primary",
       "section": "product",
@@ -2142,39 +2174,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "RL-ATTACK for Adversarial LLMs",
-      "summary": "RL-ATTACK presents a reinforcement learning-based black-box adversarial attack framework for language models, improving attack precision.",
-      "url": "https://arxiv.org/abs/2611.08711",
-      "flagged": "",
-      "id": "live-1794269340328-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "ChatGPT Enterprise AWS",
-      "summary": "Available via AWS Marketplace, simplifying procurement for organizations.",
-      "url": "https://openai.com/index/chatgpt-enterprise-aws-marketplace",
-      "flagged": "",
-      "id": "live-1794262286770-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795544078614,
+  "checkedAt": 1795547922207,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-24",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Inkling 2 Mini on AI Gateway",
+      "summary": "A small multimodal reasoning model now available on AI Gateway, optimized for agentic coding and knowledge work. Offers 1M-token context window and efficient reasoning.",
+      "url": "https://vercel.com/changelog/inkling-2-mini-now-available-on-ai-gateway",
+      "flagged": "",
+      "id": "live-1795544078608-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Grammar-as-a-Draft",
+      "summary": "New method integrates grammar constraints into speculative decoding, reducing invalid token proposals and improving structured output generation.",
+      "url": "https://arxiv.org/abs/2611.28349",
+      "flagged": "",
+      "id": "live-1795544078608-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2144,41 +2172,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "CodeRabbit Ships 20x",
-      "summary": "Uses OpenAI models to scale agentic software development with Codex.",
-      "url": "https://openai.com/index/coderabbit-codex-daybreak",
-      "flagged": "",
-      "id": "live-1794262286770-1",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Control Room Safety",
-      "summary": "Tracks and stops model workloads across research infrastructure for safety.",
-      "url": "https://openai.com/index/control-room",
-      "flagged": "",
-      "id": "live-1794262286770-2",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795533898462,
+  "checkedAt": 1795544078614,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

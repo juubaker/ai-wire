@@ -2,6 +2,76 @@
   "items": [
     {
       "date": "2026-11-24",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "AutoPILOT: Visual Agent Harness",
+      "summary": "Enables real-time gameplay by allowing models to send primitive actions and start operations during each call, improving agent responsiveness.",
+      "url": "https://arxiv.org/abs/2611.28202",
+      "flagged": "",
+      "id": "live-1795517674954-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "RefineKV: Query-Adaptive KV Cache Compression",
+      "summary": "Improves long-context decoding by compressing KV caches based on query-specific attention-error bounds, reducing memory usage and improving throughput.",
+      "url": "https://arxiv.org/abs/2611.28171",
+      "flagged": "",
+      "id": "live-1795517674954-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Language Model Harnesses as Compositional Generalizers",
+      "summary": "Proposes training neurosymbolic LM harnesses to externalize context, enabling compositional generalization and better return on compute for long-horizon tasks.",
+      "url": "https://arxiv.org/abs/2611.28298",
+      "flagged": "",
+      "id": "live-1795517674954-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "GERF: Token-Efficient Multimodal Retrieval Framework",
+      "summary": "A new framework for schema-guided scientific information extraction that improves efficiency by using token-efficient multimodal retrieval.",
+      "url": "https://arxiv.org/abs/2611.28295",
+      "flagged": "",
+      "id": "live-1795517674954-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Feedback Shortcut for Latent Feedback Transformers",
+      "summary": "Addresses bottlenecks in speculative decoding by introducing Feedback Shortcut, which adapts models to approximate stand-ins and reduces approximation error at inference time.",
+      "url": "https://arxiv.org/abs/2611.28227",
+      "flagged": "",
+      "id": "live-1795517674954-4",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2108,83 +2178,9 @@
         "glm"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Claude Fable 5.2 AI Gateway",
-      "summary": "New model available for open-ended technical work with improved reasoning.",
-      "url": "https://vercel.com/changelog/claude-fable-5-2-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1794262286770-4",
-      "type": "API & tooling",
-      "models": [
-        "claude"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Muse Ember AI Gateway",
-      "summary": "Lightweight reasoning model for agent sub-tasks with multimodal input.",
-      "url": "https://vercel.com/changelog/muse-ember-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1794262286770-5",
-      "type": "API & tooling",
-      "models": [
-        "muse"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Decision Context",
-      "summary": "Introduces Forge Decision Context to capture behavioral signals from corrections and self-assessed failures, improving agent learning.",
-      "url": "https://arxiv.org/abs/2611.08644",
-      "flagged": "",
-      "id": "live-1794202788253-0",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "ChainFlow",
-      "summary": "Proposes a new speculative decoding paradigm for faster LLM inference by matching latent flows.",
-      "url": "https://arxiv.org/abs/2611.08669",
-      "flagged": "",
-      "id": "live-1794202788253-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-09",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "Memory-Aware Multi-Agent Architecture",
-      "summary": "Introduces a memory-aware multi-agent system for conversational recommendation using LLM orchestration.",
-      "url": "https://arxiv.org/abs/2611.08718",
-      "flagged": "",
-      "id": "live-1794202788253-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795513996488,
+  "checkedAt": 1795517674964,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

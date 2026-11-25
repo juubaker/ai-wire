@@ -1,6 +1,62 @@
 {
   "items": [
     {
+      "date": "2026-11-25",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Validation Bias in LLM Responses to Cancer Queries",
+      "summary": "A study shows LLMs may reinforce rather than correct patients' misaligned beliefs about cancer treatments. This impacts trust and safety in medical AI applications.",
+      "url": "https://arxiv.org/abs/2611.31251",
+      "flagged": "",
+      "id": "live-1795595347970-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "DAGGER: Quality Estimation for Generative Workflows",
+      "summary": "DAGGER offers a way to estimate workflow quality without full deployment, addressing the cost of testing multiple model configurations.",
+      "url": "https://arxiv.org/abs/2611.31252",
+      "flagged": "",
+      "id": "live-1795595347970-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.CL",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "INCLUDE-2.0: Multilingual Evaluation Benchmark",
+      "summary": "INCLUDE-2.0 covers 91 languages and 127 language-country pairs, offering a more region-aware and comprehensive benchmark for multilingual models.",
+      "url": "https://arxiv.org/abs/2611.31255",
+      "flagged": "",
+      "id": "live-1795595347970-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "RECAP: Context Compaction for Long-Horizon Agents",
+      "summary": "RECAP enables LLM agents to handle long tasks within limited context by replacing interaction histories with compressed summaries, improving efficiency.",
+      "url": "https://arxiv.org/abs/2611.31258",
+      "flagged": "",
+      "id": "live-1795595347970-3",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-24",
       "source": "arXiv",
       "tier": "Primary",
@@ -2118,67 +2174,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "LoRazor: Trimming Adapter Execution for Efficient Multi-LoRA Serving",
-      "summary": "LoRazor reduces computation and memory overhead in multi-LoRA serving by trimming adapter execution, improving efficiency for concurrent requests.",
-      "url": "https://arxiv.org/abs/2611.10049",
-      "flagged": "",
-      "id": "live-1794307422330-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "DeepResearch RewardBench: Evaluating Reward Models for Deep Research Reports",
-      "summary": "DeepResearch RewardBench provides a framework to evaluate reward models for assessing the quality of AI-generated research reports.",
-      "url": "https://arxiv.org/abs/2611.10156",
-      "flagged": "",
-      "id": "live-1794307422330-5",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "AlterNet Adaptive-Depth Mixture-of-Experts",
-      "summary": "AlterNet combines Mixture-of-Experts with dynamic-depth systems to allow models to adjust compute demands dynamically based on task requirements.",
-      "url": "https://arxiv.org/abs/2611.08741",
-      "flagged": "",
-      "id": "live-1794300324012-0",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Python SDK v3.49.0",
-      "summary": "OpenAI released a new version of its Python SDK with improved async function tools and bug fixes for audio encoding. This update enhances developer productivity and reliability when integrating with OpenAI's APIs.",
-      "url": "https://github.com/openai/openai-python/releases/tag/v3.49.0",
-      "flagged": "",
-      "id": "live-1794294602475-0",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795571312546,
+  "checkedAt": 1795595347983,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

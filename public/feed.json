@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "MOZAIC: Audio-Video Deepfake Benchmark",
+      "summary": "MOZAIC is a benchmark that evaluates deepfake detection by measuring each modality's contribution, enabling more accurate assessment of audio-video forgery detection systems.",
+      "url": "https://arxiv.org/abs/2611.31301",
+      "flagged": "",
+      "id": "live-1795600969083-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.LG",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Chain-of-Thought Is Not Explainability",
+      "summary": "This paper argues that chain-of-thought reasoning does not guarantee model transparency, emphasizing the need for more rigorous interpretability methods in AI systems.",
+      "url": "https://arxiv.org/abs/2611.31271",
+      "flagged": "",
+      "id": "live-1795600969083-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
       "source": "arXiv cs.CL",
       "tier": "Primary",
       "section": "innovation",
@@ -2146,37 +2174,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.LG",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "AutoEMatic: Runtime-Adaptive Mixed-Precision LLM Inference",
-      "summary": "AutoEMatic enables dynamic precision adjustments for LLM inference, optimizing performance and resource usage during runtime.",
-      "url": "https://arxiv.org/abs/2611.10165",
-      "flagged": "",
-      "id": "live-1794307422330-2",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.CL",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "MedToolFault and MedGuard: Evaluating Clinical Agent Reliability",
-      "summary": "Introduces MedToolFault and MedGuard to improve clinical agent reliability by detecting and mitigating tool failures in medical tasks.",
-      "url": "https://arxiv.org/abs/2611.09942",
-      "flagged": "",
-      "id": "live-1794307422330-3",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795595347983,
+  "checkedAt": 1795600969096,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

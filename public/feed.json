@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-25",
+      "source": "Cloudflare",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Search for Agents",
+      "summary": "Cloudflare introduces a search feature for AI agents, enabling automatic content indexing and a discoverable search API, enhancing agent utility and accessibility.",
+      "url": "https://blog.cloudflare.com/search-for-agents/",
+      "flagged": "",
+      "id": "live-1795639718295-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "Vercel",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Workflow is 10x Faster",
+      "summary": "Vercel's new execution engine reduces workflow latency and function time, significantly improving performance for durable AI agents and scalable deployments.",
+      "url": "https://vercel.com/changelog/workflows-speculative-execution",
+      "flagged": "",
+      "id": "live-1795639718295-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2138,41 +2166,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "Google AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini Intelligence Expands to More Devices",
-      "summary": "Gemini Intelligence is rolling out to more devices, enhancing user capabilities across various platforms with expanded features.",
-      "url": "https://blog.google/products-and-platforms/platforms/android/gemini-intelligence-november-features-devices/",
-      "flagged": "",
-      "id": "live-1794353414562-0",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "Google AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Google Cloud Launches Gemini for Healthcare",
-      "summary": "Google Cloud launches Gemini for healthcare to unify clinical data and automate workflows, reducing administrative burnout.",
-      "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-for-healthcare/",
-      "flagged": "",
-      "id": "live-1794353414562-1",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795633905894,
+  "checkedAt": 1795639718303,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

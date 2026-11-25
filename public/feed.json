@@ -5,6 +5,48 @@
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
+      "title": "RegioZH: Regional Chinese Varieties Benchmark",
+      "summary": "RegioZH introduces a 2,607-item benchmark for regional lexical reasoning across Chinese dialects, highlighting disparities in LLM performance between regions like Taiwan and Singapore.",
+      "url": "https://arxiv.org/abs/2611.31262",
+      "flagged": "",
+      "id": "live-1795633905885-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Taxi: Agent Debugging and Monitoring System",
+      "summary": "Taxi is a system for debugging, clustering, and monitoring agents at scale, providing full SQL access for engineers to analyze agent behavior and performance.",
+      "url": "https://arxiv.org/abs/2611.31457",
+      "flagged": "",
+      "id": "live-1795633905885-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "SpatialCraft: Procedural Intelligence for Spatial Reasoning Agents",
+      "summary": "SpatialCraft enables spatial reasoning agents to improve orchestration from their interaction history, reducing repetitive mistakes in tool usage across tasks.",
+      "url": "https://arxiv.org/abs/2611.31475",
+      "flagged": "",
+      "id": "live-1795633905885-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
       "title": "Antares-Smaug: Adversarial Names, Tokens and Attack Rewrites",
       "summary": "A study on how sanitizers fail to detect unseen generalizations in adversarial attacks, highlighting vulnerabilities in model security.",
       "url": "https://arxiv.org/abs/2611.31347",
@@ -2128,55 +2170,9 @@
         "gemini"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "Google DeepMind",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "AlphaProof Code Introduces Breakthrough in Software Verification",
-      "summary": "AlphaProof Code agents wrote three million lines of proofs in Lean to verify Signal’s core encryption, advancing software verification techniques.",
-      "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
-      "flagged": "",
-      "id": "live-1794353414562-2",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Carbon Now Available",
-      "summary": "Gemini 4 Carbon is now available on AI Gateway with 50% discount through November 30. It supports complex engineering tasks and cybersecurity defense with a 1M-token context window.",
-      "url": "https://vercel.com/changelog/gemini-4-carbon-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1794329958729-0",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.CL",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "DramaGrow for LLM Drama Evaluation",
-      "summary": "DramaGrow is a benchmark for auditing LLM judges of multi-episode dramas, addressing reliability and variability in human ratings.",
-      "url": "https://arxiv.org/abs/2611.09938",
-      "flagged": "",
-      "id": "live-1794329958729-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795613667222,
+  "checkedAt": 1795633905894,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

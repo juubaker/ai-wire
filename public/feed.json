@@ -5,6 +5,20 @@
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
+      "title": "Irreducible Governance Structure for Autonomous Agents",
+      "summary": "A new framework for fair allocation and strategy-proofness in multi-agent systems addresses governance challenges.",
+      "url": "https://arxiv.org/abs/2611.31284",
+      "flagged": "",
+      "id": "live-1795605664501-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
       "title": "MOZAIC: Audio-Video Deepfake Benchmark",
       "summary": "MOZAIC is a benchmark that evaluates deepfake detection by measuring each modality's contribution, enabling more accurate assessment of audio-video forgery detection systems.",
       "url": "https://arxiv.org/abs/2611.31301",
@@ -2160,23 +2174,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.AI",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "META-IR: Meta-Introspective Reasoning for Adaptive Safety Alignment in LLM",
-      "summary": "Proposes META-IR, a framework for adaptive safety alignment in LLMs, enhancing resistance to jailbreak attacks and harmful prompts through meta-learning.",
-      "url": "https://arxiv.org/abs/2611.10089",
-      "flagged": "",
-      "id": "live-1794307422330-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795600969096,
+  "checkedAt": 1795605664524,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

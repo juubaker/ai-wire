@@ -5,9 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Wire — LLM systems changelog</title>
     <meta name="description" content="Model releases, API changes, deprecations, pricing and papers, from primary sources." />
+    <style>
+      body { margin: 0; }
+      #stamp-shell {
+        box-sizing: border-box;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        border: clamp(36px, 12vw, 160px) solid transparent;
+        /* %BASE_URL% rather than './' — Vite substitutes it at build time, so
+           this resolves under the Pages base (/ai-wire/) as well as at a
+           domain root. A relative url in an inline <style> is not rewritten
+           and 404s on one of the two builds. */
+        /* "stretch round" — the two keywords are horizontal then vertical.
+           Horizontal stays stretch: the top and bottom slices span 592px and
+           get pulled to about 1100, which the guilloche takes without
+           complaint. Vertical must not: the side slices are 842px tall and
+           this page runs past 6000, so stretch smeared the crosshatch into
+           vertical streaks. round tiles them at whole multiples instead and
+           the engraving survives at any page length. */
+        border-image: url('%BASE_URL%stamp-border.png') 260 260 300 270 stretch round;
+        background: #fffdf5;
+        background-clip: padding-box;
+      }
+      #stamp-shell > #root { flex: 1; min-width: 0; width: 100%; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="stamp-shell">
+      <div id="root"></div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

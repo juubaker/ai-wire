@@ -1,9 +1,21 @@
 :root{
-  --paper:#EDF0F4; --panel:#F7F9FB; --ink:#101D33; --ink-soft:#4A5A75;
-  --rule:#C9D2DE; --signal:#A85B10; --tier:#186A66; --wire:#8FA2BA;
+  /* Warm stock, to sit inside the engraved border in index.html: its face is
+     #fffdf5 and its ink is a dark green, and the old cool blue-grey read as a
+     screen pasted into a paper frame. Signal and tier are kept — both belong
+     in a stamp palette — but signal is darkened from #A85B10, which measured
+     4.46:1 on the warmer panel, just under the 4.5 it cleared on the grey.
+     Everything else lands between 5.0 and 12.4:1.
+
+     This is separable from the frame: restoring the four values above brings
+     back the original scheme without touching index.html. */
+  --paper:#FFFDF5; --panel:#F6F1E3; --ink:#20382C; --ink-soft:#5A6B5E;
+  --rule:#DCD3BE; --signal:#A05610; --tier:#186A66; --wire:#B6AB92;
 }
 .wire-root{
-  background:var(--paper); color:var(--ink); min-height:100%;
+  /* Transparent, not var(--paper): the shell in index.html paints the face,
+     and the border-image's inner edge is irregular, so a second opaque box on
+     top of it would cover the places where the engraving bleeds inward. */
+  background:transparent; color:var(--ink); min-height:100%;
   font-family:"Charter","Bitstream Charter","Iowan Old Style","Source Serif Pro",Georgia,serif;
   -webkit-font-smoothing:antialiased;
 }

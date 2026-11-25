@@ -2,6 +2,20 @@
   "items": [
     {
       "date": "2026-11-24",
+      "source": "arXiv",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Contrastive On-Policy Distillation for Agents",
+      "summary": "A new distillation method contrasts strong and weak teacher models to improve student performance, offering better token efficiency and reasoning capabilities for agentic tasks.",
+      "url": "https://arxiv.org/abs/2611.28359",
+      "flagged": "",
+      "id": "live-1795571312526-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-24",
       "source": "OpenAI",
       "tier": "Primary",
       "section": "product",
@@ -2162,23 +2176,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "NormGym Benchmark",
-      "summary": "NormGym introduces an interactive benchmark for testing normative competence in AI agents, enabling them to infer and adapt to new social norms through interaction. This could improve how agents operate in human-centric environments.",
-      "url": "https://arxiv.org/abs/2611.08613",
-      "flagged": "",
-      "id": "live-1794294602475-1",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795563586084,
+  "checkedAt": 1795571312546,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

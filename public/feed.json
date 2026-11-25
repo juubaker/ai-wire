@@ -5,6 +5,20 @@
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
+      "title": "Antares-Smaug: Adversarial Names, Tokens and Attack Rewrites",
+      "summary": "A study on how sanitizers fail to detect unseen generalizations in adversarial attacks, highlighting vulnerabilities in model security.",
+      "url": "https://arxiv.org/abs/2611.31347",
+      "flagged": "",
+      "id": "live-1795613667208-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-25",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
       "title": "Irreducible Governance Structure for Autonomous Agents",
       "summary": "A new framework for fair allocation and strategy-proofness in multi-agent systems addresses governance challenges.",
       "url": "https://arxiv.org/abs/2611.31284",
@@ -2160,23 +2174,9 @@
       "type": "API & tooling",
       "models": [],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-10",
-      "source": "arXiv cs.CL",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "BIBIMBAP: A Benchmark for Instructional BIM-Based Automated Programming",
-      "summary": "Introduces BIBIMBAP, a Text-to-BIM benchmark for evaluating LLMs' ability to edit IFC models. Crucial for developers building BIM automation tools.",
-      "url": "https://arxiv.org/abs/2611.09933",
-      "flagged": "",
-      "id": "live-1794307422330-0",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795605664524,
+  "checkedAt": 1795613667222,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

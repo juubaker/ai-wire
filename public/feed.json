@@ -2,6 +2,22 @@
   "items": [
     {
       "date": "2026-11-26",
+      "source": "OpenAI Python SDK",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Python SDK v3.60.0",
+      "summary": "New features include spend alerts, response compaction, and improved session vault support for OpenAI APIs.",
+      "url": "https://github.com/openai/openai-python/releases/tag/v3.60.0",
+      "flagged": "",
+      "id": "live-1795713202980-0",
+      "type": "API & tooling",
+      "models": [
+        "gpt"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-26",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2150,25 +2166,9 @@
         "gemini"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-11",
-      "source": "Vercel",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini Decision 1 on AI Gateway",
-      "summary": "Vercel now offers Gemini Decision 1 via AI Gateway, allowing developers to use the model with text, images, audio, video, and PDF inputs for decision-making tasks without generating output tokens.",
-      "url": "https://vercel.com/changelog/gemini-decision-1-now-available-on-ai-gateway",
-      "flagged": "",
-      "id": "live-1794422643834-1",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795683444278,
+  "checkedAt": 1795713202992,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

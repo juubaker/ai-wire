@@ -1,6 +1,50 @@
 {
   "items": [
     {
+      "date": "2026-11-27",
+      "source": "arXiv cs.AI",
+      "tier": "Primary",
+      "section": "innovation",
+      "title": "Context Scaling",
+      "summary": "A new approach to reduce context mismatch in AI systems by managing training, decision-time, and context-infrastructure budgets. This changes how models are scaled and integrated into real-world systems.",
+      "url": "https://arxiv.org/abs/2611.33160",
+      "flagged": "no",
+      "id": "live-1795761463434-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-27",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "llama.cpp Benchmark Dashboard for AMD",
+      "summary": "Hugging Face introduces a benchmark dashboard for llama.cpp on AMD Ryzen and Radeon, providing performance insights for users running LLMs on these hardware platforms.",
+      "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+      "flagged": "no",
+      "id": "live-1795761463434-1",
+      "type": "API & tooling",
+      "models": [
+        "llama"
+      ],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-27",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Nemotron 3.5 Parse Enhancements",
+      "summary": "Hugging Face announces improvements to Nemotron 3.5, including open data, faster inference, and fine-tuning capabilities, expanding the model's utility for developers.",
+      "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+      "flagged": "no",
+      "id": "live-1795761463434-2",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
       "date": "2026-11-26",
       "source": "OpenAI Python SDK",
       "tier": "Primary",
@@ -2120,55 +2164,9 @@
         "gemini"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-12",
-      "source": "Google DeepMind",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Hydrogen Launched for Developers",
-      "summary": "Gemini 4 Hydrogen is now available on AI Gateway, offering improved multimodal capabilities and reliable tool orchestration for complex workflows.",
-      "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen/",
-      "flagged": "",
-      "id": "live-1794530168992-3",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-12",
-      "source": "Hugging Face",
-      "tier": "Primary",
-      "section": "innovation",
-      "title": "LLMON: LLM-Native Markup Language in Granite",
-      "summary": "LLMON, an LLM-native markup language, is now available in Granite 4.1, enabling more efficient and structured interaction with large language models.",
-      "url": "https://huggingface.co/blog/ibm-granite/llmon-an-llm-native-markup-language-now-in-granite",
-      "flagged": "",
-      "id": "live-1794530168992-4",
-      "type": "API & tooling",
-      "models": [],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-11",
-      "source": "Google AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini Decisions API",
-      "summary": "Google introduces the Gemini Decisions API, which provides fast, calibrated multimodal decisions using the Gemini Decision model. This tool enables developers to route requests, check policies, and filter agent tools without generating output tokens.",
-      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
-      "flagged": "",
-      "id": "live-1794422643834-0",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795713202992,
+  "checkedAt": 1795761463460,
   "provider": "ollama",
   "model": "qwen3:8b"
 }

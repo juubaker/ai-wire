@@ -2,6 +2,34 @@
   "items": [
     {
       "date": "2026-11-27",
+      "source": "Hugging Face",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Trainium3 Video Generation",
+      "summary": "Hugging Face introduces Trainium3 with LTX-2.5, enabling video generation capabilities. This expands the range of applications for LLM-based systems in multimedia tasks.",
+      "url": "https://huggingface.co/blog/video-trainium3",
+      "flagged": "",
+      "id": "live-1795845112961-0",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-27",
+      "source": "Ollama",
+      "tier": "Primary",
+      "section": "product",
+      "title": "Ollama v0.40.19 Release",
+      "summary": "Ollama updates its framework with performance improvements and enhanced memory management for better efficiency in running LLMs.",
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.40.19",
+      "flagged": "",
+      "id": "live-1795845112961-1",
+      "type": "API & tooling",
+      "models": [],
+      "via": "ollama"
+    },
+    {
+      "date": "2026-11-27",
       "source": "arXiv cs.AI",
       "tier": "Primary",
       "section": "innovation",
@@ -2132,41 +2160,9 @@
         "gpt"
       ],
       "via": "ollama"
-    },
-    {
-      "date": "2026-11-12",
-      "source": "OpenAI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gondola Boosts Output with Codex",
-      "summary": "Gondola uses Codex to increase lead engineer output by 50%, simplifying daily work and improving productivity for creative teams.",
-      "url": "https://openai.com/business/customer-stories/gondola",
-      "flagged": "",
-      "id": "live-1794530168992-1",
-      "type": "API & tooling",
-      "models": [
-        "gpt"
-      ],
-      "via": "ollama"
-    },
-    {
-      "date": "2026-11-12",
-      "source": "Google AI",
-      "tier": "Primary",
-      "section": "product",
-      "title": "Gemini 4 Hydrogen Enhances Search and Multimodal Workflows",
-      "summary": "Gemini 4 Hydrogen improves agentic coding, knowledge work, and tool use while maintaining low latency. It supports longer tasks and better document generation for developers and analysts.",
-      "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
-      "flagged": "",
-      "id": "live-1794530168992-2",
-      "type": "API & tooling",
-      "models": [
-        "gemini"
-      ],
-      "via": "ollama"
     }
   ],
-  "checkedAt": 1795761463460,
+  "checkedAt": 1795845112979,
   "provider": "ollama",
   "model": "qwen3:8b"
 }
